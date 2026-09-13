@@ -2020,5 +2020,221 @@
     "prompt": "How can the knowledge graph in the tutoring case study act as a constraint on the RL agent's action space?",
     "explanation": "",
     "hint": "By restricting which exercises/topics are eligible to be suggested at a given time to those whose prerequisites are already estimated as mastered, so the RL agent only chooses among pedagogically valid actions rather than learning that constraint purely through trial and error."
+  },
+  {
+    "id": 177,
+    "topic": "Neural Network Basics",
+    "week": "Definitions",
+    "type": "flash",
+    "prompt": "What is a neural network, in plain terms?",
+    "explanation": "",
+    "hint": "A computational model made of layers of interconnected 'neurons' (simple weighted-sum-plus-activation units), which learns to map inputs to outputs by adjusting connection weights based on training data."
+  },
+  {
+    "id": 178,
+    "topic": "Neural Network Basics",
+    "week": "Definitions",
+    "type": "mcq",
+    "prompt": "What is a Convolutional Neural Network (CNN)?",
+    "explanation": "CNNs use convolutional layers with learnable filters that slide across the input (e.g. an image), detecting local patterns like edges or textures -- exploiting spatial structure that a plain fully-connected network ignores.",
+    "options": [
+      "A network that generates new data samples by learning a probabilistic latent space",
+      "A network where every neuron in one layer connects to every neuron in the next, with no spatial structure",
+      "A network that uses sliding filters (kernels) to detect local spatial patterns, well-suited to grid-like data such as images",
+      "A network that processes sequences one element at a time, maintaining a hidden memory state"
+    ],
+    "answer": 2
+  },
+  {
+    "id": 179,
+    "topic": "Neural Network Basics",
+    "week": "Definitions",
+    "type": "flash",
+    "prompt": "Why are CNNs particularly well-suited to processing images (e.g. Atari game frames in a DQN)?",
+    "explanation": "",
+    "hint": "Convolutional filters exploit spatial locality (nearby pixels are related) and are applied across the whole image (weight sharing), which massively reduces the number of parameters compared to a fully-connected network and lets the network learn translation-invariant features like edges/shapes regardless of where they appear."
+  },
+  {
+    "id": 180,
+    "topic": "Neural Network Basics",
+    "week": "Definitions",
+    "type": "mcq",
+    "prompt": "What distinguishes a Recurrent Neural Network (RNN) from a standard feedforward network?",
+    "explanation": "RNNs process sequential data by feeding a hidden state forward from one time step to the next, giving them a form of memory that plain feedforward networks lack.",
+    "options": [
+      "An RNN requires no training data",
+      "An RNN maintains a hidden state that is passed forward across time steps, allowing it to process sequences with memory of earlier inputs",
+      "An RNN can only be used for image classification",
+      "An RNN has no hidden layers at all"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 181,
+    "topic": "Neural Network Basics",
+    "week": "Definitions",
+    "type": "flash",
+    "prompt": "What problem do LSTMs (Long Short-Term Memory networks) address compared to basic RNNs?",
+    "explanation": "",
+    "hint": "Basic RNNs struggle to retain information over long sequences due to the vanishing gradient problem (gradients shrink to near-zero over many time steps). LSTMs use gated memory cells (input/output/forget gates) that let them retain or discard information over much longer sequences."
+  },
+  {
+    "id": 182,
+    "topic": "Neural Network Basics",
+    "week": "Definitions",
+    "type": "mcq",
+    "prompt": "What is a Transformer, at a basic level?",
+    "explanation": "Transformers rely on self-attention to relate every token to every other token in parallel, rather than processing sequentially like an RNN -- enabling both long-range context and efficient parallel training.",
+    "options": [
+      "A type of recurrent network that processes tokens strictly one at a time in sequence",
+      "A rule-based system for generating grammatically correct sentences",
+      "A network exclusively used for image classification tasks",
+      "A neural network architecture that uses self-attention to weigh relationships between all tokens in a sequence simultaneously, without recurrence"
+    ],
+    "answer": 3
+  },
+  {
+    "id": 183,
+    "topic": "Neural Network Basics",
+    "week": "Definitions",
+    "type": "flash",
+    "prompt": "What is self-attention, as used in transformers?",
+    "explanation": "",
+    "hint": "A mechanism where each token in a sequence computes a weighted relevance ('attention') score against every other token, letting the model decide which other words in a sentence are most important for understanding each word's meaning in context."
+  },
+  {
+    "id": 184,
+    "topic": "Neural Network Basics",
+    "week": "Definitions",
+    "type": "mcq",
+    "prompt": "What is an activation function, and why is it needed in a neural network?",
+    "explanation": "Without a non-linear activation function (e.g. ReLU, sigmoid, tanh), stacking multiple layers would mathematically collapse into an equivalent single linear layer -- activation functions are what let deep networks model complex, non-linear patterns.",
+    "options": [
+      "A function used only during evaluation, never during training",
+      "A function that decides how many layers the network should have",
+      "A function that initialises the network's weights before training begins",
+      "A non-linear function applied to a neuron's weighted input sum, allowing the network to model non-linear relationships rather than collapsing into a single linear function"
+    ],
+    "answer": 3
+  },
+  {
+    "id": 185,
+    "topic": "Neural Network Basics",
+    "week": "Definitions",
+    "type": "flash",
+    "prompt": "Name two commonly used activation functions and one property of each.",
+    "explanation": "",
+    "hint": "ReLU (Rectified Linear Unit): outputs the input if positive, else zero -- simple, fast, avoids some vanishing-gradient issues, widely used in hidden layers. Sigmoid: squashes output to between 0 and 1 -- useful for binary probabilities, but prone to vanishing gradients in deep networks."
+  },
+  {
+    "id": 186,
+    "topic": "Neural Network Basics",
+    "week": "Definitions",
+    "type": "mcq",
+    "prompt": "What is backpropagation?",
+    "explanation": "Backpropagation applies the chain rule to compute how much each weight contributed to the overall error, layer by layer from output back to input, so gradient descent knows which direction to adjust each weight.",
+    "options": [
+      "The algorithm used to compute the gradient of the loss with respect to each weight, by propagating error backward through the network's layers",
+      "A method for selecting which training examples to use in each batch",
+      "A method for randomly initialising a neural network's weights",
+      "A technique for compressing a trained network to run faster"
+    ],
+    "answer": 0
+  },
+  {
+    "id": 187,
+    "topic": "Neural Network Basics",
+    "week": "Definitions",
+    "type": "flash",
+    "prompt": "How do backpropagation and gradient descent relate to each other?",
+    "explanation": "",
+    "hint": "Backpropagation computes the gradient (how the loss changes with respect to each weight); gradient descent then uses that gradient to actually update the weights, stepping in the direction that reduces the loss, scaled by the learning rate."
+  },
+  {
+    "id": 188,
+    "topic": "Neural Network Basics",
+    "week": "Definitions",
+    "type": "mcq",
+    "prompt": "What is an autoencoder?",
+    "explanation": "An autoencoder learns to compress input data into a lower-dimensional latent representation (encoder) and then reconstruct the original input from it (decoder), useful for compression, denoising, and (in the variational case) generation.",
+    "options": [
+      "A network trained to classify images into a fixed set of categories",
+      "A network that only works with labelled data",
+      "A network trained to reconstruct its own input, typically by compressing it through a smaller 'bottleneck' layer and then decoding it back",
+      "A network specialised purely for generating random noise"
+    ],
+    "answer": 2
+  },
+  {
+    "id": 189,
+    "topic": "Neural Network Basics",
+    "week": "Definitions",
+    "type": "flash",
+    "prompt": "What is a diffusion model, at a basic level?",
+    "explanation": "",
+    "hint": "A generative model that learns to reverse a gradual noise-adding process: trained by progressively corrupting real data with noise, it learns to iteratively remove noise step by step, so at generation time it can start from pure noise and refine it into a realistic sample (e.g. an image or audio waveform)."
+  },
+  {
+    "id": 190,
+    "topic": "Neural Network Basics",
+    "week": "Definitions",
+    "type": "mcq",
+    "prompt": "What is the difference between supervised and unsupervised learning?",
+    "explanation": "Supervised learning trains on labelled examples (input plus correct output) to learn a predictive mapping; unsupervised learning looks for structure (e.g. clusters, latent representations) in unlabelled data.",
+    "options": [
+      "Supervised learning requires no training data at all; unsupervised learning requires millions of examples",
+      "There is no meaningful difference between the two",
+      "Supervised learning only applies to images; unsupervised learning only applies to text",
+      "Supervised learning uses labelled input-output pairs to learn a mapping; unsupervised learning finds patterns/structure in data with no labels"
+    ],
+    "answer": 3
+  },
+  {
+    "id": 191,
+    "topic": "Neural Network Basics",
+    "week": "Definitions",
+    "type": "flash",
+    "prompt": "Where does reinforcement learning fit relative to supervised and unsupervised learning?",
+    "explanation": "",
+    "hint": "RL is a distinct paradigm: rather than learning from labelled examples (supervised) or unlabelled structure (unsupervised), an agent learns by interacting with an environment and receiving reward/penalty feedback for its actions, aiming to maximise cumulative reward over time."
+  },
+  {
+    "id": 192,
+    "topic": "Neural Network Basics",
+    "week": "Definitions",
+    "type": "mcq",
+    "prompt": "What does 'overfitting' mean in the context of a trained model?",
+    "explanation": "Overfitting occurs when a model memorises specifics (including noise) of the training data rather than learning the underlying generalisable pattern, so it performs worse on new data.",
+    "options": [
+      "The model performs poorly on both training and test data",
+      "The model performs very well on training data but generalises poorly to new, unseen data",
+      "The model trains faster than expected",
+      "The model has too few parameters to capture the underlying pattern"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 193,
+    "topic": "Neural Network Basics",
+    "week": "Definitions",
+    "type": "flash",
+    "prompt": "What is a hyperparameter, and how does it differ from a regular model parameter?",
+    "explanation": "",
+    "hint": "A hyperparameter (e.g. learning rate, number of layers, batch size, epsilon decay rate) is set before training begins and controls how learning happens; a regular parameter (e.g. a network's weights) is what the model itself learns/adjusts during training."
+  },
+  {
+    "id": 194,
+    "topic": "Neural Network Basics",
+    "week": "Definitions",
+    "type": "mcq",
+    "prompt": "What is a 'batch' in the context of neural network training?",
+    "explanation": "Training data is typically split into batches; the network processes one batch at a time, computes an average loss/gradient over it, and updates weights once per batch -- balancing computational efficiency and gradient stability.",
+    "options": [
+      "The entire training dataset processed in a single pass",
+      "The final trained model ready for deployment",
+      "A subset of training examples processed together before the model's weights are updated once",
+      "A single training example processed in isolation"
+    ],
+    "answer": 2
   }
 ]
