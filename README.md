@@ -80,28 +80,41 @@ Your app will be live at `https://<your-app-name>.azurewebsites.net`.
 3. This also means editing `data/questions.json` and pushing is a simple way
    to bulk-add questions from your laptop, rather than only using the in-app form.
 
+### Multi-user support
+
+Anyone who opens the deployed URL is asked for a name and a 4-6 digit PIN
+before they can start a quiz or flashcard session (see the login overlay in
+`public/index.html` / `public/app.js`). This is **not real authentication**
+— there's no password reset, no email, nothing encrypted — it exists purely
+so that if you share the link with classmates, everyone's quiz scores and
+"weak spots" stay separate rather than mixing together. The PIN just stops
+someone accidentally (or deliberately) typing an existing name and seeing/
+resetting someone else's progress.
+
+- `data/users.json` stores `{ username: { pin, displayName, createdAt } }`.
+- `data/progress.json` stores `{ username: { questionId: {correct, incorrect} } }`.
+
+Each browser remembers who's logged in via `localStorage` (just the
+username/displayName, not the PIN), so you won't be asked to log in again on
+the same device — but you will on a new device/browser, and a "Switch user"
+button in the header lets you swap identities on a shared machine.
+
 ### A note on persistence
 
-The "Add Question" form and quiz/flashcard answer tracking use two different
-storage locations:
+`data/questions.json`, `data/users.json`, and `data/progress.json` are all
+plain JSON files on the App Service's filesystem. On the free/basic tiers
+these persist across app restarts, but are **not guaranteed to persist
+across a redeploy** (a git push or zip deploy overwrites the app folder) and
+**won't be shared across multiple instances** if you ever scale out. For a
+small group revising for one exam this is fine — just avoid redeploying
+mid-way through a big question-adding or quiz-taking session, and
+periodically back up the `data/` folder via the Kudu console at
+`https://<app-name>.scm.azurewebsites.net` if you want to be safe.
 
-- **New questions you add** are written to `data/questions.json` on the App
-  Service's filesystem. On the free/basic tiers this file persists across
-  app restarts, but it is **not guaranteed to persist across a redeploy**
-  (a git push or zip deploy overwrites the app folder) and **won't be shared
-  across multiple instances** if you ever scale out. For a single person
-  revising for one exam this is fine — just avoid redeploying mid-way through
-  a big question-adding session, or download `data/questions.json`
-  periodically as a backup (`az webapp ssh` or the Kudu console at
-  `https://<app-name>.scm.azurewebsites.net`).
-- **Your quiz scores and "weak spots" tracking** are stored in your browser's
-  `localStorage`, not on the server — so they're private to you and won't be
-  lost by a redeploy, but also won't follow you to a different browser/device.
-
-If you outgrow this (e.g. want progress synced across devices), swap the
-`localStorage` calls in `public/app.js` for a small `/api/progress` endpoint
-backed by Azure Table Storage or Cosmos DB's free tier — the server already
-has the same JSON-file pattern you can copy for that.
+If you outgrow this (e.g. a larger group, or wanting progress to survive
+redeploys reliably), swap the JSON-file reads/writes in `server.js` for
+Azure Table Storage or Cosmos DB's free tier — the API shape (`/api/login`,
+`/api/progress`) wouldn't need to change, only what's behind it.
 
 ### Environment variables
 

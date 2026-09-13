@@ -5,24 +5,109 @@ let quizIndex = 0;
 let quizScore = 0;
 let flashQueue = [];
 let flashIndex = 0;
+let currentUser = null; // { username, displayName }
 
-const STORAGE_KEY = 'examPrepStats_v1';
+const USER_KEY = 'examPrepUser_v1';
 
-function loadStats() {
+// ---------- Login / user identity ----------
+function getSavedUser() {
   try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+    return JSON.parse(localStorage.getItem(USER_KEY));
+  } catch {
+    return null;
+  }
+}
+function saveUser(user) {
+  localStorage.setItem(USER_KEY, JSON.stringify(user));
+}
+function clearSavedUser() {
+  localStorage.removeItem(USER_KEY);
+}
+
+function showLoginOverlay() {
+  document.getElementById('login-overlay').classList.remove('hidden');
+}
+function hideLoginOverlay() {
+  document.getElementById('login-overlay').classList.add('hidden');
+}
+
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const username = document.getElementById('login-username').value.trim();
+  const pin = document.getElementById('login-pin').value.trim();
+  const statusEl = document.getElementById('login-status');
+  statusEl.textContent = '';
+
+  try {
+    const res = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, pin })
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      statusEl.textContent = data.error || 'Login failed.';
+      return;
+    }
+    currentUser = { username: data.username, displayName: data.displayName };
+    saveUser(currentUser);
+    hideLoginOverlay();
+    updateUserLabel();
+  } catch (err) {
+    statusEl.textContent = 'Could not reach the server. Try again.';
+  }
+});
+
+document.getElementById('switch-user-btn').addEventListener('click', () => {
+  clearSavedUser();
+  currentUser = null;
+  document.getElementById('login-username').value = '';
+  document.getElementById('login-pin').value = '';
+  showLoginOverlay();
+});
+
+function updateUserLabel() {
+  document.getElementById('current-user-label').textContent = currentUser ? currentUser.displayName : '';
+}
+
+function requireLogin() {
+  const saved = getSavedUser();
+  if (saved && saved.username) {
+    currentUser = saved;
+    updateUserLabel();
+  } else {
+    showLoginOverlay();
+  }
+}
+
+// ---------- Progress (server-side, per user) ----------
+async function loadStats() {
+  if (!currentUser) return {};
+  try {
+    const res = await fetch(`/api/progress?username=${encodeURIComponent(currentUser.username)}`);
+    if (!res.ok) return {};
+    return await res.json();
   } catch {
     return {};
   }
 }
-function saveStats(stats) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(stats));
+
+async function recordResult(questionId, correct) {
+  if (!currentUser) return;
+  try {
+    await fetch('/api/progress', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: currentUser.username, questionId, correct })
+    });
+  } catch (err) {
+    console.error('Could not save progress', err);
+  }
 }
-function recordResult(questionId, correct) {
-  const stats = loadStats();
-  if (!stats[questionId]) stats[questionId] = { correct: 0, incorrect: 0 };
-  if (correct) stats[questionId].correct++; else stats[questionId].incorrect++;
-  saveStats(stats);
+
+async function resetStats() {
+  if (!currentUser) return;
+  await fetch(`/api/progress?username=${encodeURIComponent(currentUser.username)}`, { method: 'DELETE' });
 }
 
 // ---------- Tabs ----------
@@ -100,10 +185,10 @@ function showQuizQuestion() {
   });
 }
 
-function answerQuiz(selectedIdx) {
+async function answerQuiz(selectedIdx) {
   const q = quizQueue[quizIndex];
   const correct = selectedIdx === q.answer;
-  recordResult(q.id, correct);
+  await recordResult(q.id, correct);
   if (correct) quizScore++;
 
   document.querySelectorAll('.option-btn').forEach((btn, idx) => {
@@ -164,12 +249,12 @@ document.getElementById('flip-btn').addEventListener('click', () => {
   document.getElementById('flash-back').classList.toggle('hidden');
 });
 
-document.getElementById('flash-again-btn').addEventListener('click', () => {
-  recordResult(flashQueue[flashIndex].id, false);
+document.getElementById('flash-again-btn').addEventListener('click', async () => {
+  await recordResult(flashQueue[flashIndex].id, false);
   advanceFlash();
 });
-document.getElementById('flash-good-btn').addEventListener('click', () => {
-  recordResult(flashQueue[flashIndex].id, true);
+document.getElementById('flash-good-btn').addEventListener('click', async () => {
+  await recordResult(flashQueue[flashIndex].id, true);
   advanceFlash();
 });
 document.getElementById('flash-next-btn').addEventListener('click', advanceFlash);
@@ -181,9 +266,10 @@ function advanceFlash() {
 }
 
 // ---------- WEAK SPOTS ----------
-function renderWeakSpots() {
-  const stats = loadStats();
+async function renderWeakSpots() {
   const list = document.getElementById('weak-list');
+  list.innerHTML = '<p class="muted">Loading…</p>';
+  const stats = await loadStats();
   list.innerHTML = '';
 
   const rows = Object.entries(stats).map(([id, s]) => {
@@ -209,9 +295,9 @@ function renderWeakSpots() {
   });
 }
 
-document.getElementById('reset-progress-btn').addEventListener('click', () => {
-  if (confirm('Clear all locally-stored quiz/flashcard progress?')) {
-    localStorage.removeItem(STORAGE_KEY);
+document.getElementById('reset-progress-btn').addEventListener('click', async () => {
+  if (confirm(`Clear all quiz/flashcard progress for "${currentUser.displayName}"?`)) {
+    await resetStats();
     renderWeakSpots();
   }
 });
@@ -263,4 +349,5 @@ document.getElementById('add-form').addEventListener('submit', async (e) => {
 });
 
 // ---------- Init ----------
+requireLogin();
 fetchQuestions();

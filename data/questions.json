@@ -16,10 +16,10 @@
     "prompt": "Which of the following best distinguishes the action space from the state space?",
     "explanation": "Action space = agent's degrees of freedom (outputs). State space = environment's possible configurations (inputs to the agent).",
     "options": [
-      "The action space is always larger than the state space",
+      "They describe the same thing, just at different points in training",
       "The action space defines the agent's possible outputs; the state space defines the environment's possible configurations",
-      "They are the same thing in reinforcement learning",
-      "The state space only exists in continuous environments"
+      "The action space defines what the agent can perceive; the state space defines what the agent can do",
+      "The state space only matters for continuous environments, while the action space applies to all environments"
     ],
     "answer": 1
   },
@@ -40,12 +40,12 @@
     "prompt": "Why is Q-learning necessary in environments where the transition dynamics are unknown?",
     "explanation": "Q-learning is model-free: it learns Q(s,a) purely from sampled experience (s, a, r, s'), so it doesn't need the environment's transition model.",
     "options": [
-      "Because it requires a full model of the environment to work",
-      "Because it learns action-values directly from experience without needing to know transition probabilities in advance",
-      "Because it only works in deterministic environments",
-      "Because it replaces the need for a reward signal"
+      "Q-learning learns action-values directly from experience without needing to know transition probabilities in advance",
+      "Q-learning only works when the transition dynamics are deterministic and known in advance",
+      "Q-learning still needs a full probabilistic model of the environment, but updates it online as it goes",
+      "Q-learning avoids the need for a reward signal by using the Bellman equation instead"
     ],
-    "answer": 1
+    "answer": 0
   },
   {
     "id": 5,
@@ -64,12 +64,12 @@
     "prompt": "In epsilon-greedy action selection, what action is chosen with probability (1 - epsilon)?",
     "explanation": "With probability (1-epsilon) the agent exploits by choosing the greedy (highest Q-value) action; with probability epsilon it explores randomly.",
     "options": [
-      "A uniformly random action",
+      "The action with the highest visit count so far, regardless of its Q-value",
+      "The action taken in the previous time step, to encourage consistency",
       "The action with the highest estimated Q-value (argmax_a Q(s,a))",
-      "The action taken in the previous time step",
-      "The action with the lowest estimated Q-value"
+      "A uniformly random action, to keep exploring even while exploiting"
     ],
-    "answer": 1
+    "answer": 2
   },
   {
     "id": 7,
@@ -88,12 +88,12 @@
     "prompt": "What is the main risk of decaying epsilon too quickly?",
     "explanation": "Decaying too fast means the agent stops exploring before its Q-value estimates are reliable, risking premature convergence on a suboptimal action.",
     "options": [
-      "The agent wastes time acting randomly for too long",
-      "The agent locks into exploitation before exploring enough, risking a suboptimal policy",
-      "The Q-network will overfit to the reward function",
-      "The replay buffer will overflow"
+      "The replay buffer fills up faster than it can be sampled from",
+      "The Q-network's weights stop updating entirely once epsilon reaches its minimum",
+      "The agent spends too much of training exploring, delaying convergence unnecessarily",
+      "The agent locks into exploitation before exploring enough, risking a suboptimal policy"
     ],
-    "answer": 1
+    "answer": 3
   },
   {
     "id": 9,
@@ -121,12 +121,12 @@
     "prompt": "What loss function is typically used to update a DQN's weights?",
     "explanation": "DQN minimises (y - Q(s,a;theta))^2, i.e. mean squared error, via gradient descent.",
     "options": [
-      "Cross-entropy loss between predicted and true action labels",
-      "Mean squared error between the target value y and the current Q-estimate Q(s,a;theta)",
-      "KL divergence between two policy distributions",
-      "Hinge loss on the advantage function"
+      "Mean squared error between the main network's output and the target network's output on the same state-action pair, regardless of reward",
+      "Cross-entropy loss between the predicted action and the action actually taken",
+      "A hinge loss that penalises the gap between the best and second-best Q-value",
+      "Mean squared error between the target value y and the current Q-estimate Q(s,a;theta)"
     ],
-    "answer": 1
+    "answer": 3
   },
   {
     "id": 12,
@@ -154,10 +154,10 @@
     "prompt": "Which of these is a genuine risk of higher model capacity in a DQN trained on limited interaction data?",
     "explanation": "With limited/noisy RL data, high-capacity networks risk memorising spurious patterns in the agent's own imperfect experience rather than generalising.",
     "options": [
-      "The network will always underfit",
+      "The network will underfit no matter how much data it's given, since Q-values are inherently noisy",
       "The network may overfit to specific trajectories or reward noise rather than learning a generalisable policy",
-      "The network cannot represent non-linear functions",
-      "The network will require fewer convolutional layers"
+      "The network's capacity has no effect on generalisation, only on training speed",
+      "The network will require a smaller replay buffer to compensate for the extra parameters"
     ],
     "answer": 1
   },
@@ -178,12 +178,12 @@
     "prompt": "How does bio-inspired computing typically differ from traditional gradient-based optimisation?",
     "explanation": "Bio-inspired methods maintain a population of candidates and use selection/variation rather than gradients, so they work on non-differentiable, poorly-understood or deceptive search spaces.",
     "options": [
-      "It requires the objective function to be differentiable",
       "It uses population-based, stochastic search rather than requiring gradient information or well-behaved structure",
-      "It always converges faster than gradient descent",
-      "It cannot be applied to real-world problems"
+      "It still requires a differentiable objective function, just a less strict one than gradient descent needs",
+      "It guarantees a globally optimal solution where gradient-based methods only find local optima",
+      "It replaces the need for any objective/fitness measure with purely random sampling"
     ],
-    "answer": 1
+    "answer": 0
   },
   {
     "id": 17,
@@ -202,12 +202,12 @@
     "prompt": "In a genetic algorithm, which statement correctly describes the genotype-phenotype relationship?",
     "explanation": "Genotype (encoded) -> decoding -> phenotype (expressed solution) -> evaluated by fitness function.",
     "options": [
-      "The genotype IS the fitness function",
-      "The phenotype is the encoded string; the genotype is the built/expressed solution",
-      "The genotype is decoded into a phenotype, which is then evaluated using a fitness function",
-      "Genotype and phenotype are interchangeable terms"
+      "The genotype and phenotype are evaluated separately, each against its own fitness function",
+      "The genotype is evaluated directly by the fitness function, and only converted to a phenotype after selection",
+      "The phenotype is decoded into a genotype, which is then evaluated using a fitness function",
+      "The genotype is decoded into a phenotype, which is then evaluated using a fitness function"
     ],
-    "answer": 2
+    "answer": 3
   },
   {
     "id": 19,
@@ -226,10 +226,10 @@
     "prompt": "In tournament selection, how is a parent chosen?",
     "explanation": "Tournament selection samples k individuals at random and picks the best among them, balancing selection pressure with diversity.",
     "options": [
-      "The single fittest individual in the entire population is always chosen",
+      "The single fittest individual in the entire population is chosen every time, guaranteeing no diversity loss",
       "A random subset of k individuals is sampled, and the fittest of that subset is chosen",
-      "Individuals are chosen purely at random with no regard to fitness",
-      "Parents are chosen in the order they appear in the population array"
+      "Individuals are ranked by fitness and selected in strict order, with the top k always becoming parents",
+      "A random subset of k individuals is sampled, and one is chosen uniformly at random from that subset"
     ],
     "answer": 1
   },
@@ -259,10 +259,10 @@
     "prompt": "Which is a genuine advantage of a GA-based scheduler over a model-free DQN for offline, forecast-based scheduling (e.g. HVAC)?",
     "explanation": "A GA can search for a good schedule from scratch each cycle using known forecasts (weather, tariffs) without needing training data, whereas DQN needs experience to learn a good policy but can adapt online once trained.",
     "options": [
-      "GAs require large amounts of training data to start producing meaningful results",
+      "GAs generally need less computation per run than a trained DQN needs to make a single decision",
       "GAs can directly optimise a full schedule in advance using known forecasts without needing prior training data",
-      "GAs are a black box, unlike DQN",
-      "GAs adapt online to real-time changes better than DQN"
+      "GAs are easier to interpret and debug because their internal decision process is fully transparent, unlike DQN",
+      "GAs can adapt to unexpected real-time changes in occupancy or weather more smoothly than DQN can"
     ],
     "answer": 1
   },
@@ -283,10 +283,10 @@
     "prompt": "Which reasoning mode involves generating a plausible hypothesis to explain an observation (as opposed to deriving guaranteed conclusions)?",
     "explanation": "Abduction infers the most likely explanation for an observation; deduction derives guaranteed conclusions from premises; induction generalises from repeated observations.",
     "options": [
-      "Deduction",
-      "Induction",
+      "Recursion, since the same reasoning process is reapplied to itself",
+      "Induction, since it generalises from a single specific case",
       "Abduction",
-      "Recursion"
+      "Deduction, since it derives a certain conclusion from established premises"
     ],
     "answer": 2
   },
@@ -325,12 +325,12 @@
     "prompt": "How does a variational autoencoder (VAE) differ from a standard autoencoder?",
     "explanation": "VAEs regularise the latent space to follow a known distribution (e.g. Gaussian), enabling meaningful sampling and generation, unlike a standard autoencoder's deterministic bottleneck.",
     "options": [
-      "A VAE cannot reconstruct its input",
       "A VAE learns a probabilistic latent distribution (allowing sampling/generation), whereas a standard autoencoder learns a fixed deterministic encoding",
-      "A VAE has no decoder",
-      "A VAE only works on image data"
+      "A VAE requires labelled data during training, whereas a standard autoencoder is always unsupervised",
+      "A VAE compresses data to a smaller size than a standard autoencoder can achieve",
+      "A VAE uses a discriminator network to distinguish real from generated samples, unlike a standard autoencoder"
     ],
-    "answer": 1
+    "answer": 0
   },
   {
     "id": 30,
@@ -358,12 +358,12 @@
     "prompt": "What core technique did Deep Blue rely on to beat Garry Kasparov in chess?",
     "explanation": "Deep Blue used massively parallel minimax/alpha-beta search over possible move sequences, guided by a hand-engineered position evaluation function -- not learning.",
     "options": [
-      "Deep reinforcement learning",
-      "Brute-force search with a hand-crafted evaluation function",
-      "Generative adversarial networks",
-      "Unsupervised clustering"
+      "A neural network trained via self-play reinforcement learning",
+      "A large pre-trained language model fine-tuned on chess games",
+      "Monte Carlo tree search guided by a learned value network",
+      "Brute-force search with a hand-crafted evaluation function"
     ],
-    "answer": 1
+    "answer": 3
   },
   {
     "id": 33,
@@ -373,12 +373,12 @@
     "prompt": "Why are games a useful structured environment for testing AI capabilities?",
     "explanation": "Clear rules and scoring make it easy to define success and compare agents/techniques in a repeatable environment.",
     "options": [
-      "Games have no rules, so any AI approach works equally well",
+      "Games are simple enough that any AI technique performs equally well on them",
+      "Games are useful mainly because they require no computational resources to simulate",
       "Games provide clear rules, well-defined objectives/rewards, and a controllable environment for measuring performance",
-      "Games always require unsupervised learning",
-      "Games cannot be simulated computationally"
+      "Games remove the need to define a reward signal, since winning is self-evident"
     ],
-    "answer": 1
+    "answer": 2
   },
   {
     "id": 34,
@@ -406,10 +406,10 @@
     "prompt": "Which of these pairs correctly matches a game milestone with its year (approximately)?",
     "explanation": "Deep Blue beat Kasparov at chess in 1997. AlphaGo (Go) was 2016; Atari DQN was ~2013-2015; Dota II (OpenAI Five) was 2019.",
     "options": [
-      "2016 Go \u2014 Deep Blue",
+      "2019 Dota II \u2014 AlphaGo, adapting its tree-search approach to a team game",
       "1997 Chess \u2014 Deep Blue",
-      "2013 Atari \u2014 AlphaGo",
-      "2019 Dota II \u2014 Deep Blue"
+      "2013 Atari \u2014 Deep Blue, extending its search techniques to video games",
+      "2016 Go \u2014 AlphaGo Zero, the first version trained entirely without human game data"
     ],
     "answer": 1
   },
@@ -430,12 +430,12 @@
     "prompt": "Which of the following is a genuine concern raised by human-competitive AI game players (e.g. in poker, Dota, or chess)?",
     "explanation": "Concerns include fairness/accessibility of competing against superhuman AI, economic impact on professional players, and broader effects on eSports and game design.",
     "options": [
-      "They make games impossible to play at all",
       "Potential psychological, economic, and fairness impacts on human players and professional competition",
-      "They eliminate the need for game rules",
-      "They can only play deterministic games"
+      "Increased development costs for game studios, with no effect on players",
+      "A general decline in public interest in the games themselves once AI can play them",
+      "A reduction in the total number of possible strategies available to human players"
     ],
-    "answer": 1
+    "answer": 0
   },
   {
     "id": 39,
@@ -445,12 +445,12 @@
     "prompt": "In an MDP, what does the discount factor (gamma) control?",
     "explanation": "Gamma (between 0 and 1) discounts future rewards -- a gamma close to 1 values long-term reward highly; close to 0 favours immediate reward.",
     "options": [
-      "The learning rate of the neural network",
-      "How much future rewards are weighted relative to immediate rewards",
-      "The size of the action space",
-      "The exploration rate"
+      "How many possible actions are available to the agent at each state",
+      "How much the Q-network's weights change on each gradient update",
+      "How often the agent explores versus exploits during training",
+      "How much future rewards are weighted relative to immediate rewards"
     ],
-    "answer": 1
+    "answer": 3
   },
   {
     "id": 40,
@@ -469,12 +469,12 @@
     "prompt": "What does the Bellman equation express?",
     "explanation": "Q(s,a) = r + gamma * max_a' Q(s',a') -- value is defined recursively in terms of immediate reward and discounted future value.",
     "options": [
-      "The probability of winning a game",
       "The value of a state-action pair as immediate reward plus the discounted value of the best subsequent action",
-      "The architecture of a neural network",
-      "The mutation rate in a genetic algorithm"
+      "The total reward accumulated over an entire completed episode",
+      "The difference between the agent's estimated value and the environment's true reward function",
+      "The probability that a given action leads to a winning outcome"
     ],
-    "answer": 1
+    "answer": 0
   },
   {
     "id": 42,
@@ -493,12 +493,12 @@
     "prompt": "What is the role of the neural network in a DQN?",
     "explanation": "The neural network approximates Q(s,a) across a large/continuous state space, rather than using an infeasible lookup table.",
     "options": [
-      "To generate random actions for exploration",
+      "To store and replay past transitions more efficiently than a standard buffer",
+      "To directly select actions using fixed, hand-coded rules learned before training",
       "To act as a function approximator, mapping states to estimated Q-values for each action",
-      "To replace the reward function",
-      "To store the replay buffer"
+      "To generate the reward signal the agent is trained to maximise"
     ],
-    "answer": 1
+    "answer": 2
   },
   {
     "id": 44,
@@ -517,10 +517,10 @@
     "prompt": "Which of these is an appropriate performance metric for evaluating a trained DQN agent?",
     "explanation": "Cumulative reward and convergence rate (how learning curves improve over episodes) are standard RL evaluation metrics, often compared against a random-policy or fixed baseline.",
     "options": [
-      "Number of lines of code in the implementation",
+      "The number of hidden layers used in the Q-network's architecture",
       "Cumulative reward per episode and convergence rate over training",
-      "The exact pixel values of the game screen",
-      "The number of neurons in the input layer"
+      "The total wall-clock time taken to write and debug the implementation",
+      "The exact sequence of pixel values seen during a single episode"
     ],
     "answer": 1
   },
@@ -559,10 +559,10 @@
     "prompt": "What is the purpose of implementing a random agent before a learned agent in an RL project?",
     "explanation": "A random agent gives a naive baseline; if a trained agent doesn't clearly outperform it, something is likely wrong with training.",
     "options": [
-      "It is the final solution and requires no further work",
+      "It generates the reward function that the learned agent will later use",
       "It establishes a simple baseline to compare a learned agent's performance against",
-      "It trains the neural network",
-      "It replaces the need for a reward function"
+      "It replaces the need for a learned agent in simple environments",
+      "It pre-trains the neural network's weights before real training begins"
     ],
     "answer": 1
   },
@@ -592,12 +592,12 @@
     "prompt": "A fixed (non-annealed) epsilon value is used throughout training. What is the main downside compared to an annealed schedule?",
     "explanation": "A fixed epsilon can't match early high-exploration needs and later high-exploitation needs -- annealing tracks the agent's growing reliability.",
     "options": [
-      "It will always converge faster than annealing",
-      "It cannot balance exploration and exploitation optimally across the different phases of training, since the ideal balance changes as Q-estimates improve",
-      "It requires more memory",
-      "It removes the need for a Q-network entirely"
+      "It has no real effect on training, since the Q-network adapts to whatever epsilon value is used",
+      "It uses more memory than an annealed schedule, since epsilon's value must be stored at every step",
+      "It converges faster than an annealed schedule, since the exploration rate never has to be recalculated",
+      "It cannot balance exploration and exploitation optimally across the different phases of training, since the ideal balance changes as Q-estimates improve"
     ],
-    "answer": 1
+    "answer": 3
   },
   {
     "id": 53,
@@ -625,12 +625,12 @@
     "prompt": "Which is a genuine risk commonly raised about progress toward general AI?",
     "explanation": "Common concerns: job displacement, misuse/dual-use risks, alignment/control/safety, and unequal distribution of benefits/access.",
     "options": [
-      "It cannot ever be economically viable",
+      "The main concern is that general AI systems will always be less capable than narrow, task-specific systems",
+      "The main risk is that general AI research will make training data unnecessary for future systems",
       "Concerns include job displacement, misuse, safety/control, and unequal access to benefits",
-      "General AI systems require no training data",
-      "It removes all narrow-AI use cases"
+      "The primary concern is that general AI cannot be economically justified compared to narrow AI"
     ],
-    "answer": 1
+    "answer": 2
   },
   {
     "id": 56,
@@ -640,12 +640,12 @@
     "prompt": "Which of the following is NOT typically considered a bio-inspired computing technique?",
     "explanation": "Quicksort is a classical deterministic sorting algorithm, not inspired by biological processes.",
     "options": [
-      "Genetic Algorithms",
-      "Particle Swarm Optimisation",
-      "Ant Colony Optimisation",
-      "Quicksort"
+      "Ant Colony Optimisation, since it doesn't rely on a population of candidate solutions",
+      "Particle Swarm Optimisation, since it uses gradient information rather than stochastic search",
+      "Quicksort",
+      "Genetic Algorithms, since they are deterministic rather than population-based"
     ],
-    "answer": 3
+    "answer": 2
   },
   {
     "id": 57,
@@ -673,12 +673,12 @@
     "prompt": "Which of these best describes 'hard' artificial life?",
     "explanation": "Hard ALife refers to physically embodied/hardware-based artificial life systems (e.g. real evolved robots), as opposed to soft (software) or wet (biochemical) ALife.",
     "options": [
-      "Purely software-based simulations of evolution",
+      "Purely software-based simulations that model biological evolution without any physical embodiment",
+      "A purely mathematical framework for artificial life with no simulation or hardware component",
       "Life-like systems implemented in physical hardware, e.g. evolved or physically embodied robots",
-      "Synthetic biology experiments in wet-lab conditions",
-      "A theoretical framework with no implementations"
+      "Biochemical or synthetic-biology systems built from real organic molecules"
     ],
-    "answer": 1
+    "answer": 2
   },
   {
     "id": 60,
@@ -688,12 +688,12 @@
     "prompt": "Which crossover method combines genes from two parents at a single randomly chosen point along the genotype?",
     "explanation": "One-point crossover splits both parent genotypes at one point and swaps the tails; uniform crossover instead decides gene-by-gene independently.",
     "options": [
-      "Uniform crossover",
       "One-point crossover",
-      "Gaussian mutation",
-      "Roulette wheel selection"
+      "Tournament selection, which compares two parents at a single randomly chosen gene",
+      "Gaussian mutation, which introduces small random perturbations at one point in the genotype",
+      "Uniform crossover, which swaps genes at a single fixed midpoint in the genotype"
     ],
-    "answer": 1
+    "answer": 0
   },
   {
     "id": 61,
@@ -703,10 +703,10 @@
     "prompt": "In roulette wheel selection, how is the probability of an individual being selected as a parent determined?",
     "explanation": "Roulette wheel (fitness-proportionate) selection gives fitter individuals a proportionally larger 'slice' of selection probability.",
     "options": [
-      "Uniformly at random regardless of fitness",
+      "Inversely proportional to fitness, so weaker individuals are more likely to reproduce",
       "Proportional to the individual's fitness relative to the total population fitness",
-      "Always the single fittest individual",
-      "Inversely proportional to fitness"
+      "Equal for every individual, so that fitness only affects mutation rate rather than selection",
+      "Proportional to the individual's rank in the population, regardless of the actual fitness values"
     ],
     "answer": 1
   },
@@ -736,12 +736,12 @@
     "prompt": "What is a likely effect of setting the mutation rate far too high in a genetic algorithm?",
     "explanation": "Excessive mutation destroys beneficial genetic material faster than selection can propagate it, degrading the GA toward random search.",
     "options": [
-      "The algorithm converges instantly to the optimal solution",
       "Good solutions get disrupted too often, and the search behaves closer to random search, preventing convergence",
-      "The population size increases automatically",
-      "It has no effect on the search process"
+      "Crossover becomes unnecessary, since mutation alone can explore the whole search space efficiently",
+      "The population converges to the optimal solution more quickly, since more variation is introduced each generation",
+      "The fitness function has to be recalculated more often to keep pace with the extra variation"
     ],
-    "answer": 1
+    "answer": 0
   },
   {
     "id": 65,
@@ -769,12 +769,12 @@
     "prompt": "What is the key difference between direct and indirect (generative) genetic encoding?",
     "explanation": "Direct: one-to-one gene-to-trait mapping, simple but doesn't scale well. Indirect/generative: a compact description develops into complex structure, more scalable, supports regularity/modularity.",
     "options": [
-      "Direct encoding always produces better solutions",
+      "Indirect encoding maps each gene explicitly to one phenotype trait, while direct encoding uses developmental rules",
+      "The two encoding types differ only in programming language, not in how genes relate to phenotypes",
       "Direct encoding maps each gene explicitly to one phenotype trait; indirect encoding develops a compact genotype into a larger, more complex phenotype via rules",
-      "Indirect encoding cannot be mutated",
-      "There is no meaningful difference"
+      "Direct encoding always evolves faster because it requires fewer generations to converge"
     ],
-    "answer": 1
+    "answer": 2
   },
   {
     "id": 68,
@@ -811,12 +811,12 @@
     "prompt": "Why might evolving morphology alongside control policy improve robot performance compared to evolving control alone?",
     "explanation": "Body and control interact -- e.g. a differently-shaped limb might make walking trivial with a much simpler controller. Co-evolution can exploit this synergy.",
     "options": [
-      "Morphology has no effect on behaviour",
-      "A body shape well-suited to the task can make certain behaviours much easier to achieve, so co-evolving both can find synergistic solutions a fixed body couldn't",
-      "It removes the need for a fitness function",
-      "It guarantees a globally optimal robot design"
+      "Morphology only affects energy efficiency, not what behaviours are actually achievable",
+      "Co-evolving morphology and control always converges faster than evolving control alone, regardless of the task",
+      "Evolving morphology removes the need to evolve a control policy at all",
+      "A body shape well-suited to the task can make certain behaviours much easier to achieve, so co-evolving both can find synergistic solutions a fixed body couldn't"
     ],
-    "answer": 1
+    "answer": 3
   },
   {
     "id": 72,
@@ -844,12 +844,12 @@
     "prompt": "Which joint type in URDF allows continuous rotation around a single axis (like a hinge)?",
     "explanation": "Revolute joints rotate around an axis (like a hinge or elbow); prismatic joints slide linearly; fixed joints don't move at all.",
     "options": [
-      "Fixed",
-      "Revolute",
-      "Prismatic",
-      "Floating"
+      "Fixed, which allows limited rotational movement within a defined range",
+      "Floating, which is restricted to a single rotational axis like a hinge",
+      "Prismatic, which rotates continuously around a single axis",
+      "Revolute"
     ],
-    "answer": 1
+    "answer": 3
   },
   {
     "id": 75,
@@ -877,12 +877,12 @@
     "prompt": "Which of these is a genuine trade-off in evolving robot morphologies?",
     "explanation": "Richer, more adaptable morphologies expand the search space and complicate both evolution and physical fabrication/testing.",
     "options": [
-      "More flexibility and adaptability always comes at zero cost in complexity",
+      "Fabrication constraints only matter for hard ALife systems, not for evolved soft robots",
+      "Greater morphological flexibility generally simplifies the search space, since more configurations are valid",
       "Greater morphological flexibility/adaptability typically increases design complexity and the size of the search space",
-      "Fabrication constraints are irrelevant to evolutionary robotics",
-      "Simulation always perfectly predicts real-world performance"
+      "Simulation-to-reality transfer is not affected by how flexible the evolved morphology is"
     ],
-    "answer": 1
+    "answer": 2
   },
   {
     "id": 78,
@@ -910,12 +910,12 @@
     "prompt": "Which of these is a limitation commonly observed in simple generative text systems trained on a single document?",
     "explanation": "With limited data, generative systems often echo the source material closely rather than producing broadly novel, coherent content.",
     "options": [
-      "They always produce perfectly grammatical, highly original text",
-      "They can overfit to the training text's specific structure/phrases and struggle to generalise or produce genuinely novel content",
-      "They require no training data at all",
-      "They cannot generate any text"
+      "They cannot be evaluated for quality without a human-labelled reference dataset",
+      "They tend to ignore the training text entirely and generate content unrelated to it",
+      "They require substantially more computational resources than large-scale pre-trained models",
+      "They can overfit to the training text's specific structure/phrases and struggle to generalise or produce genuinely novel content"
     ],
-    "answer": 1
+    "answer": 3
   },
   {
     "id": 81,
@@ -925,12 +925,12 @@
     "prompt": "What does 'fine-tuning' a pre-trained language model like GPT-2 involve?",
     "explanation": "Fine-tuning adapts an already-trained model's weights using additional domain-specific data, rather than training from scratch.",
     "options": [
-      "Training a brand-new model from randomly initialised weights",
       "Continuing training of an already pre-trained model on a smaller, domain-specific dataset to adapt its outputs to a target style/task",
-      "Deleting the model's existing weights",
-      "Only changing the model's output length parameter"
+      "Running the pre-trained model at inference time with a longer maximum output length",
+      "Training an identical architecture from randomly initialised weights on the target dataset only",
+      "Adjusting only the tokenizer's vocabulary while keeping all model weights frozen"
     ],
-    "answer": 1
+    "answer": 0
   },
   {
     "id": 82,
@@ -958,12 +958,12 @@
     "prompt": "Why are transformer architectures generally well-suited to text-generation tasks compared to older sequence models?",
     "explanation": "Self-attention captures context across the whole sequence and enables efficient parallel training, unlike the sequential bottleneck in RNNs/LSTMs.",
     "options": [
-      "They process tokens strictly one at a time with no parallelism",
       "Their self-attention mechanism captures long-range contextual dependencies and can be trained more efficiently in parallel across a sequence",
-      "They cannot be pre-trained on large corpora",
-      "They require hand-crafted grammar rules"
+      "They avoid the need for large training corpora, unlike RNNs and LSTMs",
+      "They process the input sequence strictly one token at a time, which improves contextual accuracy",
+      "They rely on hand-crafted grammar rules layered on top of the learned weights"
     ],
-    "answer": 1
+    "answer": 0
   },
   {
     "id": 85,
@@ -1009,12 +1009,12 @@
     "prompt": "What role do diffusion-based models like DiffSinger play in modern speech/singing synthesis?",
     "explanation": "Diffusion models generate output by learning to reverse a noise-adding process, producing high-fidelity audio through iterative refinement.",
     "options": [
-      "They use rule-based phoneme concatenation with no learning",
+      "They generate audio in a single deterministic pass with no iterative refinement",
+      "They are limited to synthesising spoken text and cannot be applied to singing",
       "They learn to generate high-quality audio by iteratively refining a noisy signal into a realistic waveform/spectrogram, guided by learned data patterns",
-      "They require no training data at all",
-      "They only work for spoken (non-singing) speech"
+      "They concatenate pre-recorded phoneme fragments according to fixed linguistic rules"
     ],
-    "answer": 1
+    "answer": 2
   },
   {
     "id": 90,
@@ -1033,10 +1033,10 @@
     "prompt": "Which of these is a genuinely contested question in evaluating machine creativity?",
     "explanation": "A core debate is whether statistical pattern generation/recombination constitutes genuine creativity, or only imitates surface features of creative output without originality/intent.",
     "options": [
-      "Whether machines can execute code",
+      "Whether generative systems can technically produce audio or visual output at all",
       "Whether a system that recombines and generalises from training data patterns can be considered 'truly' creative or merely imitative",
-      "Whether machines require electricity",
-      "Whether creativity requires a keyboard"
+      "Whether the underlying training data was collected with proper licensing",
+      "Whether generative systems require more computing power than traditional software"
     ],
     "answer": 1
   },
@@ -1066,12 +1066,12 @@
     "prompt": "How does a Robot Scientist typically use experimental results to improve future research?",
     "explanation": "Robot Scientists form a closed loop: results feed back into hypothesis refinement and future experiment design/optimisation.",
     "options": [
-      "Results are discarded after each experiment",
-      "Results are analysed (often with machine learning) to refine existing hypotheses and inform the design of the next experiment",
-      "Results are only used for record-keeping with no further analysis",
-      "Results replace the need for hypotheses entirely"
+      "Results are stored purely for archival purposes, with no influence on future hypotheses",
+      "Results are discarded once a single experiment has been completed successfully",
+      "Results are used only to confirm the very first hypothesis generated, never to revise it",
+      "Results are analysed (often with machine learning) to refine existing hypotheses and inform the design of the next experiment"
     ],
-    "answer": 1
+    "answer": 3
   },
   {
     "id": 95,
@@ -1099,9 +1099,9 @@
     "prompt": "Which factor is NOT typically used to evaluate the suitability of a knowledge model for AI-based scientific reasoning?",
     "explanation": "Suitability is judged on accuracy, completeness, and efficiency of representation/reasoning -- not on how many people built it.",
     "options": [
-      "Accuracy",
-      "Completeness",
-      "Efficiency",
+      "Completeness, since a model missing key relationships will support poor scientific reasoning",
+      "Accuracy, since an incorrect knowledge model will mislead any reasoning built on it",
+      "Efficiency, since a model too slow to query becomes impractical for real-time reasoning",
       "The number of researchers who designed it"
     ],
     "answer": 3
@@ -1123,10 +1123,10 @@
     "prompt": "A Robot Scientist observes an unexpected experimental result and proposes the most likely biological mechanism to explain it. Which reasoning mode is this?",
     "explanation": "Proposing the most plausible explanation for an observation (without certainty) is abductive reasoning.",
     "options": [
-      "Deduction",
+      "Random search, since no reasoning process is actually involved",
       "Abduction",
-      "Random search",
-      "Gradient descent"
+      "Gradient descent, since the explanation is refined iteratively over many attempts",
+      "Deduction, since the mechanism follows with certainty from the observed data"
     ],
     "answer": 1
   },
@@ -1138,12 +1138,12 @@
     "prompt": "Which of these is a defining characteristic of a CLASSICAL planning problem (as opposed to real-world planning)?",
     "explanation": "Classical planning assumes a fully observable, deterministic, static world -- real-world planning must instead handle uncertainty, partial observability, and dynamic conditions.",
     "options": [
-      "Uncertainty about action outcomes and partial observability",
-      "Fully known, deterministic, discrete states and actions",
-      "Continuously changing goals during execution",
-      "Multiple agents acting simultaneously and unpredictably"
+      "Partial observability combined with a continuously shifting set of goals",
+      "A requirement that multiple agents coordinate their actions in real time",
+      "An assumption that action outcomes are probabilistic rather than certain",
+      "Fully known, deterministic, discrete states and actions"
     ],
-    "answer": 1
+    "answer": 3
   },
   {
     "id": 101,
@@ -1162,12 +1162,12 @@
     "prompt": "Why might a Robot Scientist prioritise experiments that best discriminate between competing hypotheses, rather than simply repeating the same test?",
     "explanation": "Choosing maximally discriminating experiments is a form of active/optimal experiment design, reducing the number of experiments needed to converge on the correct hypothesis.",
     "options": [
-      "To use up more laboratory resources",
       "To maximise the information gained per experiment, improving the efficiency of the overall scientific discovery process",
-      "Because repeated experiments are prohibited",
-      "Because hypotheses cannot be compared"
+      "Because Robot Scientists are only able to test one hypothesis per experimental run",
+      "To reduce the total number of hypotheses under consideration before any testing begins",
+      "To ensure every hypothesis is tested an equal number of times, regardless of how informative each test is"
     ],
-    "answer": 1
+    "answer": 0
   },
   {
     "id": 103,
@@ -1195,10 +1195,10 @@
     "prompt": "What is a key advantage of applying meta-machine learning in automated scientific research?",
     "explanation": "Meta-ML automates parts of the ML pipeline itself, reducing manual effort and potentially discovering more effective approaches faster.",
     "options": [
-      "It removes the need for any data at all",
+      "It eliminates the need to collect any experimental data before drawing conclusions",
       "It can automate model/algorithm selection and tuning, speeding up and scaling the research process with less manual trial-and-error",
-      "It guarantees scientifically correct conclusions",
-      "It only works for image classification tasks"
+      "It replaces the underlying machine learning models entirely with rule-based logic",
+      "It works only for image-based scientific data, such as microscopy or telescope imagery"
     ],
     "answer": 1
   },
@@ -1219,12 +1219,12 @@
     "prompt": "Why is 'mastery gain' (change in estimated mastery after an exercise) often preferred as a reward signal over final grades in a tutoring RL system?",
     "explanation": "Dense, immediate reward signals are much easier for an RL agent to learn from than sparse, delayed ones like end-of-term grades.",
     "options": [
-      "Grades are the only meaningful signal",
+      "Mastery gain is easier to fake than a grade, so it produces more robust training",
+      "Grades are actually the denser signal, since they're updated after every single exercise",
       "Mastery gain gives a dense, immediate training signal, whereas grades are sparse and delayed",
-      "Mastery gain cannot be computed",
-      "Grades update every second"
+      "Grades cannot be represented numerically, so they're unsuitable as a reward signal"
     ],
-    "answer": 1
+    "answer": 2
   },
   {
     "id": 108,
@@ -1252,10 +1252,10 @@
     "prompt": "In the HVAC scheduling GA, how should comfort be incorporated into the fitness function?",
     "explanation": "A combined weighted fitness (cost + carbon + comfort penalty) ensures the GA doesn't sacrifice comfort purely to minimise energy cost.",
     "options": [
-      "It should be ignored entirely -- only cost matters",
+      "By only checking comfort after the GA has already selected a final schedule",
       "As a penalty term combined with cost/carbon, so schedules that save energy at the expense of comfort are penalised rather than rewarded",
-      "As a hard constraint that always overrides cost",
-      "Comfort cannot be quantified"
+      "As a separate fitness function evolved independently of the cost and carbon objectives",
+      "By excluding any schedule that causes even a small comfort deviation from the population entirely"
     ],
     "answer": 1
   },
@@ -1276,10 +1276,10 @@
     "prompt": "For a new smart-building deployment with no historical operational data yet, which approach can safely run from day one, and why?",
     "explanation": "GA-based or symbolic planning approaches can operate correctly from the outset without needing accumulated interaction data, unlike a DQN which needs substantial training experience.",
     "options": [
-      "DQN, because it requires no data to perform well",
+      "Either approach equally, since both require the same amount of historical operational data",
       "The symbolic/GA-based approach, because it doesn't require training data and can compute a schedule directly via search/optimisation using known forecasts",
-      "Neither approach can be used without data",
-      "DQN, because it is always faster to compute"
+      "DQN, because its neural network can be initialised to produce a usable schedule without any training",
+      "DQN, because model-free methods generally need less data than search-based approaches"
     ],
     "answer": 1
   },
@@ -1300,12 +1300,12 @@
     "prompt": "In the DQN target calculation y = r + gamma * max_a' Q(s', a'; theta-), which network's weights does theta- refer to?",
     "explanation": "theta- denotes the target network's weights, which are periodically synced from the main network (theta) rather than updated every step.",
     "options": [
-      "The main/online Q-network, updated every step",
-      "The separate target network, updated only periodically",
-      "A randomly initialised network used only once",
-      "The replay buffer's internal weights"
+      "The exploration policy's parameters, which are annealed alongside epsilon",
+      "A copy of the replay buffer used only to compute the discount factor",
+      "The main/online Q-network, whose weights are used for both prediction and target calculation",
+      "The separate target network, updated only periodically"
     ],
-    "answer": 1
+    "answer": 3
   },
   {
     "id": 115,
@@ -1333,12 +1333,12 @@
     "prompt": "What is a reasonable termination criterion for a genetic algorithm?",
     "explanation": "GAs typically terminate after a maximum generation count or when fitness improvement plateaus (convergence).",
     "options": [
-      "Running forever with no stopping condition",
+      "Stopping as soon as the first individual with above-average fitness appears",
+      "Stopping once crossover has been applied to every individual exactly once",
       "A fixed maximum number of generations, or convergence (fitness no longer improving)",
-      "Stopping after exactly one generation regardless of fitness",
-      "Stopping the moment the population is initialised"
+      "Running for exactly as many generations as the population size"
     ],
-    "answer": 1
+    "answer": 2
   },
   {
     "id": 118,
@@ -1357,10 +1357,10 @@
     "prompt": "Which scenario best illustrates 'underfitting' in a neural network used for Q-value approximation?",
     "explanation": "Underfitting = insufficient capacity to model the true relationship, leading to poor performance even on training data.",
     "options": [
-      "The network perfectly memorises training experience but fails on new states",
+      "The network performs very well on states it has seen but poorly on genuinely new ones",
       "The network is too simple to capture the relationship between states and Q-values, performing poorly even on states it has already seen",
-      "The network has too many parameters relative to available data",
-      "The network uses experience replay"
+      "The network's replay buffer is too small to provide enough diverse training samples",
+      "The network has more parameters than the data can support, learning noise instead of signal"
     ],
     "answer": 1
   },
@@ -1381,10 +1381,10 @@
     "prompt": "Bio-inspired computing is best described as:",
     "explanation": "It's a broad family of techniques (GAs, swarm intelligence, neuroevolution, etc.), not one single algorithm or hardware approach.",
     "options": [
-      "A single specific algorithm for sorting data",
+      "A subfield of robotics concerned only with physically embodied evolved systems",
       "A family of computational techniques drawing inspiration from biological processes such as evolution, swarm behaviour, or neural systems",
-      "A hardware-only approach to computing",
-      "A subfield concerned exclusively with robotics"
+      "An approach limited to simulating biological cells at the molecular level",
+      "A single, specific evolutionary algorithm used mainly for combinatorial optimisation problems"
     ],
     "answer": 1
   },
@@ -1405,12 +1405,12 @@
     "prompt": "Which of the following is an example of a continuous action space?",
     "explanation": "A steering angle over a real-valued range is continuous; the others are discrete finite sets.",
     "options": [
-      "{up, down, left, right}",
-      "A steering angle chosen from -90 to +90 degrees",
-      "{fire, don't fire}",
-      "{rock, paper, scissors}"
+      "A fixed set of three moves in a game: rock, paper, or scissors",
+      "A discrete set of four directional moves: up, down, left, right",
+      "A binary choice between firing and not firing a weapon",
+      "A steering angle chosen from -90 to +90 degrees"
     ],
-    "answer": 1
+    "answer": 3
   },
   {
     "id": 124,
@@ -1438,12 +1438,12 @@
     "prompt": "Which of these correctly completes the DQN loss function? Loss = ...",
     "explanation": "The DQN loss is the mean squared error between the target y (computed via the target network) and the current network's Q-estimate.",
     "options": [
-      "(Q(s,a;theta) - Q(s,a;theta-))",
-      "(y - Q(s,a;theta))^2, where y is the target computed via the target network",
-      "max_a Q(s,a;theta)",
-      "r + gamma"
+      "max_a Q(s,a;theta) - r, the difference between the best action-value and the immediate reward",
+      "r + gamma * Q(s,a;theta), the discounted current estimate plus the observed reward",
+      "(Q(s,a;theta) - Q(s,a;theta-))^2, comparing the main and target networks directly regardless of reward",
+      "(y - Q(s,a;theta))^2, where y is the target computed via the target network"
     ],
-    "answer": 1
+    "answer": 3
   },
   {
     "id": 127,
@@ -1462,10 +1462,10 @@
     "prompt": "What does a fitness function do in a genetic algorithm?",
     "explanation": "The fitness function scores each phenotype's performance, which selection then uses to decide who reproduces.",
     "options": [
-      "Encodes the candidate solution as a bit string",
+      "Encodes a candidate solution as a string of bits or real numbers for the GA to manipulate",
       "Assigns each candidate a numerical score measuring how well it performs the target task, used to guide selection",
-      "Performs crossover between two parents",
-      "Decides the population size"
+      "Combines genetic material from two parent candidates to produce offspring",
+      "Introduces small random changes into a candidate's encoding to maintain diversity"
     ],
     "answer": 1
   },
@@ -1486,12 +1486,12 @@
     "prompt": "What real-world property of genotype-phenotype mappings do evolved robot morphologies often illustrate?",
     "explanation": "Evolved robotics often shows that a small change in one gene (e.g. limb length) can non-linearly disrupt balance or gait -- an important, sometimes brittle, property of such mappings.",
     "options": [
-      "Genotype changes never affect the phenotype",
+      "Genotype and phenotype changes are always proportional, so small mutations only ever cause small effects",
+      "Phenotype changes only ever affect a robot's appearance, never its functional behaviour",
       "Small genotype mutations can sometimes cause large, non-linear phenotype effects (e.g. a robot that can no longer balance)",
-      "Phenotypes are always identical regardless of genotype",
-      "The mapping is always one-to-one and perfectly linear"
+      "The genotype-phenotype mapping in evolved robots is typically many-to-one, with many genotypes producing an identical phenotype"
     ],
-    "answer": 1
+    "answer": 2
   },
   {
     "id": 131,
@@ -1501,12 +1501,12 @@
     "prompt": "Roughly how many trainable parameters might a DQN processing raw Atari pixel frames plausibly have, to adequately capture the complexity of the mapping from pixels to Q-values?",
     "explanation": "A convolutional DQN over pixel input typically needs on the order of a million or more parameters to represent the complex visual-to-action-value mapping.",
     "options": [
-      "Around 10",
+      "Around 1,600, since the state space is limited to a small number of discrete pixel patterns",
+      "Around 160 million, since every individual pixel needs its own dedicated parameter",
       "Around 1.6 million",
-      "Around 3",
-      "It needs zero trainable parameters"
+      "Around 16, since Q-values only need to be estimated for a handful of actions"
     ],
-    "answer": 1
+    "answer": 2
   },
   {
     "id": 132,
@@ -1516,12 +1516,12 @@
     "prompt": "Which action set is appropriately grained for an RL agent choosing individual tutoring exercises (as opposed to a coarse course-level agent)?",
     "explanation": "The fine-grained exercise/hint-level action set matches the actual per-problem decision the tutoring system needs to make, unlike coarse course-level actions.",
     "options": [
-      "{study more, take tests, attend seminars}",
       "{present easier problem, present harder problem, give hint, switch topic}",
-      "{pass course, fail course}",
-      "{enroll, drop out}"
+      "{improve grade, maintain grade, decline grade}, describing outcomes rather than actions the agent can take",
+      "{study more, take tests, attend seminars}, matching the coarser course-level decisions a student makes",
+      "{enrol in course, drop course}, which describes a much longer-timescale decision than exercise selection"
     ],
-    "answer": 1
+    "answer": 0
   },
   {
     "id": 133,
@@ -1540,12 +1540,12 @@
     "prompt": "Why is 'accountability' a distinct ethical concern from 'bias' in automated/evolved system design?",
     "explanation": "Bias is about fairness of outcomes; accountability is about responsibility and oversight when something goes wrong -- related but distinct ethical dimensions.",
     "options": [
-      "They are the same concern under different names",
+      "Accountability is a purely legal concept with no meaningful application to AI system design",
+      "Bias and accountability both refer to the same underlying issue of unequal outcomes across groups",
       "Bias concerns whether the system's outputs unfairly favour or disadvantage certain outcomes/groups; accountability concerns who is responsible when an automated/evolved design causes harm or fails",
-      "Accountability only applies to symbolic AI, never to evolved systems",
-      "Bias cannot occur in evolved systems"
+      "Bias only applies to symbolic/rule-based systems, while accountability only applies to evolved/learned systems"
     ],
-    "answer": 1
+    "answer": 2
   },
   {
     "id": 135,
@@ -1555,12 +1555,12 @@
     "prompt": "What does 'interpolating' between two points in a latent space typically produce when decoded?",
     "explanation": "A well-structured latent space supports smooth interpolation -- decoded intermediate points tend to blend meaningfully between the two original examples.",
     "options": [
-      "Random unrelated noise with no structure",
       "A smooth, musically/visually coherent transition between the two original encoded examples",
-      "An exact copy of one of the two original inputs only",
-      "An error, since interpolation is not supported"
+      "An exact 50/50 average of the two original inputs' raw data, rather than a learned blend",
+      "A random new sample entirely unrelated to either of the two original encoded examples",
+      "The same output as decoding just one of the two original points, since interpolation defaults to the nearer point"
     ],
-    "answer": 1
+    "answer": 0
   },
   {
     "id": 136,
@@ -1597,12 +1597,12 @@
     "prompt": "What distinguishes Dota II (OpenAI Five) as an AI challenge compared to single-agent Atari games?",
     "explanation": "Dota II adds team coordination, long time horizons, and partial observability -- a much richer multi-agent RL challenge than single-agent Atari.",
     "options": [
-      "It has a much smaller action space than Atari",
+      "It is fully observable, so agents have complete information about the entire game state at all times",
+      "It has a much simpler reward structure than most Atari games, since only the final outcome matters",
       "It requires long-term strategic planning and coordination among multiple cooperating agents in a complex, partially observable environment",
-      "It has no reward signal at all",
-      "It is a fully solved, deterministic game"
+      "It uses a smaller, more constrained action space than a typical Atari game"
     ],
-    "answer": 1
+    "answer": 2
   },
   {
     "id": 140,
@@ -1630,12 +1630,12 @@
     "prompt": "Compared to roulette wheel selection, what is a key advantage of tournament selection?",
     "explanation": "Roulette wheel selection can be skewed heavily by one or two very high-fitness outliers; tournament selection's relative, local comparison is more robust to this.",
     "options": [
-      "It guarantees the worst individual is always chosen",
       "It is less sensitive to a few individuals having disproportionately huge fitness values dominating selection",
-      "It cannot be used with real-valued fitness",
-      "It always selects only the single best individual in the population"
+      "It requires fitness values to be normalised between 0 and 1 before selection can occur",
+      "It guarantees faster convergence than roulette wheel selection on every problem",
+      "It always selects the globally fittest individual, unlike roulette wheel selection"
     ],
-    "answer": 1
+    "answer": 0
   },
   {
     "id": 143,
@@ -1654,12 +1654,12 @@
     "prompt": "What role does machine learning typically play in a Robot Scientist's analysis of experimental results?",
     "explanation": "ML techniques help interpret data, update belief in competing hypotheses, and guide the choice of the next experiment -- closing the discovery loop.",
     "options": [
-      "It has no role -- results are analysed manually only",
-      "It helps interpret data patterns, update mastery/probability estimates of hypotheses, and suggest which hypothesis to test next",
-      "It replaces the need for any experiment at all",
-      "It is only used to store raw data with no interpretation"
+      "It is applied solely to detect and discard faulty sensor readings, not to interpret results",
+      "It replaces the need to design or run any further experiments once initial data is collected",
+      "It is used only to store experimental results in a structured database format",
+      "It helps interpret data patterns, update mastery/probability estimates of hypotheses, and suggest which hypothesis to test next"
     ],
-    "answer": 1
+    "answer": 3
   },
   {
     "id": 145,
@@ -1687,12 +1687,12 @@
     "prompt": "Which is a genuine argument in favour of increasing automation in scientific discovery?",
     "explanation": "Automation's main strength is scale and consistency of exploration/experimentation, not infallibility or removing the need for oversight.",
     "options": [
-      "It removes all possibility of error",
+      "It is primarily valuable because it eliminates the cost of laboratory equipment",
+      "It guarantees that conclusions reached will always be scientifically valid",
       "It can explore hypothesis spaces more exhaustively and run repetitive experiments faster/cheaper than human researchers",
-      "It requires no human oversight ever",
-      "It guarantees ethically sound conclusions"
+      "It removes the need for any human review of the conclusions it reaches"
     ],
-    "answer": 1
+    "answer": 2
   },
   {
     "id": 148,
@@ -1711,12 +1711,12 @@
     "prompt": "In a safety-sensitive deployment (e.g. tutoring students), what is one practical mitigation for the risks of epsilon-greedy exploration during early training?",
     "explanation": "Simulation/offline pretraining and knowledge-constrained action spaces reduce the risk of harmful random actions being taken on real users during exploration.",
     "options": [
-      "Set epsilon to 1.0 permanently",
+      "Deploy the untrained policy directly, since real user feedback will correct it faster than simulation",
+      "Increase epsilon substantially so the agent explores more thoroughly before deployment",
       "Pretrain or validate the policy in simulation/offline data before exposing it to real users, and/or constrain the action space with domain knowledge",
-      "Remove the reward function entirely",
-      "Only ever use a random policy in production"
+      "Remove the target network so updates take effect immediately during live use"
     ],
-    "answer": 1
+    "answer": 2
   },
   {
     "id": 150,
@@ -1735,12 +1735,12 @@
     "prompt": "Why is retention (performance on a skill days/weeks later) a more informative metric than immediate post-exercise accuracy alone?",
     "explanation": "A system could inflate immediate accuracy without producing lasting learning; retention testing checks for genuine, durable mastery gain.",
     "options": [
-      "Immediate accuracy is always more informative",
+      "It reflects how engaging the exercise was, rather than how much was actually learned",
+      "It is easier to measure automatically than immediate accuracy, which requires human grading",
       "It checks whether the system produced durable learning rather than just short-term memorisation of the most recent exercise",
-      "Retention cannot be measured",
-      "Retention is unrelated to learning quality"
+      "It is a stronger predictor of a student's mood than of their actual skill level"
     ],
-    "answer": 1
+    "answer": 2
   },
   {
     "id": 152,
@@ -1768,12 +1768,12 @@
     "prompt": "What can go wrong if a fitness function only rewards a single narrow objective (e.g. pure speed) in an evolved robot?",
     "explanation": "This is a classic 'reward hacking'/specification-gaming problem in evolutionary and RL systems: optimising a narrow proxy metric can produce unintended, exploitative behaviour.",
     "options": [
-      "The GA will refuse to run",
       "The evolved solution may exploit unintended shortcuts (e.g. an unstable but fast-falling gait) that technically maximise fitness but aren't the intended real-world solution",
-      "The genotype will become invalid",
-      "Fitness functions cannot cause unintended behaviour"
+      "The population will stop evolving entirely, since there's nothing left to optimise once one objective is chosen",
+      "The GA will fail to produce any viable phenotype at all, since a single-objective fitness function is invalid",
+      "The genotype encoding will need to be redesigned from scratch to support a single objective"
     ],
-    "answer": 1
+    "answer": 0
   },
   {
     "id": 155,
@@ -1801,12 +1801,12 @@
     "prompt": "In which scenario might NeuroEvolution be preferred over standard gradient-based neural network training?",
     "explanation": "NeuroEvolution is useful precisely where gradients are unavailable or unreliable, or when architecture search is also needed -- gradient descent needs a differentiable, well-defined loss.",
     "options": [
-      "When the objective function is smooth and differentiable with abundant labelled data",
       "When the reward/fitness signal is sparse, non-differentiable, or the network architecture itself should be searched over",
-      "When training speed is the only concern and data is abundant",
-      "NeuroEvolution is never preferred over gradient descent"
+      "When the goal is to minimise the number of parameters rather than to maximise task performance",
+      "When labelled training data is abundant and the loss function is smooth and differentiable",
+      "When training speed is the only consideration and the architecture is already fixed"
     ],
-    "answer": 1
+    "answer": 0
   },
   {
     "id": 158,
@@ -1825,10 +1825,10 @@
     "prompt": "In the Q-learning update rule, what does the learning rate (alpha) control?",
     "explanation": "Alpha scales how much the Q-value estimate moves toward the newly observed target each update -- too high risks instability, too low risks very slow learning.",
     "options": [
-      "How much future reward is discounted",
+      "How large the experience replay buffer needs to be before training starts",
       "How large a step is taken toward the new target estimate on each update",
-      "The size of the replay buffer",
-      "The number of actions available"
+      "How much future reward is discounted relative to immediate reward",
+      "How many actions are available to the agent in a given state"
     ],
     "answer": 1
   },
@@ -1849,12 +1849,12 @@
     "prompt": "What is a key challenge of a sparse reward signal (e.g. reward only given at the very end of a long episode)?",
     "explanation": "Sparse rewards make the credit-assignment problem harder -- the agent struggles to work out which of many earlier actions contributed to the eventual outcome.",
     "options": [
-      "It always leads to faster learning",
+      "It only becomes a problem once the state space becomes continuous",
+      "It causes the agent to explore far more than it would with a dense reward signal",
       "It gives the agent very little feedback to attribute credit to specific earlier actions, making learning slow or unstable",
-      "It removes the need for exploration",
-      "It only occurs in supervised learning"
+      "It has no real impact on learning speed, only on final performance"
     ],
-    "answer": 1
+    "answer": 2
   },
   {
     "id": 162,
@@ -1891,12 +1891,12 @@
     "prompt": "Which of these best reflects a standard critique of purely statistical/pattern-based generative systems' claim to 'creativity'?",
     "explanation": "A recurring critique is that pattern recombination, however impressive, may not meet stronger definitions of creativity requiring intent, understanding, or genuinely novel conceptual leaps.",
     "options": [
-      "They are always considered fully creative with no debate",
       "They may recombine and interpolate learned patterns impressively, but critics question whether this constitutes genuine novelty/intent versus sophisticated imitation",
-      "They cannot produce any novel-looking output",
-      "Creativity evaluation is irrelevant to generative AI"
+      "The debate is now considered fully resolved in favour of machine creativity being equivalent to human creativity",
+      "They are generally dismissed as incapable of producing anything resembling creative output",
+      "Critics primarily object to the computational cost of running these systems, not to questions of creativity"
     ],
-    "answer": 1
+    "answer": 0
   },
   {
     "id": 166,
@@ -1906,10 +1906,10 @@
     "prompt": "What is the main purpose of an ontology in knowledge representation?",
     "explanation": "Ontologies formally capture domain concepts and their relationships (e.g. class hierarchies, properties, constraints), supporting machine reasoning over the domain.",
     "options": [
-      "To store raw unstructured text with no relationships",
+      "To compress domain data into a smaller file size for faster transmission",
       "To formally define concepts, categories, and the relationships between them within a domain, enabling structured reasoning",
-      "To compress data for storage efficiency only",
-      "To replace the need for any database"
+      "To provide a user interface for querying a knowledge base directly",
+      "To store large volumes of unstructured text more efficiently than a plain database"
     ],
     "answer": 1
   },
@@ -1939,10 +1939,10 @@
     "prompt": "What was notable about the Robot Scientist project's drug-repositioning work (e.g. against neglected tropical diseases)?",
     "explanation": "It showed automated hypothesis generation and experimentation could efficiently identify repurposing candidates, a genuine practical application of automated discovery.",
     "options": [
-      "It required no experimentation at all",
+      "It showed that automated systems could not meaningfully contribute to drug discovery without human hypothesis generation",
       "It demonstrated automated discovery could identify promising existing drugs for new disease targets faster/cheaper than traditional methods",
-      "It only worked on already-approved treatments with no new findings",
-      "It replaced all human researchers in drug discovery"
+      "It focused exclusively on discovering entirely new drug compounds rather than repositioning existing ones",
+      "It was limited to simulation and never led to any physically tested experimental results"
     ],
     "answer": 1
   },
@@ -1972,12 +1972,12 @@
     "prompt": "Which application is a better fit for direct genetic encoding rather than indirect/generative encoding?",
     "explanation": "Direct encoding is simplest and most interpretable for small, fixed parameter sets; indirect/generative encoding scales better for large, complex, or repetitive structures.",
     "options": [
-      "Evolving a highly complex, modular soft-robot body with many repeated segments",
-      "A simple problem with a small, fixed number of independent parameters (e.g. a handful of specific robot joint angles)",
-      "Evolving deep neural network architectures with millions of weights",
-      "Evolving repeating fractal-like robot morphologies"
+      "A neural network architecture with millions of weights that benefits from compact, rule-based description",
+      "A repeating, fractal-like robot morphology with many self-similar parts",
+      "A highly complex, modular soft-robot body with many repeated segments",
+      "A simple problem with a small, fixed number of independent parameters (e.g. a handful of specific robot joint angles)"
     ],
-    "answer": 1
+    "answer": 3
   },
   {
     "id": 173,
@@ -1996,12 +1996,12 @@
     "prompt": "Which of these is one of the 'dimensions of fairness' proposed for comparing humans and AI in game benchmarks (Canaan et al.)?",
     "explanation": "Fairness dimensions include perceptual/motor advantages, information access, and practice/training resource parity -- not implementation details like UI colour or code length.",
     "options": [
-      "Colour of the game's user interface",
+      "Whether the AI's source code is open-source or proprietary",
+      "The number of different game titles a single AI system has been tested on",
       "Perceptual and motor advantages the AI may have over humans (e.g. reaction time, precision)",
-      "The programming language used to build the AI",
-      "The number of lines of code in the AI"
+      "The visual theme or art style used in the game being benchmarked"
     ],
-    "answer": 1
+    "answer": 2
   },
   {
     "id": 175,

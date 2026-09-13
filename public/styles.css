@@ -152,3 +152,47 @@ button:hover { opacity: 0.9; }
 form label { display: block; margin-bottom: 0.75rem; font-size: 0.9rem; }
 
 #add-status { color: var(--accent-2); font-size: 0.9rem; }
+
+/* ---------- Login overlay ---------- */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 6, 15, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 1rem;
+}
+
+.overlay-card {
+  background: var(--panel);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  max-width: 420px;
+  width: 100%;
+}
+
+.overlay-card h2 { margin-top: 0; }
+
+.error-text { color: var(--danger); font-size: 0.85rem; min-height: 1.2em; }
+
+/* ---------- User bar ---------- */
+.user-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0.25rem 0 0.75rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+#current-user-label { font-weight: 600; color: var(--text); }
+
+.link-btn {
+  background: transparent;
+  color: var(--accent);
+  padding: 0;
+  font-weight: 500;
+  text-decoration: underline;
+}

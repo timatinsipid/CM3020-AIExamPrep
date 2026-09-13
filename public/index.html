@@ -7,8 +7,27 @@
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
+<!-- LOGIN OVERLAY -->
+<div id="login-overlay" class="overlay hidden">
+  <div class="overlay-card">
+    <h2>Who's revising?</h2>
+    <p class="muted">Pick a name and a short PIN. This just keeps your quiz scores and weak-spots separate from anyone else using this app — it's not a real password, so don't reuse one you care about.</p>
+    <form id="login-form">
+      <label>Name: <input id="login-username" type="text" maxlength="30" required placeholder="e.g. tim"></label>
+      <label>4-6 digit PIN: <input id="login-pin" type="password" inputmode="numeric" maxlength="6" required placeholder="e.g. 1234"></label>
+      <button type="submit">Continue</button>
+      <p id="login-status" class="error-text"></p>
+    </form>
+  </div>
+</div>
+
 <header>
   <h1>AI Module Exam Prep</h1>
+  <div class="user-bar">
+    <span id="current-user-label"></span>
+    <button id="switch-user-btn" class="link-btn">Switch user</button>
+  </div>
   <nav>
     <button class="tab-btn active" data-tab="quiz">Quiz</button>
     <button class="tab-btn" data-tab="flash">Flashcards</button>
@@ -65,7 +84,7 @@
     <h2>Where you're losing marks</h2>
     <p class="muted">Based on your quiz answers and flashcard ratings, stored locally in this browser.</p>
     <div id="weak-list"></div>
-    <button id="reset-progress-btn">Reset all progress</button>
+    <button id="reset-progress-btn">Reset my progress</button>
   </section>
 
   <!-- ADD QUESTION TAB -->
