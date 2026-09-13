@@ -32,6 +32,7 @@
     <button class="tab-btn active" data-tab="quiz">Quiz</button>
     <button class="tab-btn" data-tab="flash">Flashcards</button>
     <button class="tab-btn" data-tab="weak">Weak Spots</button>
+    <button class="tab-btn" data-tab="usage">Usage</button>
     <button class="tab-btn" data-tab="add">Add Question</button>
   </nav>
 </header>
@@ -82,9 +83,27 @@
   <!-- WEAK SPOTS TAB -->
   <section id="weak" class="tab-panel">
     <h2>Where you're losing marks</h2>
-    <p class="muted">Based on your quiz answers and flashcard ratings, stored locally in this browser.</p>
+    <p class="muted">Based on your quiz answers and flashcard ratings, stored server-side per user.</p>
     <div id="weak-list"></div>
     <button id="reset-progress-btn">Reset my progress</button>
+    <hr class="divider">
+    <h3>Sync questions to GitHub</h3>
+    <p class="muted">Pushes the current data/questions.json (including anything added via "Add Question") back to your repo, so it survives future redeploys.</p>
+    <label>Sync secret: <input id="sync-secret" type="password" placeholder="the SYNC_SECRET app setting"></label>
+    <button id="sync-github-btn">Sync now</button>
+    <p id="sync-status" class="muted"></p>
+  </section>
+
+  <!-- USAGE TAB -->
+  <section id="usage" class="tab-panel">
+    <h2>Who's using this</h2>
+    <p class="muted">Name, how many times they've opened the app, and a best-effort location from their IP address (city-level, via a public IP geolocation lookup — not exact, and easily wrong for VPNs/mobile networks).</p>
+    <table id="usage-table" class="data-table">
+      <thead>
+        <tr><th>Name</th><th>Visits</th><th>Last location</th><th>Last seen</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
   </section>
 
   <!-- ADD QUESTION TAB -->

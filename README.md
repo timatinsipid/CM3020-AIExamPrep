@@ -99,22 +99,86 @@ username/displayName, not the PIN), so you won't be asked to log in again on
 the same device — but you will on a new device/browser, and a "Switch user"
 button in the header lets you swap identities on a shared machine.
 
+### Usage tracking
+
+The **Usage** tab shows, per name: how many times the app has been opened,
+and a best-effort city/region/country guess from the visitor's IP address
+(via the free [ipapi.co](https://ipapi.co) lookup, cached for 24 hours per
+IP to stay well within its free-tier rate limit). This is recorded
+automatically on every visit — no separate opt-in — via `data/usage.json`
+and `data/ip-cache.json`.
+
+Worth knowing before you share the link with anyone:
+
+- **IP-based location is approximate and often wrong** — it reflects the
+  visitor's ISP or mobile network, not their literal address, and can be
+  way off for VPNs, corporate networks, or mobile data.
+- **There's no access control on the Usage tab** — anyone who's logged in
+  can see everyone else's visit counts and locations. Fine for a couple of
+  classmates who know this is happening; not something to enable if you
+  share this more broadly without telling people.
+- If you'd rather not collect this at all, delete the two `trackVisit()`
+  call sites in `public/app.js` (`requireLogin()` and the login form's
+  submit handler) and remove the Usage tab from `public/index.html`.
+
+### Syncing added questions back to GitHub
+
+Questions added via the "Add Question" tab are written to
+`data/questions.json` on the live App Service, but (see "A note on
+persistence" below) a future code redeploy will overwrite that file with
+whatever's in your repo — silently discarding anything added through the UI
+in between. The "Sync questions to GitHub" control on the **Weak Spots**
+tab pushes the current live `questions.json` straight to your GitHub repo
+via the GitHub Contents API, so you can do this right before redeploying
+instead of manually downloading/uploading through Kudu.
+
+**One-time setup:**
+
+1. Create a fine-grained GitHub Personal Access Token (Settings → Developer
+   settings → Personal access tokens → Fine-grained tokens) scoped to just
+   this one repository, with **Contents: Read and write** permission and
+   nothing else.
+2. In the Azure Portal, open your Web App → **Settings → Environment
+   variables** (or "Configuration → Application settings" on older portal
+   layouts) and add:
+   - `GITHUB_TOKEN` — the token from step 1
+   - `GITHUB_REPO` — e.g. `timatinsipid/CM3020-AIExamPrep`
+   - `GITHUB_FILE_PATH` — e.g. `exam-prep-app/data/questions.json` (the
+     path to the file *within* the repo)
+   - `GITHUB_BRANCH` — e.g. `main` (optional, defaults to `main`)
+   - `SYNC_SECRET` — any string you make up; you'll need to type this into
+     the app's Sync box to trigger a sync, so treat it like a password (but
+     it's only protecting "who can push to your own repo", not anything
+     more sensitive)
+   - Optionally `AUTO_SYNC_HOURS` — e.g. `24` to auto-sync once a day
+     instead of clicking the button yourself. This needs **Always On**
+     enabled (Settings → Configuration → General settings), which requires
+     at least a Basic (B1) App Service plan — the Free tier sleeps the app
+     when idle, so a timer inside the app won't fire reliably.
+3. Save, which restarts the app so it picks up the new environment
+   variables.
+4. In the app's Weak Spots tab, enter your `SYNC_SECRET` and click
+   "Sync now". You should see a success message with a commit hash, and a
+   new commit will appear in your repo's history.
+
+Each sync overwrites the file at `GITHUB_FILE_PATH` on `GITHUB_BRANCH` with
+whatever's currently live — so sync *before* you redeploy, not after, or
+you'll just be pushing back the same (possibly stale) content you're about
+to overwrite anyway.
+
 ### A note on persistence
 
-`data/questions.json`, `data/users.json`, and `data/progress.json` are all
-plain JSON files on the App Service's filesystem. On the free/basic tiers
-these persist across app restarts, but are **not guaranteed to persist
-across a redeploy** (a git push or zip deploy overwrites the app folder) and
+The `data/` folder (`questions.json`, `users.json`, `progress.json`) lives
+on the App Service's filesystem. On the free/basic tiers these persist
+across app restarts, but are **not guaranteed to persist across a
+redeploy** (a git push or zip deploy overwrites the app folder) and
 **won't be shared across multiple instances** if you ever scale out. For a
-small group revising for one exam this is fine — just avoid redeploying
-mid-way through a big question-adding or quiz-taking session, and
-periodically back up the `data/` folder via the Kudu console at
-`https://<app-name>.scm.azurewebsites.net` if you want to be safe.
-
-If you outgrow this (e.g. a larger group, or wanting progress to survive
-redeploys reliably), swap the JSON-file reads/writes in `server.js` for
-Azure Table Storage or Cosmos DB's free tier — the API shape (`/api/login`,
-`/api/progress`) wouldn't need to change, only what's behind it.
+small group revising for one exam this is fine — just remember to use the
+GitHub sync above before pushing a code change, and periodically back up
+`users.json`/`progress.json` via the Kudu console at
+`https://<app-name>.scm.azurewebsites.net` if you want those preserved too
+(the sync feature above only covers `questions.json` by design, since
+progress/users are personal rather than shared content worth versioning).
 
 ### Environment variables
 

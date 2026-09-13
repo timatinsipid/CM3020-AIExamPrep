@@ -53,6 +53,7 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
     saveUser(currentUser);
     hideLoginOverlay();
     updateUserLabel();
+    trackVisit();
   } catch (err) {
     statusEl.textContent = 'Could not reach the server. Try again.';
   }
@@ -75,9 +76,19 @@ function requireLogin() {
   if (saved && saved.username) {
     currentUser = saved;
     updateUserLabel();
+    trackVisit();
   } else {
     showLoginOverlay();
   }
+}
+
+function trackVisit() {
+  if (!currentUser) return;
+  fetch('/api/track-visit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username: currentUser.username })
+  }).catch(err => console.error('Could not track visit', err));
 }
 
 // ---------- Progress (server-side, per user) ----------
@@ -118,6 +129,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.classList.add('active');
     document.getElementById(btn.dataset.tab).classList.add('active');
     if (btn.dataset.tab === 'weak') renderWeakSpots();
+    if (btn.dataset.tab === 'usage') renderUsage();
   });
 });
 
@@ -299,6 +311,58 @@ document.getElementById('reset-progress-btn').addEventListener('click', async ()
   if (confirm(`Clear all quiz/flashcard progress for "${currentUser.displayName}"?`)) {
     await resetStats();
     renderWeakSpots();
+  }
+});
+
+// ---------- USAGE ----------
+async function renderUsage() {
+  const tbody = document.querySelector('#usage-table tbody');
+  tbody.innerHTML = '<tr><td colspan="4" class="muted">Loading…</td></tr>';
+  try {
+    const res = await fetch('/api/usage');
+    const rows = await res.json();
+    if (rows.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="4" class="muted">No visits recorded yet.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = '';
+    rows.forEach(r => {
+      const loc = r.lastLocation
+        ? [r.lastLocation.city, r.lastLocation.region, r.lastLocation.country].filter(Boolean).join(', ')
+        : 'Unknown';
+      const lastSeen = r.lastAccessAt ? new Date(r.lastAccessAt).toLocaleString() : '—';
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${r.displayName || r.username}</td><td>${r.accessCount}</td><td>${loc}</td><td>${lastSeen}</td>`;
+      tbody.appendChild(tr);
+    });
+  } catch (err) {
+    tbody.innerHTML = '<tr><td colspan="4" class="muted">Could not load usage data.</td></tr>';
+  }
+}
+
+// ---------- GITHUB SYNC ----------
+document.getElementById('sync-github-btn').addEventListener('click', async () => {
+  const secret = document.getElementById('sync-secret').value.trim();
+  const statusEl = document.getElementById('sync-status');
+  if (!secret) {
+    statusEl.textContent = 'Enter the sync secret first.';
+    return;
+  }
+  statusEl.textContent = 'Syncing…';
+  try {
+    const res = await fetch('/api/sync-to-github', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-sync-secret': secret },
+      body: JSON.stringify({})
+    });
+    const data = await res.json();
+    if (res.ok) {
+      statusEl.textContent = `Synced to GitHub successfully${data.commit ? ` (commit ${data.commit.slice(0, 7)})` : ''}.`;
+    } else {
+      statusEl.textContent = `Sync failed: ${data.error || 'unknown error'}`;
+    }
+  } catch (err) {
+    statusEl.textContent = 'Could not reach the server to sync.';
   }
 });
 

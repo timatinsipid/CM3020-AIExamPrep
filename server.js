@@ -3,11 +3,14 @@ const path = require('path');
 const fs = require('fs');
 
 const app = express();
+app.set('trust proxy', true); // so req.ip reflects the real client IP behind Azure's proxy
 const PORT = process.env.PORT || 8080; // Azure App Service injects PORT
 
 const QUESTIONS_PATH = path.join(__dirname, 'data', 'questions.json');
 const USERS_PATH = path.join(__dirname, 'data', 'users.json');
 const PROGRESS_PATH = path.join(__dirname, 'data', 'progress.json');
+const USAGE_PATH = path.join(__dirname, 'data', 'usage.json');
+const IP_CACHE_PATH = path.join(__dirname, 'data', 'ip-cache.json');
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -172,7 +175,179 @@ app.delete('/api/progress', (req, res) => {
   }
 });
 
+// =========================================================
+// USAGE TRACKING (name, access count, best-effort IP location)
+// =========================================================
+
+function getClientIp(req) {
+  const forwarded = req.headers['x-forwarded-for'];
+  if (forwarded) return forwarded.split(',')[0].trim();
+  return req.ip;
+}
+
+async function lookupLocation(ip) {
+  // Skip lookups for local/private addresses (won't resolve to anything useful)
+  if (!ip || ip === '::1' || ip === '127.0.0.1' || ip.startsWith('10.') || ip.startsWith('192.168.')) {
+    return null;
+  }
+  const cache = readJson(IP_CACHE_PATH, {});
+  const cached = cache[ip];
+  const oneDayMs = 24 * 60 * 60 * 1000;
+  if (cached && (Date.now() - new Date(cached.cachedAt).getTime()) < oneDayMs) {
+    return cached.location;
+  }
+  try {
+    const res = await fetch(`https://ipapi.co/${ip}/json/`);
+    if (!res.ok) return cached ? cached.location : null;
+    const data = await res.json();
+    if (data.error) return cached ? cached.location : null;
+    const location = {
+      city: data.city || null,
+      region: data.region || null,
+      country: data.country_name || null
+    };
+    cache[ip] = { location, cachedAt: new Date().toISOString() };
+    writeJson(IP_CACHE_PATH, cache);
+    return location;
+  } catch (err) {
+    console.error('IP lookup failed:', err.message);
+    return cached ? cached.location : null;
+  }
+}
+
+app.post('/api/track-visit', async (req, res) => {
+  try {
+    const username = normaliseUsername(req.body.username);
+    if (!username) return res.status(400).json({ error: 'username is required' });
+
+    const ip = getClientIp(req);
+    const location = await lookupLocation(ip);
+
+    const users = readJson(USERS_PATH, {});
+    const displayName = (users[username] && users[username].displayName) || username;
+
+    const usage = readJson(USAGE_PATH, {});
+    if (!usage[username]) {
+      usage[username] = {
+        displayName,
+        accessCount: 0,
+        firstAccessAt: new Date().toISOString()
+      };
+    }
+    usage[username].displayName = displayName; // keep in sync in case it changed
+    usage[username].accessCount++;
+    usage[username].lastAccessAt = new Date().toISOString();
+    usage[username].lastIp = ip;
+    usage[username].lastLocation = location;
+
+    writeJson(USAGE_PATH, usage);
+    res.json({ tracked: true });
+  } catch (err) {
+    console.error('Track visit failed:', err.message);
+    res.status(500).json({ error: 'Could not track visit' });
+  }
+});
+
+app.get('/api/usage', (req, res) => {
+  try {
+    const usage = readJson(USAGE_PATH, {});
+    const list = Object.entries(usage).map(([username, u]) => ({ username, ...u }));
+    list.sort((a, b) => new Date(b.lastAccessAt) - new Date(a.lastAccessAt));
+    res.json(list);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Could not load usage data' });
+  }
+});
+
 app.get('/healthz', (req, res) => res.send('ok'));
+
+// =========================================================
+// GITHUB SYNC (push data/questions.json back to your repo)
+// =========================================================
+// Configure via Azure App Service > Configuration > Application settings:
+//   GITHUB_TOKEN        - a fine-grained PAT with Contents: Read & write on the repo
+//   GITHUB_REPO         - e.g. "timatinsipid/CM3020-AIExamPrep"
+//   GITHUB_FILE_PATH    - e.g. "exam-prep-app/data/questions.json" (path within the repo)
+//   GITHUB_BRANCH       - e.g. "main" (defaults to main if unset)
+//   SYNC_SECRET         - any string you choose; required to trigger a sync
+//   AUTO_SYNC_HOURS     - optional; if set to a number > 0, auto-syncs on that interval
+
+async function syncQuestionsToGithub() {
+  const { GITHUB_TOKEN, GITHUB_REPO, GITHUB_FILE_PATH, GITHUB_BRANCH } = process.env;
+  if (!GITHUB_TOKEN || !GITHUB_REPO || !GITHUB_FILE_PATH) {
+    throw new Error('GitHub sync is not configured (missing GITHUB_TOKEN, GITHUB_REPO, or GITHUB_FILE_PATH app settings)');
+  }
+  const branch = GITHUB_BRANCH || 'main';
+  const apiBase = `https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_FILE_PATH}`;
+  const headers = {
+    Authorization: `Bearer ${GITHUB_TOKEN}`,
+    Accept: 'application/vnd.github+json',
+    'User-Agent': 'exam-prep-app-sync'
+  };
+
+  const content = fs.readFileSync(QUESTIONS_PATH, 'utf8');
+  const contentBase64 = Buffer.from(content, 'utf8').toString('base64');
+
+  // Get the current file's sha (needed to update an existing file); 404 means it doesn't exist yet.
+  let sha;
+  const getRes = await fetch(`${apiBase}?ref=${branch}`, { headers });
+  if (getRes.ok) {
+    const getData = await getRes.json();
+    sha = getData.sha;
+  } else if (getRes.status !== 404) {
+    const errText = await getRes.text();
+    throw new Error(`GitHub GET failed (${getRes.status}): ${errText}`);
+  }
+
+  const putRes = await fetch(apiBase, {
+    method: 'PUT',
+    headers: { ...headers, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      message: `Sync questions.json from live app (${new Date().toISOString()})`,
+      content: contentBase64,
+      branch,
+      ...(sha ? { sha } : {})
+    })
+  });
+
+  if (!putRes.ok) {
+    const errText = await putRes.text();
+    throw new Error(`GitHub PUT failed (${putRes.status}): ${errText}`);
+  }
+
+  return putRes.json();
+}
+
+app.post('/api/sync-to-github', async (req, res) => {
+  try {
+    const { SYNC_SECRET } = process.env;
+    const providedSecret = req.get('x-sync-secret') || req.body.secret;
+    if (!SYNC_SECRET) {
+      return res.status(501).json({ error: 'SYNC_SECRET is not configured on the server' });
+    }
+    if (providedSecret !== SYNC_SECRET) {
+      return res.status(401).json({ error: 'Invalid or missing sync secret' });
+    }
+    const result = await syncQuestionsToGithub();
+    res.json({ synced: true, commit: result.commit && result.commit.sha });
+  } catch (err) {
+    console.error('Sync to GitHub failed:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Optional: automatic periodic sync (requires Always On to keep the app awake)
+const autoSyncHours = parseFloat(process.env.AUTO_SYNC_HOURS);
+if (autoSyncHours > 0) {
+  const intervalMs = autoSyncHours * 60 * 60 * 1000;
+  console.log(`Auto-sync to GitHub enabled: every ${autoSyncHours} hour(s)`);
+  setInterval(() => {
+    syncQuestionsToGithub()
+      .then(() => console.log('Auto-sync to GitHub succeeded'))
+      .catch(err => console.error('Auto-sync to GitHub failed:', err.message));
+  }, intervalMs);
+}
 
 app.listen(PORT, () => {
   console.log(`Exam prep app listening on port ${PORT}`);
