@@ -1,0 +1,344 @@
+[
+  {
+    "id": 1,
+    "topic": "RL Fundamentals",
+    "week": "MDPs & Q-Learning",
+    "type": "flash",
+    "prompt": "Define action space vs state (observation) space in RL.",
+    "explanation": "",
+    "hint": "Action space = all possible moves the agent can make (e.g. up/down/left/right/fire). State space = the current configuration of the environment (e.g. position, score, lives). Actions are what CAN happen; state is what IS happening."
+  },
+  {
+    "id": 2,
+    "topic": "RL Fundamentals",
+    "week": "MDPs & Q-Learning",
+    "type": "mcq",
+    "prompt": "Which of the following best distinguishes the action space from the state space?",
+    "explanation": "Action space = agent's degrees of freedom (outputs). State space = environment's possible configurations (inputs to the agent).",
+    "options": [
+      "The action space is always larger than the state space",
+      "The action space defines the agent's possible outputs; the state space defines the environment's possible configurations",
+      "They are the same thing in reinforcement learning",
+      "The state space only exists in continuous environments"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 3,
+    "topic": "RL Fundamentals",
+    "week": "MDPs & Q-Learning",
+    "type": "flash",
+    "prompt": "What are the five key components of a Markov Decision Process (MDP)?",
+    "explanation": "",
+    "hint": "States, actions, transition probabilities, rewards, and a discount factor (gamma)."
+  },
+  {
+    "id": 4,
+    "topic": "RL Fundamentals",
+    "week": "MDPs & Q-Learning",
+    "type": "mcq",
+    "prompt": "Why is Q-learning necessary in environments where the transition dynamics are unknown?",
+    "explanation": "Q-learning is model-free: it learns Q(s,a) purely from sampled experience (s, a, r, s'), so it doesn't need the environment's transition model.",
+    "options": [
+      "Because it requires a full model of the environment to work",
+      "Because it learns action-values directly from experience without needing to know transition probabilities in advance",
+      "Because it only works in deterministic environments",
+      "Because it replaces the need for a reward signal"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 5,
+    "topic": "RL Fundamentals",
+    "week": "MDPs & Q-Learning",
+    "type": "flash",
+    "prompt": "What role does the Bellman equation play in Q-learning?",
+    "explanation": "",
+    "hint": "It defines how Q-values should be updated: Q(s,a) is updated toward r + gamma * max_a' Q(s',a'), recursively expressing the value of a state-action pair in terms of immediate reward plus discounted future value."
+  },
+  {
+    "id": 6,
+    "topic": "Exploration",
+    "week": "Q-Learning / DQN",
+    "type": "mcq",
+    "prompt": "In epsilon-greedy action selection, what action is chosen with probability (1 - epsilon)?",
+    "explanation": "With probability (1-epsilon) the agent exploits by choosing the greedy (highest Q-value) action; with probability epsilon it explores randomly.",
+    "options": [
+      "A uniformly random action",
+      "The action with the highest estimated Q-value (argmax_a Q(s,a))",
+      "The action taken in the previous time step",
+      "The action with the lowest estimated Q-value"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 7,
+    "topic": "Exploration",
+    "week": "Q-Learning / DQN",
+    "type": "flash",
+    "prompt": "Why is annealing (decaying) epsilon over training beneficial?",
+    "explanation": "",
+    "hint": "Early on, Q-value estimates are unreliable (near-random network), so high epsilon is needed for broad exploration. As estimates become reliable, decaying epsilon lets the agent exploit more, giving faster and more stable convergence. A small residual epsilon is kept so the agent doesn't get permanently stuck."
+  },
+  {
+    "id": 8,
+    "topic": "Exploration",
+    "week": "Q-Learning / DQN",
+    "type": "mcq",
+    "prompt": "What is the main risk of decaying epsilon too quickly?",
+    "explanation": "Decaying too fast means the agent stops exploring before its Q-value estimates are reliable, risking premature convergence on a suboptimal action.",
+    "options": [
+      "The agent wastes time acting randomly for too long",
+      "The agent locks into exploitation before exploring enough, risking a suboptimal policy",
+      "The Q-network will overfit to the reward function",
+      "The replay buffer will overflow"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 9,
+    "topic": "Deep Q-Networks",
+    "week": "DQN Components",
+    "type": "flash",
+    "prompt": "What is experience replay and why does it stabilise DQN training?",
+    "explanation": "",
+    "hint": "A buffer storing past (s,a,r,s') transitions, sampled in random batches for training rather than learning sequentially. This breaks correlation between consecutive samples and reuses past experience, improving stability and data efficiency."
+  },
+  {
+    "id": 10,
+    "topic": "Deep Q-Networks",
+    "week": "DQN Components",
+    "type": "flash",
+    "prompt": "What is the target network and why is it needed?",
+    "explanation": "",
+    "hint": "A separate copy of the Q-network, with its own weights, used only to compute the target value y = r + gamma * max_a' Q(s',a'; theta-). Its weights are synced from the main network only periodically. This prevents the 'moving target' problem that causes oscillation/divergence if the same constantly-updating network generated both prediction and target."
+  },
+  {
+    "id": 11,
+    "topic": "Deep Q-Networks",
+    "week": "DQN Components",
+    "type": "mcq",
+    "prompt": "What loss function is typically used to update a DQN's weights?",
+    "explanation": "DQN minimises (y - Q(s,a;theta))^2, i.e. mean squared error, via gradient descent.",
+    "options": [
+      "Cross-entropy loss between predicted and true action labels",
+      "Mean squared error between the target value y and the current Q-estimate Q(s,a;theta)",
+      "KL divergence between two policy distributions",
+      "Hinge loss on the advantage function"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 12,
+    "topic": "Deep Q-Networks",
+    "week": "DQN Components",
+    "type": "flash",
+    "prompt": "Why is a neural network used to approximate Q-values instead of a lookup table?",
+    "explanation": "",
+    "hint": "For large/continuous or high-dimensional state spaces (e.g. raw pixel frames), a tabular representation of every state-action pair is infeasible. A neural network generalises across similar states, and learns a compact function approximation instead of memorising every entry."
+  },
+  {
+    "id": 13,
+    "topic": "Deep Q-Networks",
+    "week": "DQN Components",
+    "type": "flash",
+    "prompt": "What is model capacity, and why might ~1.6 million parameters be significant for a game-playing DQN?",
+    "explanation": "",
+    "hint": "Model capacity = a network's ability to represent complex functions (controlled by depth, width, and parameter count). ~1.6M parameters gives enough representational power to map raw pixel input to Q-values across a huge state space -- too few parameters risks underfitting; too many risks overfitting to noise/limited experience."
+  },
+  {
+    "id": 14,
+    "topic": "Deep Q-Networks",
+    "week": "DQN Components",
+    "type": "mcq",
+    "prompt": "Which of these is a genuine risk of higher model capacity in a DQN trained on limited interaction data?",
+    "explanation": "With limited/noisy RL data, high-capacity networks risk memorising spurious patterns in the agent's own imperfect experience rather than generalising.",
+    "options": [
+      "The network will always underfit",
+      "The network may overfit to specific trajectories or reward noise rather than learning a generalisable policy",
+      "The network cannot represent non-linear functions",
+      "The network will require fewer convolutional layers"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 15,
+    "topic": "Bio-Inspired Computing",
+    "week": "Evolutionary Computing",
+    "type": "flash",
+    "prompt": "Define bio-inspired computing and name two specific techniques.",
+    "explanation": "",
+    "hint": "A family of techniques inspired by biological processes (evolution, swarm behaviour, neural systems) used for search/optimisation/learning. Examples: Genetic Algorithms (GAs), Particle Swarm Optimisation (PSO), Ant Colony Optimisation, NeuroEvolution."
+  },
+  {
+    "id": 16,
+    "topic": "Bio-Inspired Computing",
+    "week": "Evolutionary Computing",
+    "type": "mcq",
+    "prompt": "How does bio-inspired computing typically differ from traditional gradient-based optimisation?",
+    "explanation": "Bio-inspired methods maintain a population of candidates and use selection/variation rather than gradients, so they work on non-differentiable, poorly-understood or deceptive search spaces.",
+    "options": [
+      "It requires the objective function to be differentiable",
+      "It uses population-based, stochastic search rather than requiring gradient information or well-behaved structure",
+      "It always converges faster than gradient descent",
+      "It cannot be applied to real-world problems"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 17,
+    "topic": "Bio-Inspired Computing",
+    "week": "Genetic Algorithms",
+    "type": "flash",
+    "prompt": "Define fitness function, genotype, and phenotype, and how they relate.",
+    "explanation": "",
+    "hint": "Fitness function: measures how well a candidate performs (e.g. distance moved). Genotype: the encoded representation (e.g. bit string / real-valued vector) that the GA manipulates via mutation/crossover. Phenotype: the decoded, expressed solution (e.g. a built robot) that is tested against the fitness function. The genotype does NOT contain the fitness function -- fitness is computed after decoding."
+  },
+  {
+    "id": 18,
+    "topic": "Bio-Inspired Computing",
+    "week": "Genetic Algorithms",
+    "type": "mcq",
+    "prompt": "In a genetic algorithm, which statement correctly describes the genotype-phenotype relationship?",
+    "explanation": "Genotype (encoded) -> decoding -> phenotype (expressed solution) -> evaluated by fitness function.",
+    "options": [
+      "The genotype IS the fitness function",
+      "The phenotype is the encoded string; the genotype is the built/expressed solution",
+      "The genotype is decoded into a phenotype, which is then evaluated using a fitness function",
+      "Genotype and phenotype are interchangeable terms"
+    ],
+    "answer": 2
+  },
+  {
+    "id": 19,
+    "topic": "Bio-Inspired Computing",
+    "week": "Genetic Algorithms",
+    "type": "flash",
+    "prompt": "List the key components/operators of a genetic algorithm.",
+    "explanation": "",
+    "hint": "Selection (e.g. tournament, roulette wheel), crossover (e.g. one-point, uniform), mutation (e.g. bit-flip, Gaussian), and a fitness function to evaluate candidates."
+  },
+  {
+    "id": 20,
+    "topic": "Bio-Inspired Computing",
+    "week": "Genetic Algorithms",
+    "type": "mcq",
+    "prompt": "In tournament selection, how is a parent chosen?",
+    "explanation": "Tournament selection samples k individuals at random and picks the best among them, balancing selection pressure with diversity.",
+    "options": [
+      "The single fittest individual in the entire population is always chosen",
+      "A random subset of k individuals is sampled, and the fittest of that subset is chosen",
+      "Individuals are chosen purely at random with no regard to fitness",
+      "Parents are chosen in the order they appear in the population array"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 21,
+    "topic": "Bio-Inspired Computing",
+    "week": "Genetic Encoding",
+    "type": "flash",
+    "prompt": "Compare direct vs indirect (generative) genetic encoding.",
+    "explanation": "",
+    "hint": "Direct encoding: each gene maps explicitly to one phenotype trait (e.g. one gene = one limb length) -- simple and interpretable but scales poorly for complex structures. Indirect/generative encoding: a compact genotype is 'developed' via rules into a much larger/more complex phenotype (e.g. Cheney et al.'s soft robot generative encodings) -- more scalable and can produce modular, regular structures, but is less directly interpretable."
+  },
+  {
+    "id": 22,
+    "topic": "Bio-Inspired Computing",
+    "week": "Morphology Evolution",
+    "type": "flash",
+    "prompt": "Why is genotype-phenotype mapping important in evolved robot morphology?",
+    "explanation": "",
+    "hint": "It determines how genetic operators (mutation/crossover) translate into physical changes. A good example shows a direct/traceable mapping (e.g. one gene = one limb length) while also illustrating that small genotype changes can cause large, sometimes non-linear, phenotype changes (e.g. a robot that can no longer balance) -- a key real-world property of evolved robotics."
+  },
+  {
+    "id": 23,
+    "topic": "Bio-Inspired Computing",
+    "week": "GA vs DQN",
+    "type": "mcq",
+    "prompt": "Which is a genuine advantage of a GA-based scheduler over a model-free DQN for offline, forecast-based scheduling (e.g. HVAC)?",
+    "explanation": "A GA can search for a good schedule from scratch each cycle using known forecasts (weather, tariffs) without needing training data, whereas DQN needs experience to learn a good policy but can adapt online once trained.",
+    "options": [
+      "GAs require large amounts of training data to start producing meaningful results",
+      "GAs can directly optimise a full schedule in advance using known forecasts without needing prior training data",
+      "GAs are a black box, unlike DQN",
+      "GAs adapt online to real-time changes better than DQN"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 24,
+    "topic": "Knowledge Representation",
+    "week": "Robot Scientists",
+    "type": "flash",
+    "prompt": "What is a Robot Scientist and what is a knowledge model's role in it?",
+    "explanation": "",
+    "hint": "A Robot Scientist automates the scientific method: hypothesis generation, experiment planning/execution, and result analysis. A knowledge model (e.g. logic-based, semantic network, ontology) represents domain knowledge in a machine-processable form, supporting reasoning, hypothesis generation, and interpretation of results."
+  },
+  {
+    "id": 25,
+    "topic": "Knowledge Representation",
+    "week": "Robot Scientists",
+    "type": "mcq",
+    "prompt": "Which reasoning mode involves generating a plausible hypothesis to explain an observation (as opposed to deriving guaranteed conclusions)?",
+    "explanation": "Abduction infers the most likely explanation for an observation; deduction derives guaranteed conclusions from premises; induction generalises from repeated observations.",
+    "options": [
+      "Deduction",
+      "Induction",
+      "Abduction",
+      "Recursion"
+    ],
+    "answer": 2
+  },
+  {
+    "id": 26,
+    "topic": "Planning",
+    "week": "Classical vs Real-World Planning",
+    "type": "flash",
+    "prompt": "How do real-world planning problems differ from classical planning problems?",
+    "explanation": "",
+    "hint": "Classical planning assumes a fully known, deterministic, static environment with discrete states/actions. Real-world planning must handle uncertainty, partial observability, resource constraints, and dynamic/changing environments -- e.g. a Robot Scientist adapting its experiment plan based on incoming results."
+  },
+  {
+    "id": 27,
+    "topic": "Generative AI",
+    "week": "Transformers & Fine-Tuning",
+    "type": "flash",
+    "prompt": "Why is fine-tuning needed to adapt a pre-trained model like GPT-2 to a specific text style (e.g. song lyrics)?",
+    "explanation": "",
+    "hint": "A general-purpose pre-trained model has broad language knowledge but isn't specialised to a target domain's style/structure. Fine-tuning continues training on a smaller domain-specific dataset so the model's outputs better match the target style, without needing to train a model from scratch."
+  },
+  {
+    "id": 28,
+    "topic": "Generative AI",
+    "week": "Latent Space / VAE",
+    "type": "flash",
+    "prompt": "What is a latent space, and why is it important in generative music systems like MusicVAE?",
+    "explanation": "",
+    "hint": "A latent space is a compressed, lower-dimensional representation capturing the underlying variation in the data. In MusicVAE, exploring/interpolating within the latent space allows generation of new, musically coherent variations and smooth transitions between styles."
+  },
+  {
+    "id": 29,
+    "topic": "Generative AI",
+    "week": "Latent Space / VAE",
+    "type": "mcq",
+    "prompt": "How does a variational autoencoder (VAE) differ from a standard autoencoder?",
+    "explanation": "VAEs regularise the latent space to follow a known distribution (e.g. Gaussian), enabling meaningful sampling and generation, unlike a standard autoencoder's deterministic bottleneck.",
+    "options": [
+      "A VAE cannot reconstruct its input",
+      "A VAE learns a probabilistic latent distribution (allowing sampling/generation), whereas a standard autoencoder learns a fixed deterministic encoding",
+      "A VAE has no decoder",
+      "A VAE only works on image data"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 30,
+    "topic": "Ethics",
+    "week": "Game-Playing AI & General AI",
+    "type": "flash",
+    "prompt": "Name two ethical considerations around human-competitive AI game players.",
+    "explanation": "",
+    "hint": "e.g. fairness/accessibility of competing against superhuman AI, potential job displacement (e.g. professional players), psychological/economic impact on the gaming community, and broader concerns about AI dominance affecting game design and eSports."
+  }
+]

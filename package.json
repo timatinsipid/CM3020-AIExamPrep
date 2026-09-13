@@ -1,0 +1,16 @@
+{
+  "name": "exam-prep-app",
+  "version": "1.0.0",
+  "description": "Personalised exam-prep quiz, flashcard and pseudocode-practice tool for AI module (RL, DQN, bio-inspired computing, knowledge representation).",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

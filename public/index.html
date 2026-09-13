@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam Prep — AI Module</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <h1>AI Module Exam Prep</h1>
+  <nav>
+    <button class="tab-btn active" data-tab="quiz">Quiz</button>
+    <button class="tab-btn" data-tab="flash">Flashcards</button>
+    <button class="tab-btn" data-tab="weak">Weak Spots</button>
+    <button class="tab-btn" data-tab="add">Add Question</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- QUIZ TAB -->
+  <section id="quiz" class="tab-panel active">
+    <div class="controls">
+      <label>Topic:
+        <select id="quiz-topic-filter"><option value="">All topics</option></select>
+      </label>
+      <button id="start-quiz-btn">Start / Restart Quiz</button>
+      <span id="quiz-progress"></span>
+    </div>
+    <div id="quiz-card" class="card hidden">
+      <p class="topic-tag" id="quiz-topic-tag"></p>
+      <h2 id="quiz-question"></h2>
+      <div id="quiz-options"></div>
+      <div id="quiz-feedback" class="feedback hidden"></div>
+      <button id="next-question-btn" class="hidden">Next question →</button>
+    </div>
+    <div id="quiz-summary" class="card hidden"></div>
+  </section>
+
+  <!-- FLASHCARD TAB -->
+  <section id="flash" class="tab-panel">
+    <div class="controls">
+      <label>Topic:
+        <select id="flash-topic-filter"><option value="">All topics</option></select>
+      </label>
+      <button id="shuffle-flash-btn">Shuffle</button>
+      <span id="flash-progress"></span>
+    </div>
+    <div id="flash-card" class="card flip-card hidden">
+      <p class="topic-tag" id="flash-topic-tag"></p>
+      <div id="flash-front"></div>
+      <div id="flash-back" class="hidden"></div>
+      <div class="flash-controls">
+        <button id="flip-btn">Flip</button>
+        <button id="flash-again-btn" class="rate-btn again">Again</button>
+        <button id="flash-good-btn" class="rate-btn good">Got it</button>
+        <button id="flash-next-btn">Next →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- WEAK SPOTS TAB -->
+  <section id="weak" class="tab-panel">
+    <h2>Where you're losing marks</h2>
+    <p class="muted">Based on your quiz answers and flashcard ratings, stored locally in this browser.</p>
+    <div id="weak-list"></div>
+    <button id="reset-progress-btn">Reset all progress</button>
+  </section>
+
+  <!-- ADD QUESTION TAB -->
+  <section id="add" class="tab-panel">
+    <h2>Add a question or flashcard</h2>
+    <form id="add-form">
+      <label>Type:
+        <select id="add-type">
+          <option value="mcq">Multiple choice</option>
+          <option value="flash">Flashcard</option>
+        </select>
+      </label>
+      <label>Topic: <input id="add-topic" type="text" placeholder="e.g. Deep Q-Networks" required></label>
+      <label>Week / grouping: <input id="add-week" type="text" placeholder="e.g. DQN Components"></label>
+      <label>Prompt / question: <textarea id="add-prompt" required></textarea></label>
+
+      <div id="add-mcq-fields">
+        <label>Option A: <input class="add-opt" type="text"></label>
+        <label>Option B: <input class="add-opt" type="text"></label>
+        <label>Option C: <input class="add-opt" type="text"></label>
+        <label>Option D: <input class="add-opt" type="text"></label>
+        <label>Correct option (A/B/C/D): <input id="add-answer" type="text" maxlength="1"></label>
+      </div>
+      <div id="add-flash-fields" class="hidden">
+        <label>Hint / answer: <textarea id="add-hint"></textarea></label>
+      </div>
+
+      <label>Explanation (optional): <textarea id="add-explanation"></textarea></label>
+      <button type="submit">Save question</button>
+      <p id="add-status"></p>
+    </form>
+  </section>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
