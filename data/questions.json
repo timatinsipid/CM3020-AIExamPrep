@@ -340,5 +340,1685 @@
     "prompt": "Name two ethical considerations around human-competitive AI game players.",
     "explanation": "",
     "hint": "e.g. fairness/accessibility of competing against superhuman AI, potential job displacement (e.g. professional players), psychological/economic impact on the gaming community, and broader concerns about AI dominance affecting game design and eSports."
+  },
+  {
+    "id": 31,
+    "topic": "Game-Playing AI",
+    "week": "History & Motivation",
+    "type": "flash",
+    "prompt": "Name two historical examples of game-playing AI and the technique each relied on.",
+    "explanation": "",
+    "hint": "Deep Blue (1997, chess) used brute-force minimax search with heavy hand-tuned evaluation. AlphaGo (2016, Go) used deep neural networks combined with Monte Carlo tree search and reinforcement learning (self-play)."
+  },
+  {
+    "id": 32,
+    "topic": "Game-Playing AI",
+    "week": "History & Motivation",
+    "type": "mcq",
+    "prompt": "What core technique did Deep Blue rely on to beat Garry Kasparov in chess?",
+    "explanation": "Deep Blue used massively parallel minimax/alpha-beta search over possible move sequences, guided by a hand-engineered position evaluation function -- not learning.",
+    "options": [
+      "Deep reinforcement learning",
+      "Brute-force search with a hand-crafted evaluation function",
+      "Generative adversarial networks",
+      "Unsupervised clustering"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 33,
+    "topic": "Game-Playing AI",
+    "week": "History & Motivation",
+    "type": "mcq",
+    "prompt": "Why are games a useful structured environment for testing AI capabilities?",
+    "explanation": "Clear rules and scoring make it easy to define success and compare agents/techniques in a repeatable environment.",
+    "options": [
+      "Games have no rules, so any AI approach works equally well",
+      "Games provide clear rules, well-defined objectives/rewards, and a controllable environment for measuring performance",
+      "Games always require unsupervised learning",
+      "Games cannot be simulated computationally"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 34,
+    "topic": "Game-Playing AI",
+    "week": "History & Motivation",
+    "type": "flash",
+    "prompt": "Give one example of how advances in game-playing AI carried over into broader AI applications.",
+    "explanation": "",
+    "hint": "e.g. AlphaGo's underlying methods (deep RL + tree search) influenced later work on protein folding (AlphaFold) and general decision-making; Atari DQN techniques influenced robotics and control research."
+  },
+  {
+    "id": 35,
+    "topic": "Game-Playing AI",
+    "week": "Implementation",
+    "type": "flash",
+    "prompt": "What are the key components needed to implement a basic game-playing AI?",
+    "explanation": "",
+    "hint": "A game state representation, a way to enumerate/evaluate possible moves (move evaluation), and a decision procedure (search, heuristics, or a learned policy) for selecting actions."
+  },
+  {
+    "id": 36,
+    "topic": "Game-Playing AI",
+    "week": "Milestones",
+    "type": "mcq",
+    "prompt": "Which of these pairs correctly matches a game milestone with its year (approximately)?",
+    "explanation": "Deep Blue beat Kasparov at chess in 1997. AlphaGo (Go) was 2016; Atari DQN was ~2013-2015; Dota II (OpenAI Five) was 2019.",
+    "options": [
+      "2016 Go \u2014 Deep Blue",
+      "1997 Chess \u2014 Deep Blue",
+      "2013 Atari \u2014 AlphaGo",
+      "2019 Dota II \u2014 Deep Blue"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 37,
+    "topic": "Game-Playing AI",
+    "week": "Milestones",
+    "type": "flash",
+    "prompt": "What distinguished 'Mastering the game of Go without human knowledge' (AlphaGo Zero) from the original AlphaGo?",
+    "explanation": "",
+    "hint": "AlphaGo Zero learned purely through self-play reinforcement learning, without using any human game records for initial training, unlike the original AlphaGo which was bootstrapped from human expert games."
+  },
+  {
+    "id": 38,
+    "topic": "Game-Playing AI",
+    "week": "Human-Competitive AI",
+    "type": "mcq",
+    "prompt": "Which of the following is a genuine concern raised by human-competitive AI game players (e.g. in poker, Dota, or chess)?",
+    "explanation": "Concerns include fairness/accessibility of competing against superhuman AI, economic impact on professional players, and broader effects on eSports and game design.",
+    "options": [
+      "They make games impossible to play at all",
+      "Potential psychological, economic, and fairness impacts on human players and professional competition",
+      "They eliminate the need for game rules",
+      "They can only play deterministic games"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 39,
+    "topic": "RL Fundamentals",
+    "week": "MDPs & Q-Learning",
+    "type": "mcq",
+    "prompt": "In an MDP, what does the discount factor (gamma) control?",
+    "explanation": "Gamma (between 0 and 1) discounts future rewards -- a gamma close to 1 values long-term reward highly; close to 0 favours immediate reward.",
+    "options": [
+      "The learning rate of the neural network",
+      "How much future rewards are weighted relative to immediate rewards",
+      "The size of the action space",
+      "The exploration rate"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 40,
+    "topic": "RL Fundamentals",
+    "week": "MDPs & Q-Learning",
+    "type": "flash",
+    "prompt": "How would you represent a simple turn-based game as an MDP?",
+    "explanation": "",
+    "hint": "States = board/game configurations; Actions = legal moves available in a state; Transition probabilities = how the game state changes after a move (deterministic or stochastic); Rewards = points/win-loss signal; Discount factor = how much to value future vs immediate reward."
+  },
+  {
+    "id": 41,
+    "topic": "RL Fundamentals",
+    "week": "MDPs & Q-Learning",
+    "type": "mcq",
+    "prompt": "What does the Bellman equation express?",
+    "explanation": "Q(s,a) = r + gamma * max_a' Q(s',a') -- value is defined recursively in terms of immediate reward and discounted future value.",
+    "options": [
+      "The probability of winning a game",
+      "The value of a state-action pair as immediate reward plus the discounted value of the best subsequent action",
+      "The architecture of a neural network",
+      "The mutation rate in a genetic algorithm"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 42,
+    "topic": "RL Fundamentals",
+    "week": "Q-Learning Limitations",
+    "type": "flash",
+    "prompt": "Why does traditional (tabular) Q-learning struggle in large or continuous state spaces?",
+    "explanation": "",
+    "hint": "It requires a table entry for every state-action pair; this becomes infeasible to store or fill in as the state space grows large or continuous, motivating function approximation via neural networks (DQN)."
+  },
+  {
+    "id": 43,
+    "topic": "Deep Q-Networks",
+    "week": "DQN Components",
+    "type": "mcq",
+    "prompt": "What is the role of the neural network in a DQN?",
+    "explanation": "The neural network approximates Q(s,a) across a large/continuous state space, rather than using an infeasible lookup table.",
+    "options": [
+      "To generate random actions for exploration",
+      "To act as a function approximator, mapping states to estimated Q-values for each action",
+      "To replace the reward function",
+      "To store the replay buffer"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 44,
+    "topic": "Deep Q-Networks",
+    "week": "DQN Components",
+    "type": "flash",
+    "prompt": "Name two practical challenges of training a DQN and how experience replay / target networks address them.",
+    "explanation": "",
+    "hint": "Challenges: correlated, non-stationary training data. Experience replay breaks correlation between consecutive samples and reuses experience. The target network stabilises the regression target so it doesn't shift every step, preventing oscillation/divergence."
+  },
+  {
+    "id": 45,
+    "topic": "Deep Q-Networks",
+    "week": "Training & Evaluation",
+    "type": "mcq",
+    "prompt": "Which of these is an appropriate performance metric for evaluating a trained DQN agent?",
+    "explanation": "Cumulative reward and convergence rate (how learning curves improve over episodes) are standard RL evaluation metrics, often compared against a random-policy or fixed baseline.",
+    "options": [
+      "Number of lines of code in the implementation",
+      "Cumulative reward per episode and convergence rate over training",
+      "The exact pixel values of the game screen",
+      "The number of neurons in the input layer"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 46,
+    "topic": "Deep Q-Networks",
+    "week": "Training & Evaluation",
+    "type": "flash",
+    "prompt": "Why is it useful to compare a trained DQN agent's performance against a random policy baseline?",
+    "explanation": "",
+    "hint": "It establishes whether the agent has actually learned something meaningful, rather than just appearing to perform reasonably due to an easy environment or lenient reward shaping."
+  },
+  {
+    "id": 47,
+    "topic": "Deep Q-Networks",
+    "week": "Architectures",
+    "type": "flash",
+    "prompt": "Give one example of an alternative network architecture that could be used in a DQN, and why you might choose it.",
+    "explanation": "",
+    "hint": "e.g. Convolutional layers for raw pixel input (spatial feature extraction); recurrent layers (LSTM) for partially observable environments needing memory of past frames; deeper/wider networks for more complex state-action mappings."
+  },
+  {
+    "id": 48,
+    "topic": "Deep Q-Networks",
+    "week": "OpenAI Gym",
+    "type": "flash",
+    "prompt": "What does an OpenAI Gym environment provide to an RL agent?",
+    "explanation": "",
+    "hint": "A standard interface for resetting the environment, stepping forward by taking an action, and receiving back the next state/observation, reward, and a termination flag -- the basic environment loop for RL experimentation."
+  },
+  {
+    "id": 49,
+    "topic": "Deep Q-Networks",
+    "week": "Random Agent",
+    "type": "mcq",
+    "prompt": "What is the purpose of implementing a random agent before a learned agent in an RL project?",
+    "explanation": "A random agent gives a naive baseline; if a trained agent doesn't clearly outperform it, something is likely wrong with training.",
+    "options": [
+      "It is the final solution and requires no further work",
+      "It establishes a simple baseline to compare a learned agent's performance against",
+      "It trains the neural network",
+      "It replaces the need for a reward function"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 50,
+    "topic": "Deep Q-Networks",
+    "week": "Building Networks (Keras)",
+    "type": "flash",
+    "prompt": "What are the three basic types of layers in a simple feedforward neural network built with Keras?",
+    "explanation": "",
+    "hint": "Input layer (receives the state/feature vector), hidden layer(s) (learn intermediate representations), and output layer (produces Q-value estimates for each action)."
+  },
+  {
+    "id": 51,
+    "topic": "Exploration",
+    "week": "Q-Learning / DQN",
+    "type": "flash",
+    "prompt": "Describe the epsilon-greedy action-selection rule in one sentence.",
+    "explanation": "",
+    "hint": "With probability epsilon choose a random action (explore); otherwise choose argmax_a Q(s,a), the action with the highest estimated Q-value (exploit)."
+  },
+  {
+    "id": 52,
+    "topic": "Exploration",
+    "week": "Q-Learning / DQN",
+    "type": "mcq",
+    "prompt": "A fixed (non-annealed) epsilon value is used throughout training. What is the main downside compared to an annealed schedule?",
+    "explanation": "A fixed epsilon can't match early high-exploration needs and later high-exploitation needs -- annealing tracks the agent's growing reliability.",
+    "options": [
+      "It will always converge faster than annealing",
+      "It cannot balance exploration and exploitation optimally across the different phases of training, since the ideal balance changes as Q-estimates improve",
+      "It requires more memory",
+      "It removes the need for a Q-network entirely"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 53,
+    "topic": "Exploration",
+    "week": "Q-Learning / DQN",
+    "type": "flash",
+    "prompt": "What is the exploration-exploitation trade-off in reinforcement learning?",
+    "explanation": "",
+    "hint": "The agent must balance trying new/uncertain actions to gather information (exploration) against choosing the action currently believed best to maximise reward (exploitation). Too much of either hurts learning: too much exploration wastes time on bad actions; too much exploitation risks missing better ones."
+  },
+  {
+    "id": 54,
+    "topic": "Ethics",
+    "week": "General AI & Society",
+    "type": "flash",
+    "prompt": "Give one reason behind the general trend toward more general-purpose AI systems.",
+    "explanation": "",
+    "hint": "e.g. economies of scale from training one broad model for many tasks rather than many narrow ones; transferability of learned representations across domains; commercial demand for flexible assistants."
+  },
+  {
+    "id": 55,
+    "topic": "Ethics",
+    "week": "General AI & Society",
+    "type": "mcq",
+    "prompt": "Which is a genuine risk commonly raised about progress toward general AI?",
+    "explanation": "Common concerns: job displacement, misuse/dual-use risks, alignment/control/safety, and unequal distribution of benefits/access.",
+    "options": [
+      "It cannot ever be economically viable",
+      "Concerns include job displacement, misuse, safety/control, and unequal access to benefits",
+      "General AI systems require no training data",
+      "It removes all narrow-AI use cases"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 56,
+    "topic": "Bio-Inspired Computing",
+    "week": "Evolutionary Computing",
+    "type": "mcq",
+    "prompt": "Which of the following is NOT typically considered a bio-inspired computing technique?",
+    "explanation": "Quicksort is a classical deterministic sorting algorithm, not inspired by biological processes.",
+    "options": [
+      "Genetic Algorithms",
+      "Particle Swarm Optimisation",
+      "Ant Colony Optimisation",
+      "Quicksort"
+    ],
+    "answer": 3
+  },
+  {
+    "id": 57,
+    "topic": "Bio-Inspired Computing",
+    "week": "Evolutionary Computing",
+    "type": "flash",
+    "prompt": "State one advantage and one limitation of evolutionary computing compared to gradient-based optimisation.",
+    "explanation": "",
+    "hint": "Advantage: works on non-differentiable, discontinuous, or poorly-understood search spaces without needing gradient information. Limitation: often computationally expensive (many fitness evaluations needed) and provides no convergence guarantees."
+  },
+  {
+    "id": 58,
+    "topic": "Bio-Inspired Computing",
+    "week": "Artificial Life",
+    "type": "flash",
+    "prompt": "Define Artificial Life (ALife) and name its three commonly distinguished types.",
+    "explanation": "",
+    "hint": "ALife studies life-like processes/behaviours using artificial systems to better understand biology and problem-solving. Types: soft ALife (software simulations), hard ALife (physical robots/hardware), wet ALife (synthetic biology / biochemical systems)."
+  },
+  {
+    "id": 59,
+    "topic": "Bio-Inspired Computing",
+    "week": "Artificial Life",
+    "type": "mcq",
+    "prompt": "Which of these best describes 'hard' artificial life?",
+    "explanation": "Hard ALife refers to physically embodied/hardware-based artificial life systems (e.g. real evolved robots), as opposed to soft (software) or wet (biochemical) ALife.",
+    "options": [
+      "Purely software-based simulations of evolution",
+      "Life-like systems implemented in physical hardware, e.g. evolved or physically embodied robots",
+      "Synthetic biology experiments in wet-lab conditions",
+      "A theoretical framework with no implementations"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 60,
+    "topic": "Bio-Inspired Computing",
+    "week": "Genetic Algorithms",
+    "type": "mcq",
+    "prompt": "Which crossover method combines genes from two parents at a single randomly chosen point along the genotype?",
+    "explanation": "One-point crossover splits both parent genotypes at one point and swaps the tails; uniform crossover instead decides gene-by-gene independently.",
+    "options": [
+      "Uniform crossover",
+      "One-point crossover",
+      "Gaussian mutation",
+      "Roulette wheel selection"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 61,
+    "topic": "Bio-Inspired Computing",
+    "week": "Genetic Algorithms",
+    "type": "mcq",
+    "prompt": "In roulette wheel selection, how is the probability of an individual being selected as a parent determined?",
+    "explanation": "Roulette wheel (fitness-proportionate) selection gives fitter individuals a proportionally larger 'slice' of selection probability.",
+    "options": [
+      "Uniformly at random regardless of fitness",
+      "Proportional to the individual's fitness relative to the total population fitness",
+      "Always the single fittest individual",
+      "Inversely proportional to fitness"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 62,
+    "topic": "Bio-Inspired Computing",
+    "week": "Genetic Algorithms",
+    "type": "flash",
+    "prompt": "Compare bit-flip mutation and Gaussian mutation.",
+    "explanation": "",
+    "hint": "Bit-flip mutation: used with binary-encoded genotypes, flips a bit (0->1 or 1->0) with some probability. Gaussian mutation: used with real-valued genotypes, adds a small random value drawn from a Gaussian distribution to a gene, allowing fine-grained continuous adjustment."
+  },
+  {
+    "id": 63,
+    "topic": "Bio-Inspired Computing",
+    "week": "Population Models",
+    "type": "flash",
+    "prompt": "Compare generational and steady-state population models in a GA.",
+    "explanation": "",
+    "hint": "Generational: the entire population is replaced each generation by offspring. Steady-state: only one or a few individuals are replaced at a time, with the rest of the population persisting -- often allows faster propagation of good solutions but less population diversity turnover."
+  },
+  {
+    "id": 64,
+    "topic": "Bio-Inspired Computing",
+    "week": "GA Parameters",
+    "type": "mcq",
+    "prompt": "What is a likely effect of setting the mutation rate far too high in a genetic algorithm?",
+    "explanation": "Excessive mutation destroys beneficial genetic material faster than selection can propagate it, degrading the GA toward random search.",
+    "options": [
+      "The algorithm converges instantly to the optimal solution",
+      "Good solutions get disrupted too often, and the search behaves closer to random search, preventing convergence",
+      "The population size increases automatically",
+      "It has no effect on the search process"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 65,
+    "topic": "Bio-Inspired Computing",
+    "week": "GA Parameters",
+    "type": "flash",
+    "prompt": "How does population size typically trade off in a genetic algorithm?",
+    "explanation": "",
+    "hint": "Larger populations increase genetic diversity and reduce the risk of premature convergence, but require more fitness evaluations per generation (more computation). Smaller populations are cheaper per generation but risk converging prematurely to a local optimum."
+  },
+  {
+    "id": 66,
+    "topic": "Bio-Inspired Computing",
+    "week": "GA Applications",
+    "type": "flash",
+    "prompt": "Give one real-world problem well-suited to solving with a genetic algorithm, and explain why.",
+    "explanation": "",
+    "hint": "e.g. drug molecule design: the search space is huge, poorly understood, and not smoothly differentiable, but candidate molecules can still be scored by a fitness function (e.g. binding affinity), which is exactly what population-based stochastic search needs."
+  },
+  {
+    "id": 67,
+    "topic": "Bio-Inspired Computing",
+    "week": "Genetic Encoding",
+    "type": "mcq",
+    "prompt": "What is the key difference between direct and indirect (generative) genetic encoding?",
+    "explanation": "Direct: one-to-one gene-to-trait mapping, simple but doesn't scale well. Indirect/generative: a compact description develops into complex structure, more scalable, supports regularity/modularity.",
+    "options": [
+      "Direct encoding always produces better solutions",
+      "Direct encoding maps each gene explicitly to one phenotype trait; indirect encoding develops a compact genotype into a larger, more complex phenotype via rules",
+      "Indirect encoding cannot be mutated",
+      "There is no meaningful difference"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 68,
+    "topic": "Bio-Inspired Computing",
+    "week": "Genetic Encoding",
+    "type": "flash",
+    "prompt": "Why might indirect/generative encoding be preferred for evolving complex robot morphologies?",
+    "explanation": "",
+    "hint": "It allows a small genotype to develop into a much larger, potentially modular/repeating structure, which scales better than a direct encoding needing one gene per physical parameter, and can produce more regular, functional body plans (as seen in Cheney et al.'s soft robot work)."
+  },
+  {
+    "id": 69,
+    "topic": "Bio-Inspired Computing",
+    "week": "Developmental Process",
+    "type": "flash",
+    "prompt": "What is a 'developmental process' in the context of genetic encoding?",
+    "explanation": "",
+    "hint": "The process that translates/decodes a genetic encoding (a list of numbers) into a functional representation -- e.g. building an actual robot body and control system from the encoded values."
+  },
+  {
+    "id": 70,
+    "topic": "Bio-Inspired Computing",
+    "week": "Morphology Evolution",
+    "type": "flash",
+    "prompt": "What is a morphology-evolving system in robotics?",
+    "explanation": "",
+    "hint": "A system where a robot's physical body plan (morphology) -- not just its controller -- is evolved by a bio-inspired algorithm, allowing body and behaviour to co-adapt for better task performance."
+  },
+  {
+    "id": 71,
+    "topic": "Bio-Inspired Computing",
+    "week": "Morphology Evolution",
+    "type": "mcq",
+    "prompt": "Why might evolving morphology alongside control policy improve robot performance compared to evolving control alone?",
+    "explanation": "Body and control interact -- e.g. a differently-shaped limb might make walking trivial with a much simpler controller. Co-evolution can exploit this synergy.",
+    "options": [
+      "Morphology has no effect on behaviour",
+      "A body shape well-suited to the task can make certain behaviours much easier to achieve, so co-evolving both can find synergistic solutions a fixed body couldn't",
+      "It removes the need for a fitness function",
+      "It guarantees a globally optimal robot design"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 72,
+    "topic": "Bio-Inspired Computing",
+    "week": "PyBullet Simulation",
+    "type": "flash",
+    "prompt": "What is the difference between offline and online simulation in PyBullet for evolving robots?",
+    "explanation": "",
+    "hint": "Offline simulation runs a predefined, fixed set of robot movements/commands and observes the outcome. Online simulation lets robot behaviour evolve/adapt dynamically during the simulation run, e.g. reacting to sensor feedback in real time."
+  },
+  {
+    "id": 73,
+    "topic": "Bio-Inspired Computing",
+    "week": "URDF",
+    "type": "flash",
+    "prompt": "What is a URDF file used for?",
+    "explanation": "",
+    "hint": "URDF (Unified Robot Description Format) is an XML-based format that defines a robot's morphology: its links (physical parts with mass/inertia/dimensions), joints (e.g. fixed, revolute, prismatic), and how they connect -- used to load robot models into simulators like PyBullet."
+  },
+  {
+    "id": 74,
+    "topic": "Bio-Inspired Computing",
+    "week": "URDF",
+    "type": "mcq",
+    "prompt": "Which joint type in URDF allows continuous rotation around a single axis (like a hinge)?",
+    "explanation": "Revolute joints rotate around an axis (like a hinge or elbow); prismatic joints slide linearly; fixed joints don't move at all.",
+    "options": [
+      "Fixed",
+      "Revolute",
+      "Prismatic",
+      "Floating"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 75,
+    "topic": "Ethics",
+    "week": "Automated Design",
+    "type": "flash",
+    "prompt": "Name two ethical concerns specific to automated design of evolving robotic systems.",
+    "explanation": "",
+    "hint": "e.g. bias in what the fitness function rewards (may encode unintended values), safety of physically evolved/unpredictable morphologies, accountability when an evolved design fails or causes harm, and reduced human oversight/interpretability of the design process."
+  },
+  {
+    "id": 76,
+    "topic": "Bio-Inspired Computing",
+    "week": "Challenges in Evolving Morphologies",
+    "type": "flash",
+    "prompt": "What is the 'reality gap' / simulation-to-reality transfer problem in evolutionary robotics?",
+    "explanation": "",
+    "hint": "Robots evolved and tested purely in simulation often perform worse (or fail entirely) when transferred to physical hardware, because the simulation doesn't perfectly capture real-world physics, sensor noise, and manufacturing imperfections."
+  },
+  {
+    "id": 77,
+    "topic": "Bio-Inspired Computing",
+    "week": "Challenges in Evolving Morphologies",
+    "type": "mcq",
+    "prompt": "Which of these is a genuine trade-off in evolving robot morphologies?",
+    "explanation": "Richer, more adaptable morphologies expand the search space and complicate both evolution and physical fabrication/testing.",
+    "options": [
+      "More flexibility and adaptability always comes at zero cost in complexity",
+      "Greater morphological flexibility/adaptability typically increases design complexity and the size of the search space",
+      "Fabrication constraints are irrelevant to evolutionary robotics",
+      "Simulation always perfectly predicts real-world performance"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 78,
+    "topic": "Bio-Inspired Computing",
+    "week": "State-of-the-Art Examples",
+    "type": "flash",
+    "prompt": "Name one state-of-the-art example of an evolving robot/neural network system and briefly explain its significance.",
+    "explanation": "",
+    "hint": "e.g. Lipson & Pollack's automatically designed and 3D-printed robotic lifeforms (2000) -- an early demonstration of evolving both morphology and control without human design. Or Cheney et al.'s soft robots with generative encodings enabling multi-material, modular body evolution."
+  },
+  {
+    "id": 79,
+    "topic": "Generative AI",
+    "week": "Generative Systems Overview",
+    "type": "flash",
+    "prompt": "Define a generative system in your own words and give one example.",
+    "explanation": "",
+    "hint": "A system that learns patterns/structure from training data and can produce new, similar content (rather than just classifying or predicting a label). Example: a text generator trained on a document that produces new, stylistically similar text."
+  },
+  {
+    "id": 80,
+    "topic": "Generative AI",
+    "week": "Generative Systems Overview",
+    "type": "mcq",
+    "prompt": "Which of these is a limitation commonly observed in simple generative text systems trained on a single document?",
+    "explanation": "With limited data, generative systems often echo the source material closely rather than producing broadly novel, coherent content.",
+    "options": [
+      "They always produce perfectly grammatical, highly original text",
+      "They can overfit to the training text's specific structure/phrases and struggle to generalise or produce genuinely novel content",
+      "They require no training data at all",
+      "They cannot generate any text"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 81,
+    "topic": "Generative AI",
+    "week": "Transformers & Fine-Tuning",
+    "type": "mcq",
+    "prompt": "What does 'fine-tuning' a pre-trained language model like GPT-2 involve?",
+    "explanation": "Fine-tuning adapts an already-trained model's weights using additional domain-specific data, rather than training from scratch.",
+    "options": [
+      "Training a brand-new model from randomly initialised weights",
+      "Continuing training of an already pre-trained model on a smaller, domain-specific dataset to adapt its outputs to a target style/task",
+      "Deleting the model's existing weights",
+      "Only changing the model's output length parameter"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 82,
+    "topic": "Generative AI",
+    "week": "Transformers & Fine-Tuning",
+    "type": "flash",
+    "prompt": "Name two hyperparameters/settings that affect GPT-2 text generation quality via the Hugging Face pipeline.",
+    "explanation": "",
+    "hint": "e.g. temperature (controls randomness -- higher values produce more diverse/less predictable text), max_length (controls output length), top-k / top-p sampling (restricts the candidate token pool at each generation step)."
+  },
+  {
+    "id": 83,
+    "topic": "Generative AI",
+    "week": "Self-Attention & Transformers",
+    "type": "flash",
+    "prompt": "What does self-attention allow a transformer model to do that RNNs/LSTMs struggle with?",
+    "explanation": "",
+    "hint": "Self-attention lets the model weigh the relevance of every other token in the sequence directly, regardless of distance, capturing long-range dependencies in parallel -- whereas RNNs/LSTMs process sequentially and can struggle to retain information over long distances."
+  },
+  {
+    "id": 84,
+    "topic": "Generative AI",
+    "week": "Self-Attention & Transformers",
+    "type": "mcq",
+    "prompt": "Why are transformer architectures generally well-suited to text-generation tasks compared to older sequence models?",
+    "explanation": "Self-attention captures context across the whole sequence and enables efficient parallel training, unlike the sequential bottleneck in RNNs/LSTMs.",
+    "options": [
+      "They process tokens strictly one at a time with no parallelism",
+      "Their self-attention mechanism captures long-range contextual dependencies and can be trained more efficiently in parallel across a sequence",
+      "They cannot be pre-trained on large corpora",
+      "They require hand-crafted grammar rules"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 85,
+    "topic": "Generative AI",
+    "week": "Latent Space / VAE",
+    "type": "flash",
+    "prompt": "How can you generate musically coherent 'new' pieces by manipulating a model's latent space (e.g. MusicVAE)?",
+    "explanation": "",
+    "hint": "By sampling new points in the latent space, or interpolating between the latent encodings of two existing pieces, then decoding those points back into music -- nearby points in a well-structured latent space tend to produce musically similar/coherent output."
+  },
+  {
+    "id": 86,
+    "topic": "Generative AI",
+    "week": "Latent Space / VAE",
+    "type": "flash",
+    "prompt": "Give one real-world application of VAEs beyond music generation.",
+    "explanation": "",
+    "hint": "e.g. image generation/denoising, anomaly detection (unusual inputs reconstruct poorly), drug molecule generation, or data compression."
+  },
+  {
+    "id": 87,
+    "topic": "Ethics",
+    "week": "AI Creativity",
+    "type": "flash",
+    "prompt": "How does AI-based voice/singing synthesis challenge traditional notions of creativity?",
+    "explanation": "",
+    "hint": "It raises questions about whether a system that recombines learned patterns from training data (without lived experience or intention) can be considered 'creative' in the same sense as a human performer, or whether it's better understood as sophisticated pattern imitation."
+  },
+  {
+    "id": 88,
+    "topic": "Generative AI",
+    "week": "Speech Synthesis",
+    "type": "flash",
+    "prompt": "Name one historical speech synthesis technique/system and one modern one, and contrast their approaches.",
+    "explanation": "",
+    "hint": "Historical: the Voder/Vocoder (mid-20th century) used hand-engineered electronic circuits to manipulate speech-like signals. Modern: DiffSinger uses a diffusion-based deep learning model trained on large datasets to generate high-quality synthesized singing directly from data."
+  },
+  {
+    "id": 89,
+    "topic": "Generative AI",
+    "week": "Speech Synthesis",
+    "type": "mcq",
+    "prompt": "What role do diffusion-based models like DiffSinger play in modern speech/singing synthesis?",
+    "explanation": "Diffusion models generate output by learning to reverse a noise-adding process, producing high-fidelity audio through iterative refinement.",
+    "options": [
+      "They use rule-based phoneme concatenation with no learning",
+      "They learn to generate high-quality audio by iteratively refining a noisy signal into a realistic waveform/spectrogram, guided by learned data patterns",
+      "They require no training data at all",
+      "They only work for spoken (non-singing) speech"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 90,
+    "topic": "Ethics",
+    "week": "Theories of Creativity",
+    "type": "flash",
+    "prompt": "Contrast the Skinnerian and Dewian views of creativity.",
+    "explanation": "",
+    "hint": "Skinnerian (behaviourist): creativity arises from reinforced behavioural variation -- novel responses are 'selected' by their consequences, similar to operant conditioning. Dewian: creativity is tied to experience, reflection, and continuous growth/development through interaction with an environment, rather than just reinforced output variation."
+  },
+  {
+    "id": 91,
+    "topic": "Ethics",
+    "week": "Machine vs Human Creativity",
+    "type": "mcq",
+    "prompt": "Which of these is a genuinely contested question in evaluating machine creativity?",
+    "explanation": "A core debate is whether statistical pattern generation/recombination constitutes genuine creativity, or only imitates surface features of creative output without originality/intent.",
+    "options": [
+      "Whether machines can execute code",
+      "Whether a system that recombines and generalises from training data patterns can be considered 'truly' creative or merely imitative",
+      "Whether machines require electricity",
+      "Whether creativity requires a keyboard"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 92,
+    "topic": "Knowledge Representation",
+    "week": "Scientific Discovery Systems",
+    "type": "flash",
+    "prompt": "Name two historical or notable automated scientific discovery systems.",
+    "explanation": "",
+    "hint": "e.g. the Robot Scientist 'Adam' (automated hypothesis generation and yeast gene-function experiments), the Robot Scientist 'Eve' (drug repositioning for neglected tropical diseases), and 'A mobile robotic chemist' (Burger et al., autonomous chemistry experimentation)."
+  },
+  {
+    "id": 93,
+    "topic": "Knowledge Representation",
+    "week": "Robot Scientists",
+    "type": "flash",
+    "prompt": "Describe the key features/components of a Robot Scientist.",
+    "explanation": "",
+    "hint": "Hypothesis generation (often using a knowledge model), automated experiment planning/design, physical or simulated experiment execution, and automated analysis of results to refine or generate new hypotheses -- forming a closed-loop scientific process."
+  },
+  {
+    "id": 94,
+    "topic": "Knowledge Representation",
+    "week": "Robot Scientists",
+    "type": "mcq",
+    "prompt": "How does a Robot Scientist typically use experimental results to improve future research?",
+    "explanation": "Robot Scientists form a closed loop: results feed back into hypothesis refinement and future experiment design/optimisation.",
+    "options": [
+      "Results are discarded after each experiment",
+      "Results are analysed (often with machine learning) to refine existing hypotheses and inform the design of the next experiment",
+      "Results are only used for record-keeping with no further analysis",
+      "Results replace the need for hypotheses entirely"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 95,
+    "topic": "Knowledge Representation",
+    "week": "Legal & Ethical (Automated Discovery)",
+    "type": "flash",
+    "prompt": "Name one legal and one ethical consideration raised by automated scientific discovery.",
+    "explanation": "",
+    "hint": "Legal: intellectual property attribution when an AI system generates a novel hypothesis/discovery, and regulatory approval processes for AI-derived findings (e.g. in drug discovery). Ethical: transparency of the reasoning process, accountability when conclusions are wrong, and the appropriate degree of human oversight."
+  },
+  {
+    "id": 96,
+    "topic": "Knowledge Representation",
+    "week": "Knowledge Models",
+    "type": "flash",
+    "prompt": "What is a knowledge model, and name two machine-processable formats used to encode one.",
+    "explanation": "",
+    "hint": "A structured representation of domain knowledge that a machine can reason over. Formats include: RDF (Resource Description Framework), OWL (Web Ontology Language), XML, and JSON-based structured schemas."
+  },
+  {
+    "id": 97,
+    "topic": "Knowledge Representation",
+    "week": "Knowledge Models",
+    "type": "mcq",
+    "prompt": "Which factor is NOT typically used to evaluate the suitability of a knowledge model for AI-based scientific reasoning?",
+    "explanation": "Suitability is judged on accuracy, completeness, and efficiency of representation/reasoning -- not on how many people built it.",
+    "options": [
+      "Accuracy",
+      "Completeness",
+      "Efficiency",
+      "The number of researchers who designed it"
+    ],
+    "answer": 3
+  },
+  {
+    "id": 98,
+    "topic": "Knowledge Representation",
+    "week": "Hypothesis Generation",
+    "type": "flash",
+    "prompt": "Distinguish abduction, induction, and deduction in the context of hypothesis generation.",
+    "explanation": "",
+    "hint": "Deduction: derives guaranteed conclusions from given premises (top-down, certain). Induction: generalises a pattern from repeated specific observations (bottom-up, probabilistic). Abduction: infers the most plausible explanation for an observation (best guess, not guaranteed)."
+  },
+  {
+    "id": 99,
+    "topic": "Knowledge Representation",
+    "week": "Hypothesis Generation",
+    "type": "mcq",
+    "prompt": "A Robot Scientist observes an unexpected experimental result and proposes the most likely biological mechanism to explain it. Which reasoning mode is this?",
+    "explanation": "Proposing the most plausible explanation for an observation (without certainty) is abductive reasoning.",
+    "options": [
+      "Deduction",
+      "Abduction",
+      "Random search",
+      "Gradient descent"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 100,
+    "topic": "Planning",
+    "week": "Classical vs Real-World Planning",
+    "type": "mcq",
+    "prompt": "Which of these is a defining characteristic of a CLASSICAL planning problem (as opposed to real-world planning)?",
+    "explanation": "Classical planning assumes a fully observable, deterministic, static world -- real-world planning must instead handle uncertainty, partial observability, and dynamic conditions.",
+    "options": [
+      "Uncertainty about action outcomes and partial observability",
+      "Fully known, deterministic, discrete states and actions",
+      "Continuously changing goals during execution",
+      "Multiple agents acting simultaneously and unpredictably"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 101,
+    "topic": "Planning",
+    "week": "Robot Scientist Experiment Planning",
+    "type": "flash",
+    "prompt": "Outline the key steps of planning an experiment with a Robot Scientist.",
+    "explanation": "",
+    "hint": "Formulate a hypothesis (often via abduction from prior data/knowledge model), design an experiment expected to discriminate between competing hypotheses, select/optimise experimental parameters for efficiency and accuracy, execute the experiment, then analyse results to refine hypotheses."
+  },
+  {
+    "id": 102,
+    "topic": "Planning",
+    "week": "Robot Scientist Experiment Planning",
+    "type": "mcq",
+    "prompt": "Why might a Robot Scientist prioritise experiments that best discriminate between competing hypotheses, rather than simply repeating the same test?",
+    "explanation": "Choosing maximally discriminating experiments is a form of active/optimal experiment design, reducing the number of experiments needed to converge on the correct hypothesis.",
+    "options": [
+      "To use up more laboratory resources",
+      "To maximise the information gained per experiment, improving the efficiency of the overall scientific discovery process",
+      "Because repeated experiments are prohibited",
+      "Because hypotheses cannot be compared"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 103,
+    "topic": "Knowledge Representation",
+    "week": "Automated Discovery Critique",
+    "type": "flash",
+    "prompt": "Give one strength and one limitation of the Robot Scientist approach to automated scientific discovery.",
+    "explanation": "",
+    "hint": "Strength: can run experiments tirelessly, systematically, and often faster/cheaper than humans, exploring hypothesis spaces exhaustively. Limitation: dependent on the quality/completeness of its knowledge model and experiment design assumptions -- it may miss insights that require creative leaps or context outside its encoded knowledge."
+  },
+  {
+    "id": 104,
+    "topic": "Knowledge Representation",
+    "week": "Meta-Machine Learning",
+    "type": "flash",
+    "prompt": "What is meta-machine learning, and how does it differ from traditional machine learning?",
+    "explanation": "",
+    "hint": "Meta-machine learning is 'learning to learn' -- using ML to automate or optimise aspects of the ML process itself (e.g. model selection, hyperparameter tuning, or algorithm design), rather than learning to perform a single fixed task directly from data."
+  },
+  {
+    "id": 105,
+    "topic": "Knowledge Representation",
+    "week": "Meta-Machine Learning",
+    "type": "mcq",
+    "prompt": "What is a key advantage of applying meta-machine learning in automated scientific research?",
+    "explanation": "Meta-ML automates parts of the ML pipeline itself, reducing manual effort and potentially discovering more effective approaches faster.",
+    "options": [
+      "It removes the need for any data at all",
+      "It can automate model/algorithm selection and tuning, speeding up and scaling the research process with less manual trial-and-error",
+      "It guarantees scientifically correct conclusions",
+      "It only works for image classification tasks"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 106,
+    "topic": "Case Studies",
+    "week": "Tutoring App (RL Design)",
+    "type": "flash",
+    "prompt": "In the personalised maths tutoring case study, what should the state vector capture?",
+    "explanation": "",
+    "hint": "Fine-grained per-topic mastery estimates, recent correct/incorrect response history, time taken per problem, and hint-usage rate -- not just coarse course-level averages."
+  },
+  {
+    "id": 107,
+    "topic": "Case Studies",
+    "week": "Tutoring App (RL Design)",
+    "type": "mcq",
+    "prompt": "Why is 'mastery gain' (change in estimated mastery after an exercise) often preferred as a reward signal over final grades in a tutoring RL system?",
+    "explanation": "Dense, immediate reward signals are much easier for an RL agent to learn from than sparse, delayed ones like end-of-term grades.",
+    "options": [
+      "Grades are the only meaningful signal",
+      "Mastery gain gives a dense, immediate training signal, whereas grades are sparse and delayed",
+      "Mastery gain cannot be computed",
+      "Grades update every second"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 108,
+    "topic": "Case Studies",
+    "week": "Tutoring App (Knowledge Representation)",
+    "type": "flash",
+    "prompt": "What role does a knowledge graph with prerequisite relationships play alongside an RL-based tutoring agent?",
+    "explanation": "",
+    "hint": "It constrains the action space sensibly (e.g. don't suggest quadratics before basic algebra is mastered) using explicit domain knowledge, so the RL agent doesn't need to learn prerequisite structure purely from trial and error -- often combined with a mastery-estimation model like Bayesian Knowledge Tracing."
+  },
+  {
+    "id": 109,
+    "topic": "Case Studies",
+    "week": "HVAC Energy Optimiser (GA Design)",
+    "type": "flash",
+    "prompt": "In the smart building energy optimiser case study, what should be encoded in the genotype (and what should NOT)?",
+    "explanation": "",
+    "hint": "Genotype encodes the schedule to be optimised: HVAC set-points per time-slot per zone, and device start times. It should NOT encode the state/forecast data (weather, tariffs, occupancy) -- those are context used to evaluate a genotype's fitness, not something the GA evolves."
+  },
+  {
+    "id": 110,
+    "topic": "Case Studies",
+    "week": "HVAC Energy Optimiser (GA Design)",
+    "type": "mcq",
+    "prompt": "In the HVAC scheduling GA, how should comfort be incorporated into the fitness function?",
+    "explanation": "A combined weighted fitness (cost + carbon + comfort penalty) ensures the GA doesn't sacrifice comfort purely to minimise energy cost.",
+    "options": [
+      "It should be ignored entirely -- only cost matters",
+      "As a penalty term combined with cost/carbon, so schedules that save energy at the expense of comfort are penalised rather than rewarded",
+      "As a hard constraint that always overrides cost",
+      "Comfort cannot be quantified"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 111,
+    "topic": "Case Studies",
+    "week": "HVAC Energy Optimiser (Constraint Handling)",
+    "type": "flash",
+    "prompt": "Give one example each of a hard constraint (handled by repair/rejection) and a soft constraint (handled by penalty) in the HVAC scheduling problem.",
+    "explanation": "",
+    "hint": "Hard constraint: pipes must not freeze -- handled by repair (clamping temperature to a safe minimum) or rejecting infeasible schedules outright. Soft constraint: slight occupant temperature discomfort -- handled via a graduated penalty in the fitness function rather than outright rejection."
+  },
+  {
+    "id": 112,
+    "topic": "Case Studies",
+    "week": "GA vs DQN Deployment",
+    "type": "mcq",
+    "prompt": "For a new smart-building deployment with no historical operational data yet, which approach can safely run from day one, and why?",
+    "explanation": "GA-based or symbolic planning approaches can operate correctly from the outset without needing accumulated interaction data, unlike a DQN which needs substantial training experience.",
+    "options": [
+      "DQN, because it requires no data to perform well",
+      "The symbolic/GA-based approach, because it doesn't require training data and can compute a schedule directly via search/optimisation using known forecasts",
+      "Neither approach can be used without data",
+      "DQN, because it is always faster to compute"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 113,
+    "topic": "Deep Q-Networks",
+    "week": "DQN Pseudocode",
+    "type": "flash",
+    "prompt": "In DQN pseudocode, what is sampled from the replay buffer before computing the loss?",
+    "explanation": "",
+    "hint": "A random minibatch of past transitions (state, action, reward, next state), rather than using only the single most recent transition -- this is what 'experience replay' refers to operationally."
+  },
+  {
+    "id": 114,
+    "topic": "Deep Q-Networks",
+    "week": "DQN Pseudocode",
+    "type": "mcq",
+    "prompt": "In the DQN target calculation y = r + gamma * max_a' Q(s', a'; theta-), which network's weights does theta- refer to?",
+    "explanation": "theta- denotes the target network's weights, which are periodically synced from the main network (theta) rather than updated every step.",
+    "options": [
+      "The main/online Q-network, updated every step",
+      "The separate target network, updated only periodically",
+      "A randomly initialised network used only once",
+      "The replay buffer's internal weights"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 115,
+    "topic": "Deep Q-Networks",
+    "week": "DQN Pseudocode",
+    "type": "flash",
+    "prompt": "What happens to epsilon at the end of each step/episode in the standard DQN training loop?",
+    "explanation": "",
+    "hint": "It is decayed (annealed) toward a small minimum value, gradually shifting the agent's behaviour from mostly exploring to mostly exploiting its learned Q-values."
+  },
+  {
+    "id": 116,
+    "topic": "Bio-Inspired Computing",
+    "week": "GA Pseudocode",
+    "type": "flash",
+    "prompt": "In GA pseudocode, what typically happens to the single best individual under an 'elitism' replacement strategy?",
+    "explanation": "",
+    "hint": "It is carried over unchanged into the next generation, guaranteeing the population's best-found fitness never gets worse from one generation to the next."
+  },
+  {
+    "id": 117,
+    "topic": "Bio-Inspired Computing",
+    "week": "GA Pseudocode",
+    "type": "mcq",
+    "prompt": "What is a reasonable termination criterion for a genetic algorithm?",
+    "explanation": "GAs typically terminate after a maximum generation count or when fitness improvement plateaus (convergence).",
+    "options": [
+      "Running forever with no stopping condition",
+      "A fixed maximum number of generations, or convergence (fitness no longer improving)",
+      "Stopping after exactly one generation regardless of fitness",
+      "Stopping the moment the population is initialised"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 118,
+    "topic": "Bio-Inspired Computing",
+    "week": "GA Pseudocode",
+    "type": "flash",
+    "prompt": "Why is a typical GA mutation rate much lower (e.g. 0.01-0.05) than a typical crossover application rate?",
+    "explanation": "",
+    "hint": "Mutation introduces small random perturbations to maintain diversity and avoid getting stuck in local optima; if set too high, it disrupts good solutions faster than selection can propagate them, effectively turning the search into random search."
+  },
+  {
+    "id": 119,
+    "topic": "Deep Q-Networks",
+    "week": "Model Capacity",
+    "type": "mcq",
+    "prompt": "Which scenario best illustrates 'underfitting' in a neural network used for Q-value approximation?",
+    "explanation": "Underfitting = insufficient capacity to model the true relationship, leading to poor performance even on training data.",
+    "options": [
+      "The network perfectly memorises training experience but fails on new states",
+      "The network is too simple to capture the relationship between states and Q-values, performing poorly even on states it has already seen",
+      "The network has too many parameters relative to available data",
+      "The network uses experience replay"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 120,
+    "topic": "Deep Q-Networks",
+    "week": "Model Capacity",
+    "type": "flash",
+    "prompt": "What controls a neural network's capacity, and how does capacity relate to overfitting/underfitting?",
+    "explanation": "",
+    "hint": "Controlled by depth (number of layers), width (neurons per layer), total parameter count, and architecture choice. Too little capacity risks underfitting (can't capture the pattern); too much risks overfitting (memorises noise instead of generalising)."
+  },
+  {
+    "id": 121,
+    "topic": "Bio-Inspired Computing",
+    "week": "Definitions",
+    "type": "mcq",
+    "prompt": "Bio-inspired computing is best described as:",
+    "explanation": "It's a broad family of techniques (GAs, swarm intelligence, neuroevolution, etc.), not one single algorithm or hardware approach.",
+    "options": [
+      "A single specific algorithm for sorting data",
+      "A family of computational techniques drawing inspiration from biological processes such as evolution, swarm behaviour, or neural systems",
+      "A hardware-only approach to computing",
+      "A subfield concerned exclusively with robotics"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 122,
+    "topic": "Bio-Inspired Computing",
+    "week": "Definitions",
+    "type": "flash",
+    "prompt": "How does bio-inspired computing typically handle problems with very large, non-differentiable search spaces?",
+    "explanation": "",
+    "hint": "By using population-based stochastic search (multiple candidate solutions evaluated and evolved via selection, crossover, mutation) rather than requiring gradient information, which such search spaces often lack."
+  },
+  {
+    "id": 123,
+    "topic": "RL Fundamentals",
+    "week": "MDPs & Q-Learning",
+    "type": "mcq",
+    "prompt": "Which of the following is an example of a continuous action space?",
+    "explanation": "A steering angle over a real-valued range is continuous; the others are discrete finite sets.",
+    "options": [
+      "{up, down, left, right}",
+      "A steering angle chosen from -90 to +90 degrees",
+      "{fire, don't fire}",
+      "{rock, paper, scissors}"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 124,
+    "topic": "RL Fundamentals",
+    "week": "MDPs & Q-Learning",
+    "type": "flash",
+    "prompt": "Why is a small, discrete action space generally easier to learn a good policy for than a huge or continuous one?",
+    "explanation": "",
+    "hint": "Fewer possible actions per state means less to search/estimate accurately -- the agent needs fewer samples to get a reliable Q-value estimate for each action, making the learning problem more tractable."
+  },
+  {
+    "id": 125,
+    "topic": "Exploration",
+    "week": "Q-Learning / DQN",
+    "type": "flash",
+    "prompt": "What residual value is epsilon typically annealed down to (rather than exactly zero), and why keep it non-zero?",
+    "explanation": "",
+    "hint": "A small value like 0.01-0.1. Keeping it non-zero ensures the agent keeps sampling a little, guarding against a confidently wrong Q-estimate in some rarely-visited state, and allowing adaptation if conditions change."
+  },
+  {
+    "id": 126,
+    "topic": "Deep Q-Networks",
+    "week": "DQN Components",
+    "type": "mcq",
+    "prompt": "Which of these correctly completes the DQN loss function? Loss = ...",
+    "explanation": "The DQN loss is the mean squared error between the target y (computed via the target network) and the current network's Q-estimate.",
+    "options": [
+      "(Q(s,a;theta) - Q(s,a;theta-))",
+      "(y - Q(s,a;theta))^2, where y is the target computed via the target network",
+      "max_a Q(s,a;theta)",
+      "r + gamma"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 127,
+    "topic": "Deep Q-Networks",
+    "week": "DQN Components",
+    "type": "flash",
+    "prompt": "Describe, in one sentence, why training a Q-network directly on the very latest transition (no replay buffer) tends to be unstable.",
+    "explanation": "",
+    "hint": "Consecutive transitions are highly correlated (similar states/actions in sequence), which violates the independent-samples assumption behind stable gradient-based training and causes oscillation or divergence."
+  },
+  {
+    "id": 128,
+    "topic": "Bio-Inspired Computing",
+    "week": "Genetic Algorithms",
+    "type": "mcq",
+    "prompt": "What does a fitness function do in a genetic algorithm?",
+    "explanation": "The fitness function scores each phenotype's performance, which selection then uses to decide who reproduces.",
+    "options": [
+      "Encodes the candidate solution as a bit string",
+      "Assigns each candidate a numerical score measuring how well it performs the target task, used to guide selection",
+      "Performs crossover between two parents",
+      "Decides the population size"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 129,
+    "topic": "Bio-Inspired Computing",
+    "week": "Genetic Algorithms",
+    "type": "flash",
+    "prompt": "Why must a genotype be structured so that mutation and crossover produce valid (or repairable) offspring?",
+    "explanation": "",
+    "hint": "If genetic operators can easily produce invalid/nonsensical genotypes, most offspring will be wasted or need heavy repair, slowing the search -- a well-designed encoding keeps most randomly perturbed offspring meaningful and decodable."
+  },
+  {
+    "id": 130,
+    "topic": "Bio-Inspired Computing",
+    "week": "Genotype-Phenotype Mapping",
+    "type": "mcq",
+    "prompt": "What real-world property of genotype-phenotype mappings do evolved robot morphologies often illustrate?",
+    "explanation": "Evolved robotics often shows that a small change in one gene (e.g. limb length) can non-linearly disrupt balance or gait -- an important, sometimes brittle, property of such mappings.",
+    "options": [
+      "Genotype changes never affect the phenotype",
+      "Small genotype mutations can sometimes cause large, non-linear phenotype effects (e.g. a robot that can no longer balance)",
+      "Phenotypes are always identical regardless of genotype",
+      "The mapping is always one-to-one and perfectly linear"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 131,
+    "topic": "Deep Q-Networks",
+    "week": "Model Capacity",
+    "type": "mcq",
+    "prompt": "Roughly how many trainable parameters might a DQN processing raw Atari pixel frames plausibly have, to adequately capture the complexity of the mapping from pixels to Q-values?",
+    "explanation": "A convolutional DQN over pixel input typically needs on the order of a million or more parameters to represent the complex visual-to-action-value mapping.",
+    "options": [
+      "Around 10",
+      "Around 1.6 million",
+      "Around 3",
+      "It needs zero trainable parameters"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 132,
+    "topic": "Case Studies",
+    "week": "Tutoring App (RL Design)",
+    "type": "mcq",
+    "prompt": "Which action set is appropriately grained for an RL agent choosing individual tutoring exercises (as opposed to a coarse course-level agent)?",
+    "explanation": "The fine-grained exercise/hint-level action set matches the actual per-problem decision the tutoring system needs to make, unlike coarse course-level actions.",
+    "options": [
+      "{study more, take tests, attend seminars}",
+      "{present easier problem, present harder problem, give hint, switch topic}",
+      "{pass course, fail course}",
+      "{enroll, drop out}"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 133,
+    "topic": "Case Studies",
+    "week": "HVAC Energy Optimiser (Algorithm)",
+    "type": "flash",
+    "prompt": "In the HVAC GA case study, what does 'decoding a genotype into a phenotype' concretely mean?",
+    "explanation": "",
+    "hint": "Interpreting the encoded schedule (set-point/start-time genes) as an actual simulated day of building operation, which can then be scored by simulating its energy cost, carbon impact, and comfort outcome against forecast data."
+  },
+  {
+    "id": 134,
+    "topic": "Ethics",
+    "week": "Automated Design",
+    "type": "mcq",
+    "prompt": "Why is 'accountability' a distinct ethical concern from 'bias' in automated/evolved system design?",
+    "explanation": "Bias is about fairness of outcomes; accountability is about responsibility and oversight when something goes wrong -- related but distinct ethical dimensions.",
+    "options": [
+      "They are the same concern under different names",
+      "Bias concerns whether the system's outputs unfairly favour or disadvantage certain outcomes/groups; accountability concerns who is responsible when an automated/evolved design causes harm or fails",
+      "Accountability only applies to symbolic AI, never to evolved systems",
+      "Bias cannot occur in evolved systems"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 135,
+    "topic": "Generative AI",
+    "week": "Latent Space / VAE",
+    "type": "mcq",
+    "prompt": "What does 'interpolating' between two points in a latent space typically produce when decoded?",
+    "explanation": "A well-structured latent space supports smooth interpolation -- decoded intermediate points tend to blend meaningfully between the two original examples.",
+    "options": [
+      "Random unrelated noise with no structure",
+      "A smooth, musically/visually coherent transition between the two original encoded examples",
+      "An exact copy of one of the two original inputs only",
+      "An error, since interpolation is not supported"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 136,
+    "topic": "Knowledge Representation",
+    "week": "Knowledge Models",
+    "type": "flash",
+    "prompt": "Why might an ontology (e.g. in OWL) be preferred over a plain JSON structure for a scientific knowledge model?",
+    "explanation": "",
+    "hint": "Ontologies formally define relationships, hierarchies, and constraints between concepts (e.g. class/subclass, logical axioms) enabling automated reasoning and consistency checking, which a plain JSON structure does not natively support."
+  },
+  {
+    "id": 137,
+    "topic": "Planning",
+    "week": "Real-World Planning Challenges",
+    "type": "flash",
+    "prompt": "Give one example of uncertainty a real-world planner (e.g. a Robot Scientist) must handle that a classical planner does not.",
+    "explanation": "",
+    "hint": "e.g. noisy or ambiguous experimental readings, equipment failures/unexpected delays, or the outcome of an experiment not perfectly matching any of the anticipated hypotheses."
+  },
+  {
+    "id": 138,
+    "topic": "Game-Playing AI",
+    "week": "Milestones",
+    "type": "flash",
+    "prompt": "What made Libratus/Pluribus (poker AI) a particularly hard problem compared to games like chess or Go?",
+    "explanation": "",
+    "hint": "Poker is a game of imperfect information (hidden opponent cards) and involves bluffing/deception, unlike chess/Go which are perfect-information games -- requiring the AI to reason under uncertainty about hidden state and opponent strategy."
+  },
+  {
+    "id": 139,
+    "topic": "Game-Playing AI",
+    "week": "Milestones",
+    "type": "mcq",
+    "prompt": "What distinguishes Dota II (OpenAI Five) as an AI challenge compared to single-agent Atari games?",
+    "explanation": "Dota II adds team coordination, long time horizons, and partial observability -- a much richer multi-agent RL challenge than single-agent Atari.",
+    "options": [
+      "It has a much smaller action space than Atari",
+      "It requires long-term strategic planning and coordination among multiple cooperating agents in a complex, partially observable environment",
+      "It has no reward signal at all",
+      "It is a fully solved, deterministic game"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 140,
+    "topic": "Bio-Inspired Computing",
+    "week": "GA vs Traditional Search",
+    "type": "flash",
+    "prompt": "Give one reason a GA might be preferred over exhaustive/brute-force search for a large combinatorial problem.",
+    "explanation": "",
+    "hint": "Exhaustive search scales combinatorially and becomes computationally infeasible as the problem grows; a GA can find good (though not guaranteed optimal) solutions in a fraction of the evaluations by focusing search on promising regions via selection pressure."
+  },
+  {
+    "id": 141,
+    "topic": "Deep Q-Networks",
+    "week": "Replay Buffer Size",
+    "type": "flash",
+    "prompt": "What is a trade-off in choosing the size of the experience replay buffer?",
+    "explanation": "",
+    "hint": "A larger buffer retains more diverse past experience (reducing correlation, improving stability) but may include very old/stale experience from an outdated policy; a smaller buffer stays more current but risks more correlated, less diverse samples."
+  },
+  {
+    "id": 142,
+    "topic": "Bio-Inspired Computing",
+    "week": "Selection Methods",
+    "type": "mcq",
+    "prompt": "Compared to roulette wheel selection, what is a key advantage of tournament selection?",
+    "explanation": "Roulette wheel selection can be skewed heavily by one or two very high-fitness outliers; tournament selection's relative, local comparison is more robust to this.",
+    "options": [
+      "It guarantees the worst individual is always chosen",
+      "It is less sensitive to a few individuals having disproportionately huge fitness values dominating selection",
+      "It cannot be used with real-valued fitness",
+      "It always selects only the single best individual in the population"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 143,
+    "topic": "Planning",
+    "week": "Classical vs Real-World Planning",
+    "type": "flash",
+    "prompt": "Give one example of a resource constraint that a real-world planner might need to handle but a classical planner typically ignores.",
+    "explanation": "",
+    "hint": "e.g. limited lab equipment/reagents for a Robot Scientist, limited compute/time budget, or energy/battery constraints for a physical robot -- classical planning usually assumes unlimited resources for available actions."
+  },
+  {
+    "id": 144,
+    "topic": "Planning",
+    "week": "Robot Scientist Result Analysis",
+    "type": "mcq",
+    "prompt": "What role does machine learning typically play in a Robot Scientist's analysis of experimental results?",
+    "explanation": "ML techniques help interpret data, update belief in competing hypotheses, and guide the choice of the next experiment -- closing the discovery loop.",
+    "options": [
+      "It has no role -- results are analysed manually only",
+      "It helps interpret data patterns, update mastery/probability estimates of hypotheses, and suggest which hypothesis to test next",
+      "It replaces the need for any experiment at all",
+      "It is only used to store raw data with no interpretation"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 145,
+    "topic": "Planning",
+    "week": "Robot Scientist Result Analysis",
+    "type": "flash",
+    "prompt": "Give one example of how a Robot Scientist might adapt its approach after an experiment's results.",
+    "explanation": "",
+    "hint": "e.g. if a result contradicts a leading hypothesis, it may lower that hypothesis's probability and prioritise testing an alternative; or if results are ambiguous, it may design a follow-up experiment specifically to disambiguate between remaining hypotheses."
+  },
+  {
+    "id": 146,
+    "topic": "Ethics",
+    "week": "Automated Discovery",
+    "type": "flash",
+    "prompt": "Give one intellectual-property concern raised by automated scientific discovery.",
+    "explanation": "",
+    "hint": "Who (or what) should be credited/own a discovery made substantially by an AI system -- the researchers who built the system, the organisation that ran it, or no one, since current IP law is generally built around human inventorship."
+  },
+  {
+    "id": 147,
+    "topic": "Ethics",
+    "week": "Automated Discovery",
+    "type": "mcq",
+    "prompt": "Which is a genuine argument in favour of increasing automation in scientific discovery?",
+    "explanation": "Automation's main strength is scale and consistency of exploration/experimentation, not infallibility or removing the need for oversight.",
+    "options": [
+      "It removes all possibility of error",
+      "It can explore hypothesis spaces more exhaustively and run repetitive experiments faster/cheaper than human researchers",
+      "It requires no human oversight ever",
+      "It guarantees ethically sound conclusions"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 148,
+    "topic": "Exploration",
+    "week": "Q-Learning / DQN",
+    "type": "flash",
+    "prompt": "How does the exploration strategy needed for a tutoring RL agent differ in stakes from an Atari-playing DQN?",
+    "explanation": "",
+    "hint": "In a tutoring context, poor early (highly exploratory) actions directly affect a real student's learning experience, so unconstrained random exploration is riskier -- often mitigated with simulation/offline pretraining or constraining the action space with a knowledge graph, unlike an Atari agent where random early play has no real-world cost."
+  },
+  {
+    "id": 149,
+    "topic": "Exploration",
+    "week": "Q-Learning / DQN",
+    "type": "mcq",
+    "prompt": "In a safety-sensitive deployment (e.g. tutoring students), what is one practical mitigation for the risks of epsilon-greedy exploration during early training?",
+    "explanation": "Simulation/offline pretraining and knowledge-constrained action spaces reduce the risk of harmful random actions being taken on real users during exploration.",
+    "options": [
+      "Set epsilon to 1.0 permanently",
+      "Pretrain or validate the policy in simulation/offline data before exposing it to real users, and/or constrain the action space with domain knowledge",
+      "Remove the reward function entirely",
+      "Only ever use a random policy in production"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 150,
+    "topic": "Case Studies",
+    "week": "Tutoring App (Evaluation)",
+    "type": "flash",
+    "prompt": "Name two evaluation metrics appropriate for a personalised tutoring RL system, beyond raw grades.",
+    "explanation": "",
+    "hint": "e.g. mastery-gain per session, retention (performance on the same skill after a delay, checking it isn't just short-term recall), hint-dependency over time (declining is good), and engagement/completion rate."
+  },
+  {
+    "id": 151,
+    "topic": "Case Studies",
+    "week": "Tutoring App (Evaluation)",
+    "type": "mcq",
+    "prompt": "Why is retention (performance on a skill days/weeks later) a more informative metric than immediate post-exercise accuracy alone?",
+    "explanation": "A system could inflate immediate accuracy without producing lasting learning; retention testing checks for genuine, durable mastery gain.",
+    "options": [
+      "Immediate accuracy is always more informative",
+      "It checks whether the system produced durable learning rather than just short-term memorisation of the most recent exercise",
+      "Retention cannot be measured",
+      "Retention is unrelated to learning quality"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 152,
+    "topic": "Case Studies",
+    "week": "HVAC Energy Optimiser (Evaluation)",
+    "type": "flash",
+    "prompt": "Name two evaluation metrics for the HVAC energy optimiser beyond total cost saved.",
+    "explanation": "",
+    "hint": "e.g. carbon emissions reduced, number/severity of comfort constraint violations, and peak demand reduction (avoiding costly demand spikes on the grid)."
+  },
+  {
+    "id": 153,
+    "topic": "Case Studies",
+    "week": "HVAC Energy Optimiser (Ethics)",
+    "type": "flash",
+    "prompt": "What is meant by 'equitable comfort across zones' as an ethical consideration in the HVAC case study?",
+    "explanation": "",
+    "hint": "Ensuring the optimiser doesn't systematically sacrifice comfort in some zones/rooms (e.g. lower-priority areas) more than others purely to minimise overall cost -- fairness in how comfort trade-offs are distributed across occupants/zones."
+  },
+  {
+    "id": 154,
+    "topic": "Bio-Inspired Computing",
+    "week": "Fitness Function Design",
+    "type": "mcq",
+    "prompt": "What can go wrong if a fitness function only rewards a single narrow objective (e.g. pure speed) in an evolved robot?",
+    "explanation": "This is a classic 'reward hacking'/specification-gaming problem in evolutionary and RL systems: optimising a narrow proxy metric can produce unintended, exploitative behaviour.",
+    "options": [
+      "The GA will refuse to run",
+      "The evolved solution may exploit unintended shortcuts (e.g. an unstable but fast-falling gait) that technically maximise fitness but aren't the intended real-world solution",
+      "The genotype will become invalid",
+      "Fitness functions cannot cause unintended behaviour"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 155,
+    "topic": "Bio-Inspired Computing",
+    "week": "Fitness Function Design",
+    "type": "flash",
+    "prompt": "What is 'reward hacking' (or fitness function exploitation), and why is it relevant to both GAs and RL?",
+    "explanation": "",
+    "hint": "When an agent/evolved solution finds an unintended way to maximise the reward/fitness signal that doesn't match the designer's actual intent (e.g. an evolved creature that 'cheats' physics simulation glitches to score highly). Both GA fitness functions and RL reward functions are vulnerable because both processes optimise exactly what is measured, not what is intended."
+  },
+  {
+    "id": 156,
+    "topic": "Bio-Inspired Computing",
+    "week": "NeuroEvolution",
+    "type": "flash",
+    "prompt": "What is NeuroEvolution and how does it relate to genetic algorithms?",
+    "explanation": "",
+    "hint": "NeuroEvolution uses evolutionary algorithms (like GAs) to evolve neural network weights and/or architectures, instead of (or alongside) gradient-based training -- useful when gradients are unavailable, noisy, or when jointly searching over architecture and weights."
+  },
+  {
+    "id": 157,
+    "topic": "Bio-Inspired Computing",
+    "week": "NeuroEvolution",
+    "type": "mcq",
+    "prompt": "In which scenario might NeuroEvolution be preferred over standard gradient-based neural network training?",
+    "explanation": "NeuroEvolution is useful precisely where gradients are unavailable or unreliable, or when architecture search is also needed -- gradient descent needs a differentiable, well-defined loss.",
+    "options": [
+      "When the objective function is smooth and differentiable with abundant labelled data",
+      "When the reward/fitness signal is sparse, non-differentiable, or the network architecture itself should be searched over",
+      "When training speed is the only concern and data is abundant",
+      "NeuroEvolution is never preferred over gradient descent"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 158,
+    "topic": "Deep Q-Networks",
+    "week": "Q-Learning Update Rule",
+    "type": "flash",
+    "prompt": "Write out the tabular Q-learning update rule in words.",
+    "explanation": "",
+    "hint": "Q(s,a) is updated toward the old estimate plus a learning-rate-scaled correction: new_Q(s,a) = old_Q(s,a) + alpha * [r + gamma * max_a' Q(s',a') - old_Q(s,a)] -- nudging the estimate toward the observed reward plus discounted best future value."
+  },
+  {
+    "id": 159,
+    "topic": "Deep Q-Networks",
+    "week": "Q-Learning Update Rule",
+    "type": "mcq",
+    "prompt": "In the Q-learning update rule, what does the learning rate (alpha) control?",
+    "explanation": "Alpha scales how much the Q-value estimate moves toward the newly observed target each update -- too high risks instability, too low risks very slow learning.",
+    "options": [
+      "How much future reward is discounted",
+      "How large a step is taken toward the new target estimate on each update",
+      "The size of the replay buffer",
+      "The number of actions available"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 160,
+    "topic": "RL Fundamentals",
+    "week": "Reward Shaping",
+    "type": "flash",
+    "prompt": "What is reward shaping, and why must it be done carefully?",
+    "explanation": "",
+    "hint": "Designing intermediate/auxiliary rewards to guide an agent toward a goal faster than a sparse final reward alone would. Done carelessly, it risks unintentionally rewarding behaviour that doesn't actually align with the true objective (a form of reward hacking)."
+  },
+  {
+    "id": 161,
+    "topic": "RL Fundamentals",
+    "week": "Sparse vs Dense Reward",
+    "type": "mcq",
+    "prompt": "What is a key challenge of a sparse reward signal (e.g. reward only given at the very end of a long episode)?",
+    "explanation": "Sparse rewards make the credit-assignment problem harder -- the agent struggles to work out which of many earlier actions contributed to the eventual outcome.",
+    "options": [
+      "It always leads to faster learning",
+      "It gives the agent very little feedback to attribute credit to specific earlier actions, making learning slow or unstable",
+      "It removes the need for exploration",
+      "It only occurs in supervised learning"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 162,
+    "topic": "Game-Playing AI",
+    "week": "Fairness in AI Game Benchmarks",
+    "type": "flash",
+    "prompt": "Give one dimension of 'fairness' relevant when comparing AI and human performance in a game benchmark.",
+    "explanation": "",
+    "hint": "e.g. reaction-time/perception advantages (AI may perceive/react far faster than physically possible for humans), information access (does the AI see exactly what a human would see, or extra hidden information), or practice time/computational resources used to train the AI versus a human's lifetime of practice."
+  },
+  {
+    "id": 163,
+    "topic": "Game-Playing AI",
+    "week": "Mario AI Competition",
+    "type": "flash",
+    "prompt": "What made the Mario AI Championship a useful benchmark for game-playing AI research?",
+    "explanation": "",
+    "hint": "It combined real-time platforming decision-making, procedurally varied levels, and (in some tracks) level-generation challenges, providing a more open-ended, generalisation-focused testbed than static board games like chess."
+  },
+  {
+    "id": 164,
+    "topic": "Generative AI",
+    "week": "Creativity Evaluation",
+    "type": "flash",
+    "prompt": "Name one criterion sometimes used to evaluate whether a computational system's output is 'creative'.",
+    "explanation": "",
+    "hint": "e.g. novelty (is the output sufficiently different from training examples), value/usefulness (does it serve some purpose or have aesthetic merit), and surprise (does it defy simple expectations) -- criteria discussed in frameworks like Boden's or Jordanous's models of computational creativity."
+  },
+  {
+    "id": 165,
+    "topic": "Generative AI",
+    "week": "Creativity Evaluation",
+    "type": "mcq",
+    "prompt": "Which of these best reflects a standard critique of purely statistical/pattern-based generative systems' claim to 'creativity'?",
+    "explanation": "A recurring critique is that pattern recombination, however impressive, may not meet stronger definitions of creativity requiring intent, understanding, or genuinely novel conceptual leaps.",
+    "options": [
+      "They are always considered fully creative with no debate",
+      "They may recombine and interpolate learned patterns impressively, but critics question whether this constitutes genuine novelty/intent versus sophisticated imitation",
+      "They cannot produce any novel-looking output",
+      "Creativity evaluation is irrelevant to generative AI"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 166,
+    "topic": "Knowledge Representation",
+    "week": "Ontologies",
+    "type": "mcq",
+    "prompt": "What is the main purpose of an ontology in knowledge representation?",
+    "explanation": "Ontologies formally capture domain concepts and their relationships (e.g. class hierarchies, properties, constraints), supporting machine reasoning over the domain.",
+    "options": [
+      "To store raw unstructured text with no relationships",
+      "To formally define concepts, categories, and the relationships between them within a domain, enabling structured reasoning",
+      "To compress data for storage efficiency only",
+      "To replace the need for any database"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 167,
+    "topic": "Knowledge Representation",
+    "week": "Semantic Networks",
+    "type": "flash",
+    "prompt": "What is a semantic network, as a knowledge representation approach?",
+    "explanation": "",
+    "hint": "A graph-based representation where nodes represent concepts and labelled edges represent relationships between them (e.g. 'is-a', 'part-of'), allowing reasoning by traversing these relationships."
+  },
+  {
+    "id": 168,
+    "topic": "Bio-Inspired Computing",
+    "week": "Automation of Science",
+    "type": "flash",
+    "prompt": "What is the significance of the 'Robot Scientist Adam' project?",
+    "explanation": "",
+    "hint": "It was among the first systems to autonomously generate scientific hypotheses (about yeast gene function), design and physically run experiments to test them, and interpret results -- demonstrating a full closed-loop automated scientific discovery process."
+  },
+  {
+    "id": 169,
+    "topic": "Bio-Inspired Computing",
+    "week": "Automation of Science",
+    "type": "mcq",
+    "prompt": "What was notable about the Robot Scientist project's drug-repositioning work (e.g. against neglected tropical diseases)?",
+    "explanation": "It showed automated hypothesis generation and experimentation could efficiently identify repurposing candidates, a genuine practical application of automated discovery.",
+    "options": [
+      "It required no experimentation at all",
+      "It demonstrated automated discovery could identify promising existing drugs for new disease targets faster/cheaper than traditional methods",
+      "It only worked on already-approved treatments with no new findings",
+      "It replaced all human researchers in drug discovery"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 170,
+    "topic": "Deep Q-Networks",
+    "week": "Double DQN / Extensions",
+    "type": "flash",
+    "prompt": "What problem does Double DQN address compared to standard DQN?",
+    "explanation": "",
+    "hint": "Standard DQN tends to overestimate Q-values because the same network both selects the best next action and evaluates it. Double DQN decouples selection (main network) from evaluation (target network) to reduce this overestimation bias."
+  },
+  {
+    "id": 171,
+    "topic": "Deep Q-Networks",
+    "week": "Rainbow / Extensions",
+    "type": "flash",
+    "prompt": "What is the general idea behind the 'Rainbow' DQN variant?",
+    "explanation": "",
+    "hint": "It combines several independent improvements to DQN (e.g. Double DQN, prioritised experience replay, dueling networks, multi-step returns, distributional RL, noisy nets) into a single agent, since these improvements were shown to be largely complementary."
+  },
+  {
+    "id": 172,
+    "topic": "Bio-Inspired Computing",
+    "week": "Encoding Applications",
+    "type": "mcq",
+    "prompt": "Which application is a better fit for direct genetic encoding rather than indirect/generative encoding?",
+    "explanation": "Direct encoding is simplest and most interpretable for small, fixed parameter sets; indirect/generative encoding scales better for large, complex, or repetitive structures.",
+    "options": [
+      "Evolving a highly complex, modular soft-robot body with many repeated segments",
+      "A simple problem with a small, fixed number of independent parameters (e.g. a handful of specific robot joint angles)",
+      "Evolving deep neural network architectures with millions of weights",
+      "Evolving repeating fractal-like robot morphologies"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 173,
+    "topic": "Ethics",
+    "week": "Roboethics",
+    "type": "flash",
+    "prompt": "Name one general roboethics concern relevant to deploying autonomous/evolved robotic systems in real-world settings.",
+    "explanation": "",
+    "hint": "e.g. safety around unpredictable evolved behaviours, appropriate levels of human oversight/override, liability when a robot causes harm, and the broader social/economic impact of automation on jobs."
+  },
+  {
+    "id": 174,
+    "topic": "Ethics",
+    "week": "Fairness in Game AI",
+    "type": "mcq",
+    "prompt": "Which of these is one of the 'dimensions of fairness' proposed for comparing humans and AI in game benchmarks (Canaan et al.)?",
+    "explanation": "Fairness dimensions include perceptual/motor advantages, information access, and practice/training resource parity -- not implementation details like UI colour or code length.",
+    "options": [
+      "Colour of the game's user interface",
+      "Perceptual and motor advantages the AI may have over humans (e.g. reaction time, precision)",
+      "The programming language used to build the AI",
+      "The number of lines of code in the AI"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 175,
+    "topic": "RL Fundamentals",
+    "week": "Function Approximation",
+    "type": "flash",
+    "prompt": "What is function approximation in reinforcement learning, and why is it needed for large state spaces?",
+    "explanation": "",
+    "hint": "Using a parameterised function (e.g. a neural network) to estimate value/Q-functions instead of storing exact values for every state or state-action pair -- necessary because tabular storage becomes infeasible as the state space grows large or continuous."
+  },
+  {
+    "id": 176,
+    "topic": "Case Studies",
+    "week": "Tutoring App (Constraint Handling)",
+    "type": "flash",
+    "prompt": "How can the knowledge graph in the tutoring case study act as a constraint on the RL agent's action space?",
+    "explanation": "",
+    "hint": "By restricting which exercises/topics are eligible to be suggested at a given time to those whose prerequisites are already estimated as mastered, so the RL agent only chooses among pedagogically valid actions rather than learning that constraint purely through trial and error."
   }
 ]
