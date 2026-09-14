@@ -2236,5 +2236,77 @@
       "A single training example processed in isolation"
     ],
     "answer": 2
+  },
+  {
+    "id": 195,
+    "topic": "Knowledge Representation",
+    "week": "Ontologies",
+    "type": "flash",
+    "prompt": "Define an ontology in knowledge representation.",
+    "explanation": "",
+    "hint": "A formal, structured representation of the concepts within a domain and the relationships between them (e.g. class/subclass hierarchies, properties, constraints), expressed in a machine-processable format (e.g. OWL, RDF) so software can reason over the domain rather than just store text about it."
+  },
+  {
+    "id": 196,
+    "topic": "Knowledge Representation",
+    "week": "Ontologies",
+    "type": "mcq",
+    "prompt": "Which of these best defines an ontology, as used in AI knowledge representation?",
+    "explanation": "An ontology formally encodes concepts and relationships in a machine-readable form, enabling automated reasoning -- unlike plain text or raw data with no defined structure.",
+    "options": [
+      "A database table storing raw experimental measurements with no defined relationships",
+      "A free-text document summarising a domain for human readers",
+      "A single fixed algorithm for reasoning about any domain",
+      "A formal, structured representation of a domain's concepts and the relationships between them, in a machine-processable format"
+    ],
+    "answer": 3
+  },
+  {
+    "id": 197,
+    "topic": "Knowledge Representation",
+    "week": "RDF",
+    "type": "flash",
+    "prompt": "What is an RDF triple, and what are its three parts?",
+    "explanation": "",
+    "hint": "RDF (Resource Description Framework) represents a single fact as a subject-predicate-object statement, e.g. (Experiment_42, hasResult, PositiveGrowth). Subject = the entity being described; predicate = the relationship/property; object = the related value or entity."
+  },
+  {
+    "id": 198,
+    "topic": "Knowledge Representation",
+    "week": "RDF",
+    "type": "mcq",
+    "prompt": "In the RDF triple (Yeast_Strain_12, testedInExperiment, Experiment_58), what role does 'testedInExperiment' play?",
+    "explanation": "RDF triples follow subject-predicate-object structure; 'testedInExperiment' is the predicate linking the subject (Yeast_Strain_12) to the object (Experiment_58).",
+    "options": [
+      "It is the subject of the statement",
+      "It is the object of the statement",
+      "It is a separate, unrelated fourth element",
+      "It is the predicate, expressing the relationship between the subject and object"
+    ],
+    "answer": 3
+  },
+  {
+    "id": 199,
+    "topic": "Knowledge Representation",
+    "week": "RDF",
+    "type": "flash",
+    "prompt": "Why is representing facts as RDF triples useful for a Robot Scientist's knowledge base?",
+    "explanation": "",
+    "hint": "A large collection of simple subject-predicate-object facts can be queried and traversed by software to find relationships (e.g. 'find all experiments that tested Hypothesis_7'), supporting automated reasoning and hypothesis generation, in a way plain unstructured text cannot."
+  },
+  {
+    "id": 200,
+    "topic": "Knowledge Representation",
+    "week": "RDF",
+    "type": "mcq",
+    "prompt": "Which of these is a well-formed RDF triple for a robot scientist domain?",
+    "explanation": "A valid RDF triple has exactly three parts in subject-predicate-object order; the other options are missing a part or use non-RDF notation.",
+    "options": [
+      "(Gene_YBR166C, ProteinSynthesisRegulation)",
+      "(Gene_YBR166C, hasFunction, ProteinSynthesisRegulation)",
+      "(hasFunction: Gene_YBR166C = ProteinSynthesisRegulation)",
+      "Gene_YBR166C.hasFunction()"
+    ],
+    "answer": 1
   }
 ]
