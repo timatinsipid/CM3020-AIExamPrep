@@ -99,6 +99,30 @@ username/displayName, not the PIN), so you won't be asked to log in again on
 the same device — but you will on a new device/browser, and a "Switch user"
 button in the header lets you swap identities on a shared machine.
 
+### Smart review mode
+
+Both the Quiz and Flashcards tabs have a "Smart review (weak, new, or stale)"
+checkbox. When ticked, instead of quizzing on everything in the selected
+topic, it narrows the pool to questions that need attention:
+
+- **Weak** — your recorded accuracy on that question is below 70%.
+- **New** — you've never attempted it before.
+- **Stale** — you got it right consistently, but haven't seen it in the
+  last 3 days (a simple spaced-repetition nudge, so mastered material still
+  resurfaces occasionally rather than being dropped forever).
+
+Anything you're both doing well on *and* have reviewed recently is left out
+of this mode, since that's exactly the material that doesn't need
+revisiting yet. The 3-day staleness window and 70% threshold are constants
+(`WEAK_ACCURACY_THRESHOLD`, `STALE_MS`) near the top of `filterToWeak()` in
+`public/app.js` if you want to tune them.
+
+This relies on `lastAttemptAt` timestamps recorded server-side in
+`data/progress.json` from this point forward — any progress recorded
+*before* this update won't have a timestamp, so it's treated as due for
+review the first time smart review mode runs (a reasonable default, since
+there's no way to know when it was actually last seen).
+
 ### Usage tracking
 
 The **Usage** tab shows, per name: how many times the app has been opened,

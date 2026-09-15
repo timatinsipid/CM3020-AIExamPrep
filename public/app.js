@@ -121,6 +121,28 @@ async function resetStats() {
   await fetch(`/api/progress?username=${encodeURIComponent(currentUser.username)}`, { method: 'DELETE' });
 }
 
+// Filters a question pool down to a "smart review" set: questions that are
+// weak (accuracy below threshold), never seen before, or not seen recently —
+// i.e. everything except questions you're both good at AND have reviewed lately.
+const WEAK_ACCURACY_THRESHOLD = 0.7;
+const STALE_MS = 3 * 24 * 60 * 60 * 1000; // 3 days
+
+async function filterToWeak(pool) {
+  const stats = await loadStats();
+  const now = Date.now();
+  return pool.filter(q => {
+    const s = stats[q.id];
+    if (!s) return true; // never seen — include
+    const total = s.correct + s.incorrect;
+    if (total === 0) return true;
+    const accuracy = s.correct / total;
+    if (accuracy < WEAK_ACCURACY_THRESHOLD) return true; // weak
+    if (!s.lastAttemptAt) return true; // no timestamp on record (older data) — treat as due for review
+    const age = now - new Date(s.lastAttemptAt).getTime();
+    return age > STALE_MS; // seen before and doing fine, but it's been a while
+  });
+}
+
 // ---------- Tabs ----------
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -162,16 +184,20 @@ function shuffle(arr) {
   return a;
 }
 
-document.getElementById('start-quiz-btn').addEventListener('click', () => {
+document.getElementById('start-quiz-btn').addEventListener('click', async () => {
   const topic = document.getElementById('quiz-topic-filter').value;
+  const weakOnly = document.getElementById('quiz-weak-only').checked;
   let pool = allQuestions.filter(q => q.type === 'mcq');
   if (topic) pool = pool.filter(q => q.topic === topic);
+  if (weakOnly) pool = await filterToWeak(pool);
   quizQueue = shuffle(pool);
   quizIndex = 0;
   quizScore = 0;
   document.getElementById('quiz-summary').classList.add('hidden');
   if (quizQueue.length === 0) {
-    alert('No multiple-choice questions for that topic yet.');
+    alert(weakOnly
+      ? 'Nothing needs review right now — you\'ve seen everything in this topic recently and are doing well on all of it.'
+      : 'No multiple-choice questions for that topic yet.');
     return;
   }
   document.getElementById('quiz-card').classList.remove('hidden');
@@ -233,15 +259,21 @@ document.getElementById('next-question-btn').addEventListener('click', () => {
 // ---------- FLASHCARDS ----------
 document.getElementById('shuffle-flash-btn').addEventListener('click', startFlashcards);
 document.getElementById('flash-topic-filter').addEventListener('change', startFlashcards);
+document.getElementById('flash-weak-only').addEventListener('change', startFlashcards);
 
-function startFlashcards() {
+async function startFlashcards() {
   const topic = document.getElementById('flash-topic-filter').value;
+  const weakOnly = document.getElementById('flash-weak-only').checked;
   let pool = allQuestions.filter(q => q.type === 'flash');
   if (topic) pool = pool.filter(q => q.topic === topic);
+  if (weakOnly) pool = await filterToWeak(pool);
   flashQueue = shuffle(pool);
   flashIndex = 0;
   if (flashQueue.length === 0) {
     document.getElementById('flash-card').classList.add('hidden');
+    if (weakOnly) {
+      alert('Nothing needs review right now — you\'ve seen everything in this topic recently and are doing well on all of it.');
+    }
     return;
   }
   document.getElementById('flash-card').classList.remove('hidden');

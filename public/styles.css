@@ -213,3 +213,13 @@ form label { display: block; margin-bottom: 0.75rem; font-size: 0.9rem; }
 }
 
 .data-table th { color: var(--muted); font-weight: 600; }
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.checkbox-label input { width: auto; }

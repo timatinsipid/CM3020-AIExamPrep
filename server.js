@@ -153,6 +153,7 @@ app.post('/api/progress', (req, res) => {
     if (!allProgress[username][questionId]) allProgress[username][questionId] = { correct: 0, incorrect: 0 };
     if (correct) allProgress[username][questionId].correct++;
     else allProgress[username][questionId].incorrect++;
+    allProgress[username][questionId].lastAttemptAt = new Date().toISOString();
     writeJson(PROGRESS_PATH, allProgress);
     res.json(allProgress[username]);
   } catch (err) {
