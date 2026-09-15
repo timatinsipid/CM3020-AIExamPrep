@@ -180,10 +180,28 @@ app.delete('/api/progress', (req, res) => {
 // USAGE TRACKING (name, access count, best-effort IP location)
 // =========================================================
 
+function stripPort(ip) {
+  if (!ip) return ip;
+  ip = ip.trim();
+  // Bracketed IPv6 with a port, e.g. [::1]:54321
+  if (ip.startsWith('[')) {
+    const closeBracket = ip.indexOf(']');
+    if (closeBracket !== -1) return ip.slice(1, closeBracket);
+  }
+  // IPv4 with a port, e.g. 203.0.113.5:54321 — Azure's X-Forwarded-For includes this.
+  // (Plain IPv6 addresses contain multiple colons and no dot, so this only
+  // matches the "one colon, and it looks like IPv4" case.)
+  const parts = ip.split(':');
+  if (parts.length === 2 && parts[0].includes('.')) {
+    return parts[0];
+  }
+  return ip;
+}
+
 function getClientIp(req) {
   const forwarded = req.headers['x-forwarded-for'];
-  if (forwarded) return forwarded.split(',')[0].trim();
-  return req.ip;
+  const raw = forwarded ? forwarded.split(',')[0].trim() : req.ip;
+  return stripPort(raw);
 }
 
 async function lookupLocation(ip) {
@@ -199,9 +217,15 @@ async function lookupLocation(ip) {
   }
   try {
     const res = await fetch(`https://ipapi.co/${ip}/json/`);
-    if (!res.ok) return cached ? cached.location : null;
+    if (!res.ok) {
+      console.error(`IP lookup HTTP error for ${ip}: status ${res.status}`);
+      return cached ? cached.location : null;
+    }
     const data = await res.json();
-    if (data.error) return cached ? cached.location : null;
+    if (data.error) {
+      console.error(`IP lookup API error for ${ip}: ${data.reason || 'unknown reason'}`);
+      return cached ? cached.location : null;
+    }
     const location = {
       city: data.city || null,
       region: data.region || null,
@@ -211,7 +235,7 @@ async function lookupLocation(ip) {
     writeJson(IP_CACHE_PATH, cache);
     return location;
   } catch (err) {
-    console.error('IP lookup failed:', err.message);
+    console.error(`IP lookup failed for ${ip}:`, err.message);
     return cached ? cached.location : null;
   }
 }
