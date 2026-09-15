@@ -2308,5 +2308,86 @@
       "Gene_YBR166C.hasFunction()"
     ],
     "answer": 1
+  },
+  {
+    "id": 201,
+    "topic": "Planning",
+    "week": "Action Schemas",
+    "type": "flash",
+    "prompt": "What are the three main parts of a classical planning action schema?",
+    "explanation": "",
+    "hint": "Parameters (the variables the action operates on, e.g. a patient or medication), preconditions (conditions over world state that must hold for the action to be applicable), and effects (how the action changes world state once performed)."
+  },
+  {
+    "id": 202,
+    "topic": "Planning",
+    "week": "Action Schemas",
+    "type": "mcq",
+    "prompt": "In a classical planning action schema, what do preconditions represent?",
+    "explanation": "Preconditions gate whether an action is applicable in the current state; effects (a separate part of the schema) describe what changes once it's performed.",
+    "options": [
+      "The conditions over the current world state that must hold before the action can be applied",
+      "The changes to world state that occur once the action has been performed",
+      "The list of variables the action takes as input, regardless of world state",
+      "A record of every time the action has been performed previously"
+    ],
+    "answer": 0
+  },
+  {
+    "id": 203,
+    "topic": "Planning",
+    "week": "Action Schemas",
+    "type": "flash",
+    "prompt": "Why should perception/sensing calls (e.g. 'ask the patient for consent') generally be kept separate from an action schema's preconditions, rather than embedded inside the schema itself?",
+    "explanation": "",
+    "hint": "A precondition should be a condition over already-known state variables (e.g. patient.consent == true); embedding a live sensing call inside the schema conflates perception (finding out the state) with planning (deciding what to do given the state), and makes the schema harder to reason about formally or reuse across different sensing implementations."
+  },
+  {
+    "id": 204,
+    "topic": "Planning",
+    "week": "Action Schemas",
+    "type": "mcq",
+    "prompt": "Why is it poor practice to fold an 'else' branch (e.g. 'defer and remind later') directly inside a single action schema like deliver_med?",
+    "explanation": "Good practice separates concerns: each action schema defines when it applies and what it does; deciding which of several applicable/inapplicable actions to take is handled by the planner or decision-making logic, not hard-coded branching inside one schema.",
+    "options": [
+      "Effects must always be identical regardless of the action's preconditions",
+      "A schema should describe one clean, unconditional set of preconditions and effects; choosing between alternative actions (deliver now vs. defer) is the planner/decision-making layer's job, not something branched inside one action",
+      "Parameters cannot be reused across more than one action schema",
+      "Action schemas are not allowed to have any conditions at all"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 205,
+    "topic": "Planning",
+    "week": "Action Schemas",
+    "type": "flash",
+    "prompt": "Give an example action schema (parameters, at least 2 preconditions, at least 2 effects) for an action called charge_battery for a mobile robot.",
+    "explanation": "",
+    "hint": "Example: PARAMETERS: robot. PRECONDITIONS: robot.batteryLevel < lowThreshold, robot.location == chargingStation. EFFECTS: robot.batteryLevel = full, robot.charging = true."
+  },
+  {
+    "id": 206,
+    "topic": "Planning",
+    "week": "STRIPS Representation",
+    "type": "mcq",
+    "prompt": "What is STRIPS, in the context of classical planning?",
+    "explanation": "STRIPS (Stanford Research Institute Problem Solver) is a classic formalism representing planning problems as states, goals, and actions each with preconditions and effects -- the basis for the action-schema style used in classical planning.",
+    "options": [
+      "A type of neural network architecture for sequence planning",
+      "A formal language/representation for describing planning problems using actions with preconditions and effects over a set of predicates",
+      "A specific robot hardware platform used for testing planners",
+      "A machine learning algorithm for learning action policies from demonstration"
+    ],
+    "answer": 1
+  },
+  {
+    "id": 207,
+    "topic": "Planning",
+    "week": "Action Schemas",
+    "type": "flash",
+    "prompt": "In the deliver_med example, why should 'inventory updated' and 'reminder cleared' both count as separate effects, rather than combining them into one effect?",
+    "explanation": "",
+    "hint": "Each effect should describe one discrete change to world state; keeping them separate (medication delivered, inventory depleted, reminder cleared, last-dose time updated) makes the schema's consequences explicit and lets a planner or later action reason about each piece of state independently, rather than treating the whole action as one opaque black-box change."
   }
 ]
