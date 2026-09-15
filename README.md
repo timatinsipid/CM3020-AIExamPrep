@@ -144,6 +144,14 @@ Worth knowing before you share the link with anyone:
 - If you'd rather not collect this at all, delete the two `trackVisit()`
   call sites in `public/app.js` (`requireLogin()` and the login form's
   submit handler) and remove the Usage tab from `public/index.html`.
+- If locations still show as "Unknown" after this, check **Log stream**
+  (Web App > Monitoring > Log stream) right after a visit. The server tries
+  [ipapi.co](https://ipapi.co) first and falls back to
+  [ip-api.com](https://ip-api.com) if that fails (e.g. rate-limited — Azure's
+  outbound IP is shared across other tenants' apps, so a 429 isn't
+  necessarily anything to do with your own traffic). A failed lookup is
+  cached for 1 hour (rather than retried on every single visit) before
+  trying again; a successful one is cached for 24 hours.
 
 ### Syncing added questions back to GitHub
 

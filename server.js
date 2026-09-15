@@ -204,6 +204,22 @@ function getClientIp(req) {
   return stripPort(raw);
 }
 
+async function fetchFromIpapiCo(ip) {
+  const res = await fetch(`https://ipapi.co/${ip}/json/`);
+  if (!res.ok) throw new Error(`ipapi.co HTTP ${res.status}`);
+  const data = await res.json();
+  if (data.error) throw new Error(`ipapi.co API error: ${data.reason || 'unknown reason'}`);
+  return { city: data.city || null, region: data.region || null, country: data.country_name || null };
+}
+
+async function fetchFromIpApiCom(ip) {
+  const res = await fetch(`http://ip-api.com/json/${ip}?fields=status,message,city,regionName,country`);
+  if (!res.ok) throw new Error(`ip-api.com HTTP ${res.status}`);
+  const data = await res.json();
+  if (data.status !== 'success') throw new Error(`ip-api.com API error: ${data.message || 'unknown reason'}`);
+  return { city: data.city || null, region: data.regionName || null, country: data.country || null };
+}
+
 async function lookupLocation(ip) {
   // Skip lookups for local/private addresses (won't resolve to anything useful)
   if (!ip || ip === '::1' || ip === '127.0.0.1' || ip.startsWith('10.') || ip.startsWith('192.168.')) {
@@ -211,33 +227,33 @@ async function lookupLocation(ip) {
   }
   const cache = readJson(IP_CACHE_PATH, {});
   const cached = cache[ip];
+  const now = Date.now();
   const oneDayMs = 24 * 60 * 60 * 1000;
-  if (cached && (Date.now() - new Date(cached.cachedAt).getTime()) < oneDayMs) {
-    return cached.location;
+  const oneHourMs = 60 * 60 * 1000;
+
+  if (cached) {
+    const age = now - new Date(cached.cachedAt).getTime();
+    // A successful lookup is trusted for a day; a failed one is retried
+    // after an hour instead of hammering rate-limited providers on every visit.
+    if (!cached.failed && age < oneDayMs) return cached.location;
+    if (cached.failed && age < oneHourMs) return null;
   }
-  try {
-    const res = await fetch(`https://ipapi.co/${ip}/json/`);
-    if (!res.ok) {
-      console.error(`IP lookup HTTP error for ${ip}: status ${res.status}`);
-      return cached ? cached.location : null;
+
+  for (const fetcher of [fetchFromIpapiCo, fetchFromIpApiCom]) {
+    try {
+      const location = await fetcher(ip);
+      cache[ip] = { location, cachedAt: new Date().toISOString(), failed: false };
+      writeJson(IP_CACHE_PATH, cache);
+      return location;
+    } catch (err) {
+      console.error(`${fetcher.name} failed for ${ip}: ${err.message}`);
     }
-    const data = await res.json();
-    if (data.error) {
-      console.error(`IP lookup API error for ${ip}: ${data.reason || 'unknown reason'}`);
-      return cached ? cached.location : null;
-    }
-    const location = {
-      city: data.city || null,
-      region: data.region || null,
-      country: data.country_name || null
-    };
-    cache[ip] = { location, cachedAt: new Date().toISOString() };
-    writeJson(IP_CACHE_PATH, cache);
-    return location;
-  } catch (err) {
-    console.error(`IP lookup failed for ${ip}:`, err.message);
-    return cached ? cached.location : null;
   }
+
+  // Both providers failed — cache the failure briefly so we don't retry on every single visit
+  cache[ip] = { location: null, cachedAt: new Date().toISOString(), failed: true };
+  writeJson(IP_CACHE_PATH, cache);
+  return null;
 }
 
 app.post('/api/track-visit', async (req, res) => {
