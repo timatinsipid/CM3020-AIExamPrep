@@ -2389,5 +2389,101 @@
     "prompt": "In the deliver_med example, why should 'inventory updated' and 'reminder cleared' both count as separate effects, rather than combining them into one effect?",
     "explanation": "",
     "hint": "Each effect should describe one discrete change to world state; keeping them separate (medication delivered, inventory depleted, reminder cleared, last-dose time updated) makes the schema's consequences explicit and lets a planner or later action reason about each piece of state independently, rather than treating the whole action as one opaque black-box change."
+  },
+  {
+    "id": 208,
+    "topic": "Bio-Inspired Computing",
+    "week": "Swarm Intelligence",
+    "type": "flash",
+    "prompt": "Define swarm intelligence.",
+    "explanation": "",
+    "hint": "Collective, emergent problem-solving behaviour arising from many simple agents interacting via local rules only, with no central controller -- inspired by biological swarms like ant colonies, bird flocks, or bee colonies. Sophisticated group-level behaviour emerges from simple individual behaviours plus local interaction."
+  },
+  {
+    "id": 209,
+    "topic": "Bio-Inspired Computing",
+    "week": "Swarm Intelligence",
+    "type": "mcq",
+    "prompt": "What is a key defining feature of swarm intelligence systems?",
+    "explanation": "Swarm intelligence relies on decentralised, local interaction between simple agents -- there is no central controller directing the swarm; useful group-level behaviour emerges from the interactions themselves.",
+    "options": [
+      "Many simple agents follow local rules and interact locally, with sophisticated behaviour emerging at the group level with no central control",
+      "Only one candidate solution is refined at a time across iterations",
+      "A single central controller directs every agent's actions",
+      "Agents share a single global memory that all decisions are computed from directly"
+    ],
+    "answer": 0
+  },
+  {
+    "id": 210,
+    "topic": "Bio-Inspired Computing",
+    "week": "Swarm Intelligence vs Distributed Computing",
+    "type": "mcq",
+    "prompt": "Why are volunteer distributed-computing projects like SETI@home or Folding@home NOT examples of swarm intelligence?",
+    "explanation": "Distributed computing just splits one big task into independent pieces processed separately -- there's no local interaction or emergent collective behaviour, which is what actually defines swarm intelligence.",
+    "options": [
+      "They only run on supercomputers, not networks of individual machines",
+      "They are examples of genetic algorithms instead",
+      "They don't use any computers at all",
+      "Each machine processes an independent chunk of one large computation with no interaction between machines, rather than many simple agents interacting via local rules to produce emergent behaviour"
+    ],
+    "answer": 3
+  },
+  {
+    "id": 211,
+    "topic": "Bio-Inspired Computing",
+    "week": "Particle Swarm Optimisation",
+    "type": "flash",
+    "prompt": "Explain how Particle Swarm Optimisation (PSO) works.",
+    "explanation": "",
+    "hint": "A population of candidate solutions ('particles') move through the search space; each particle adjusts its position based on its own best-found solution so far and the best solution found by neighbouring/swarm particles, inspired by flocking/schooling behaviour in birds or fish."
+  },
+  {
+    "id": 212,
+    "topic": "Bio-Inspired Computing",
+    "week": "Ant Colony Optimisation",
+    "type": "flash",
+    "prompt": "Explain how Ant Colony Optimisation (ACO) works.",
+    "explanation": "",
+    "hint": "Artificial 'ants' traverse a graph (e.g. a routing problem), depositing virtual pheromone trails on the paths they take. Over many iterations, pheromone reinforcement on shorter/better paths (which get reinforced more often and evaporate less) guides the colony toward optimal or near-optimal solutions, mimicking real ant foraging behaviour."
+  },
+  {
+    "id": 213,
+    "topic": "Bio-Inspired Computing",
+    "week": "Ant Colony Optimisation",
+    "type": "mcq",
+    "prompt": "In Ant Colony Optimisation, what mechanism causes the colony to converge on good solutions over time?",
+    "explanation": "ACO's convergence comes from decentralised pheromone reinforcement -- better paths accumulate more pheromone over time, which probabilistically biases later ants toward them, without any central coordination.",
+    "options": [
+      "Pheromone trails on shorter/better paths get reinforced more (and evaporate less) than trails on worse paths, biasing future ants toward them",
+      "A central server ranks all ants and eliminates the worst-performing ones each round",
+      "Ants communicate via a shared global fitness function computed centrally",
+      "Each ant is assigned a fixed, unchangeable path at the start and never adapts"
+    ],
+    "answer": 0
+  },
+  {
+    "id": 214,
+    "topic": "Bio-Inspired Computing",
+    "week": "Swarm vs Single-Solution Optimisation",
+    "type": "mcq",
+    "prompt": "What is a key advantage of swarm intelligence approaches over traditional single-solution optimisation methods (e.g. hill-climbing or gradient descent)?",
+    "explanation": "Because many candidates are explored in parallel rather than refining a single solution, a swarm can abandon poor regions in favour of promising ones discovered elsewhere -- reducing (though not eliminating) the risk of premature convergence to a local optimum.",
+    "options": [
+      "Swarm methods require no computational resources at all",
+      "Swarm methods only work on convex, well-behaved objective functions",
+      "Maintaining and evolving a whole population of candidate solutions in parallel makes the search less likely to get permanently stuck in one local optimum, since other regions are still being explored elsewhere in the swarm",
+      "Swarm methods always find the mathematically guaranteed global optimum"
+    ],
+    "answer": 2
+  },
+  {
+    "id": 215,
+    "topic": "Bio-Inspired Computing",
+    "week": "Swarm Intelligence Applications",
+    "type": "flash",
+    "prompt": "Give one real-world computational problem well-suited to a swarm-based algorithm, and explain why.",
+    "explanation": "",
+    "hint": "e.g. vehicle routing / logistics optimisation with ACO: the search space (possible routes) is huge and combinatorial, but the graph structure and need to find short paths matches ACO's pheromone-based path reinforcement well, without needing gradient information."
   }
 ]
